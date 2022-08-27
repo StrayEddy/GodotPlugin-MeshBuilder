@@ -1,0 +1,27 @@
+Concept
+
+1- Custom CSG nodes
+2- Can switch between CSG types
+3- Wrapper on top of original CSG Nodes
+4- Drag and drop from list of shapes
+
+
+List of shapes:
+- Cube
+- Torus
+- Sphere
+- Hexagonal Pyramid
+- Hexagonal Prism
+- Triangular Prism
+- Octahedron
+- Dodecahedron
+- Icosahedron
+- Pentagrammic Prism
+- Cone
+- Square Pyramid
+- Buckyball
+- Cuboid
+- Cylinder
+- Ring
+- Truncated Cone
+- Half-Sphere

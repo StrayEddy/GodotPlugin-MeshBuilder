@@ -1,0 +1,491 @@
+@tool
+extends Node
+class_name CSG
+#    Constructive Solid Geometry (CSG) is a modeling technique that uses Boolean
+#    operations like union and intersection to combine 3D solids. This library
+#    implements CSG operations on meshes elegantly and concisely using BSP trees,
+#    and is meant to serve as an easily understandable implementation of the
+#    algorithm. All edge cases involving overlapping coplanar polygons in both
+#    solids are correctly handled.
+#
+#    Example usage::
+#
+#        from csg.core import CSG
+#
+#        cube = CSG.cube();
+#        sphere = CSG.sphere({'radius': 1.3});
+#        polygons = cube.subtract(sphere).toPolygons();
+#
+#    ## Implementation Details
+#
+#    All CSG operations are implemented in terms of two functions, `clipTo()` and
+#    `invert()`, which remove parts of a BSP tree inside another BSP tree and swap
+#    solid and empty space, respectively. To find the union of `a` and `b`, we
+#    want to remove everything in `a` inside `b` and everything in `b` inside `a`,
+#    then combine polygons from `a` and `b` into one solid::
+#
+#        a.clipTo(b);
+#        b.clipTo(a);
+#        a.build(b.allPolygons());
+#
+#    The only tricky part is handling overlapping coplanar polygons in both trees.
+#    The code above keeps both copies, but we need to keep them in one tree and
+#    remove them in the other tree. To remove them from `b` we can clip the
+#    inverse of `b` against `a`. The code for union now looks like this::
+#
+#        a.clipTo(b);
+#        b.clipTo(a);
+#        b.invert();
+#        b.clipTo(a);
+#        b.invert();
+#        a.build(b.allPolygons());
+#
+#    Subtraction and intersection naturally follow from set operations. If
+#    union is `A | B`, subtraction is `A - B = ~(~A | B)` and intersection is
+#    `A & B = ~(~A | ~B)` where `~` is the complement operator.
+
+var polygons = []
+
+static func from_polygons(polygons):
+	var csg = CSG.new()
+	csg.polygons = polygons
+	return csg
+
+func clone():
+	var csg = CSG.new()
+	csg.polygons = polygons.duplicate(true)
+	return csg
+
+func to_polygons():
+	return polygons
+
+# Return a refined CSG. To each polygon, a middle
+# point is added to each edge and to the center of
+# the polygon
+func refine():
+	var new_csg = CSG.new()
+	for poly in polygons:
+		var verts :Array = poly.vertices
+		var nb_verts = verts.size()
+		if nb_verts == 0:
+			continue
+		
+		var accum = Vector3.ZERO
+		for vert in verts:
+			accum += vert.pos
+		var mid_pos = accum / float(nb_verts)
+		var mid_normal = null
+		if verts[0].normal != null:
+			mid_normal = poly.plane.normal
+		var mid_vert = Vertex.new().init(mid_pos, mid_normal)
+		
+		var new_verts = verts
+		for i in range(nb_verts):
+			var vert = verts[i].interpolate(verts[(i+1) % nb_verts], 0.5)
+			new_verts.append(vert)
+		new_verts.append_array([mid_vert])
+
+		var i = 0
+		var vs = [new_verts[i], new_verts[i+nb_verts], new_verts[2*nb_verts], new_verts[2*nb_verts-1]]
+		var new_poly = Polygon.new()
+		new_poly.vertices = vs
+		new_poly.shared = poly.shared
+		new_poly.plane = poly.plane
+		new_csg.polygons.append(new_poly)
+		
+		for j in range(1, nb_verts):
+			var vs_2 = [new_verts[j], new_verts[nb_verts+j], new_verts[2*nb_verts], new_verts[nb_verts+j-1]]
+			var new_poly_2 = Polygon.new()
+			new_poly_2.vertices = vs_2
+			new_csg.polygons.append(new_poly_2)
+	return new_csg
+
+# Translate Geometry.
+# disp: displacement (Vector3)
+func translate(disp :Vector3):
+	for poly in polygons:
+		for v in poly.vertices:
+			v.pos = v.pos + disp
+			# no change to the normals
+	return self
+
+# Rotate geometry.
+# axis: axis of rotation (array of floats)
+# angleDeg: rotation angle in degrees
+func rotate(axis, angle_deg):
+	var ax = Vector3(axis[0], axis[1], axis[2]).normalized()
+	var cos_angle = cos(PI * angle_deg / 180)
+	var sin_angle = sin(PI * angle_deg / 180)
+
+	var new_vector = func(v :Vector3):
+		var v_a :float = v.dot(ax)
+		var v_perp :Vector3 = v - ax * v_a
+		var v_perp_len = v_perp.length()
+		if v_perp_len == 0:
+			# vector is parallel to axis, no need to rotate
+			return v
+		
+		var u1 :Vector3 = v_perp.normalized()
+		var u2 :Vector3 = u1.cross(ax)
+		var v_cos_a = v_perp_len * cos_angle
+		var v_sin_a = v_perp_len * sin_angle
+		
+		var result :Vector3
+		result = ax * v_a
+		result += u1 * (v_cos_a + (u2 * v_sin_a))
+		return result
+	
+	for poly in polygons:
+		for vert in poly.vertices:
+			vert.pos = new_vector.call(vert.pos)
+			var normal = vert.normal
+			if normal.length() > 0:
+				vert.normal = new_vector.call(vert.normal)
+
+# Return list of vertices, polygons (cells), and the total
+# number of vertex indices in the polygon connectivity list
+# (count).
+func to_vertices_and_polygons():
+	var offset = 1.234567890
+	var verts = []
+	var polys = []
+	var vertex_index_map = {}
+	var count = 0
+	for poly in polygons:
+		verts = poly.vertices
+		var cell = []
+		for v in poly.vertices:
+			var p = v.pos
+			# use string key to remove degeneracy associated
+			# very close points. The format %.10e ensures that
+			# points differing in the 11 digits and higher are 
+			# treated as the same. For instance 1.2e-10 and 
+			# 1.3e-10 are essentially the same.
+			var v_key = '%.10e,%.10e,%.10e' % [p[0] + offset, p[1] + offset, p[2] + offset]
+			if not v_key in vertex_index_map:
+				vertex_index_map[v_key] = len(vertex_index_map)
+			var index = vertex_index_map[v_key]
+			cell.append(index)
+			count += 1
+		polys.append(cell)
+	
+	
+	verts = []
+	for key in vertex_index_map.keys().sort():
+		var p = []
+		for c in vertex_index_map[key].split(','):
+			p.append(float(c) - offset)
+		verts.append(p)
+	var result = [verts, polys, count]
+	return result
+
+# Print polygon to console.
+func print():
+	var csg_info = self.to_vertices_and_polygons()
+	var verts = csg_info[0]
+	var cells = csg_info[1]
+	var count = csg_info[2]
+	
+	print("Points: " + str(len(verts)))
+	for v in verts:
+		print("Vertex: " + str(v[0]) + " " + str(v[1]) + " " + str(v[2]))
+	var nb_cells = len(cells)
+	print("Polygons: " + str(nb_cells) + " " + str(count + nb_cells))
+	for cell in cells:
+		print("Cell: " + str(len(cell)))
+		for index in cell:
+			print(str(index))
+		print("---")
+
+func print_1():
+	print("nb of polygons: " + str(len(polygons)))
+	for poly in polygons:
+		print("poly with " + str(len(poly.vertices)) + " vertices")
+
+func print_2():
+	print("nb of polygons: " + str(len(polygons)))
+	for poly in polygons:
+		print("poly with " + str(len(poly.vertices)) + " vertices")
+		for vert in poly.vertices:
+			print("vert: " + str(vert.pos))
+
+# Return a new CSG solid representing space in either this solid or in the
+# solid `csg`. Neither this solid nor the solid `csg` are modified.::
+#
+#	A.union(B)
+#
+#	+-------+            +-------+
+#	|       |            |       |
+#	|   A   |            |       |
+#	|    +--+----+   =   |       +----+
+#	+----+--+    |       +----+       |
+#		 |   B   |            |       |
+#		 |       |            |       |
+#		 +-------+            +-------+
+func union(csg):
+	var a = BSPNode.new().init(self.clone().polygons)
+	var b = BSPNode.new().init(csg.clone().polygons)
+	a.clip_to(b)
+	b.clip_to(a)
+	b.invert()
+	b.clip_to(a)
+	b.invert()
+	a.build(b.all_polygons());
+	return CSG.from_polygons(a.all_polygons())
+
+# Return a new CSG solid representing space in this solid but not in the
+# solid `csg`. Neither this solid nor the solid `csg` are modified.::
+#
+#	A.subtract(B)
+#
+#	+-------+            +-------+
+#	|       |            |       |
+#	|   A   |            |       |
+#	|    +--+----+   =   |    +--+
+#	+----+--+    |       +----+
+#		 |   B   |
+#		 |       |
+#		 +-------+
+func subtract(csg):
+	var a = BSPNode.new().init(self.clone().polygons)
+	var b = BSPNode.new().init(csg.clone().polygons)
+	a.invert()
+	a.clip_to(b)
+	b.clip_to(a)
+	b.invert()
+	b.clip_to(a)
+	b.invert()
+	a.build(b.all_polygons())
+	a.invert()
+	return CSG.from_polygons(a.all_polygons())
+
+# Return a new CSG solid representing space both this solid and in the
+# solid `csg`. Neither this solid nor the solid `csg` are modified.::
+#
+#	A.intersect(B)
+#
+#	+-------+
+#	|       |
+#	|   A   |
+#	|    +--+----+   =   +--+
+#	+----+--+    |       +--+
+#		 |   B   |
+#		 |       |
+#		 +-------+
+func intersect(csg):
+	var a = BSPNode.new().init(self.clone().polygons)
+	var b = BSPNode.new().init(csg.clone().polygons)
+	a.invert()
+	b.clip_to(a)
+	b.invert()
+	a.clip_to(b)
+	b.clip_to(a)
+	a.build(b.all_polygons())
+	a.invert()
+	return CSG.from_polygons(a.all_polygons())
+
+# Return a new CSG solid with solid and empty space switched. This solid is
+# not modified.
+func inverse():
+	var csg = self.clone()
+	for p in csg.polygons:
+		p.flip()
+	return csg
+
+# Construct an axis-aligned solid cuboid. Optional parameters are `center` and
+# `radius`, which default to `Vector3.ZERO` and `1.0`.
+#
+# Example code::
+#
+#	cube = CSG.cube(
+#	  center=Vector3.ZERO,
+#	  radius=1.0
+#	)
+static func cube(center :Vector3 = Vector3.ZERO, size :float = 1.0):
+	var l = size / 2
+	var vertices = []
+	for i in range(8):
+		var p1 = l if (i & 4) != 0 else -l
+		var p2 = l if (i & 2) != 0 else -l
+		var p3 = l if (i & 1) != 0 else -l
+		var v = Vector3(p1,p2,p3)
+		var vert = Vertex.new().init(v + center)
+		vertices.append(vert)
+	
+	var polygons_to_build = [[0,1,2],[3,2,1],[0,4,1],[5,1,4],[0,2,4],[6,4,2],[7,5,6],[4,6,5],[7,6,3],[2,3,6],[7,3,5],[1,5,3]]
+	var polygons = []
+	for poly in polygons_to_build:
+		var v0 = vertices[poly[0]]
+		var v1 = vertices[poly[1]]
+		var v2 = vertices[poly[2]]
+		polygons.append(Polygon.new().init([v0,v1,v2]))
+	
+	return CSG.from_polygons(polygons)
+
+# Example code::
+#
+#	sphere = CSG.shpere(
+#	  center=(0, 0, 0),
+#	  radius=1.0,
+#	  slices=16,
+#	  stacks=8
+#	)
+static func sphere(center :Vector3 = Vector3.ZERO, radius :float = 1.0, slices :int = 12, stacks :int = 6):
+	var c = center
+	var r = radius
+	var polygons = []
+	var append_vertex = func(vertices, theta, phi):
+		var d = Vector3(cos(theta) * sin(phi),
+			cos(phi), 
+			sin(theta) * sin(phi))
+		vertices.append(Vertex.new().init(c + d * r, d))
+		
+	var dTheta = PI * 2.0 / float(slices)
+	var dPhi = PI / float(stacks)
+
+	var j0 = 0
+	var j1 = j0 + 1
+	for i0 in range(0, slices):
+		var i1 = i0 + 1
+		#  +--+
+		#  | /
+		#  |/
+		#  +
+		var vertices = []
+		append_vertex.call(vertices, i0 * dTheta, j0 * dPhi)
+		append_vertex.call(vertices, i1 * dTheta, j1 * dPhi)
+		append_vertex.call(vertices, i0 * dTheta, j1 * dPhi)
+		polygons.append(Polygon.new().init(vertices))
+
+	j0 = stacks - 1
+	j1 = j0 + 1
+	for i0 in range(0, slices):
+		var i1 = i0 + 1
+		#  +
+		#  |\
+		#  | \
+		#  +--+
+		var vertices = []
+		append_vertex.call(vertices, i0 * dTheta, j0 * dPhi)
+		append_vertex.call(vertices, i1 * dTheta, j0 * dPhi)
+		append_vertex.call(vertices, i0 * dTheta, j1 * dPhi)
+		polygons.append(Polygon.new().init(vertices))
+		
+	for k0 in range(1, stacks - 1):
+		var k1 = k0 + 1
+		for i0 in range(0, slices):
+			var i1 = i0 + 1
+			#  +---+
+			#  |\ /|
+			#  | x |
+			#  |/ \|
+			#  +---+
+			var verticesL = []
+			append_vertex.call(verticesL, i0 * dTheta, k0 * dPhi)
+			append_vertex.call(verticesL, i1 * dTheta, k1 * dPhi)
+			append_vertex.call(verticesL, i0 * dTheta, k1 * dPhi)
+			polygons.append(Polygon.new().init(verticesL))
+			var verticesR = []
+			append_vertex.call(verticesR, i0 * dTheta, k0 * dPhi)
+			append_vertex.call(verticesR, i1 * dTheta, k0 * dPhi)
+			append_vertex.call(verticesR, i1 * dTheta, k1 * dPhi)
+			polygons.append(Polygon.new().init(verticesR))
+			
+	return CSG.from_polygons(polygons)
+
+# Example code::
+#
+#	cylinder = CSG.cylinder(
+#	  start=(0, -1, 0),
+#	  end=(0, 1, 0),
+#	  radius=1.0,
+#	  slices=16
+#	)
+static func cylinder(start :Vector3 = Vector3(0,-1,0), end :Vector3 = Vector3(0,1,0), radius :float = 1.0, slices :int = 16):
+	var s = start
+	var e = end
+	var r = radius
+	var ray = e - s
+
+	var axis_z = ray.normalized()
+	var is_y = abs(axis_z.y) > 0.5
+	var axis_x = Vector3(float(is_y), float(not is_y), 0).cross(axis_z).normalized()
+	var axis_y = axis_x.cross(axis_z).normalized()
+	var start_vert = Vertex.new().init(s, -axis_z)
+	var end_vert = Vertex.new().init(e, axis_z.normalized())
+	var polygons = []
+	
+	var point = func(stack, angle, normal_blend):
+		var out = (axis_x * cos(angle)) + (axis_y * sin(angle))
+		var pos = s + (ray * stack) + (out * r)
+		var normal = out * (1.0 - abs(normal_blend)) + (axis_z * normal_blend)
+		return Vertex.new().init(pos, normal)
+		
+	var dt = PI * 2.0 / float(slices)
+	for i in range(0, slices):
+		var t0 = i * dt
+		var i1 = (i + 1) % slices
+		var t1 = i1 * dt
+		polygons.append(Polygon.new().init([start_vert, point.call(0., t0, -1.), point.call(0., t1, -1.)]))
+		polygons.append(Polygon.new().init([point.call(0., t0, 0.), point.call(1., t0, 0.), point.call(1., t1, 0.)]))
+		polygons.append(Polygon.new().init([point.call(1., t1, 0.), point.call(0., t1, 0.), point.call(0., t0, 0.)]))
+		polygons.append(Polygon.new().init([end_vert, point.call(1., t1, 1.), point.call(1., t0, 1.)]))
+	
+	return CSG.from_polygons(polygons)
+
+# Example code::
+#
+#	cone = CSG.cone(
+#	  start=(0, -1, 0),
+#	  end=(0, 1, 0),
+#	  radius=1.0,
+#	  slices=16
+#	)
+static func cone(start :Vector3 = Vector3(0,-1,0), end :Vector3 = Vector3(0,1,0), radius :float = 1.0, slices :int = 16):
+	var s = start
+	var e = end
+	var r = radius
+	var ray = e - s
+	
+	var axis_z = ray.normalized()
+	var is_y = abs(axis_z.y) > 0.5
+	var axis_x = Vector3(float(is_y), float(not is_y), 0).cross(axis_z).normalized()
+	var axis_y = axis_x.cross(axis_z).normalized()
+	var start_normal = -axis_z
+	var start_vertex = Vertex.new().init(s, start_normal)
+	var polygons = []
+	
+	var taper_angle = atan2(r, ray.length())
+	var sin_taper_angle = sin(taper_angle)
+	var cos_taper_angle = cos(taper_angle)
+	var point = func(angle):
+		# radial direction pointing out
+		var out = (axis_x * cos(angle)) + (axis_y * sin(angle))
+		var pos = s + (out * r)
+		# normal taking into account the tapering of the cone
+		var normal = (out * cos_taper_angle) + (axis_z * sin_taper_angle)
+		return [pos, normal]
+
+	var dt = PI * 2.0 / float(slices)
+	for i in range(0, slices):
+		var t0 = i * dt
+		var i1 = (i + 1) % slices
+		var t1 = i1 * dt
+		# coordinates and associated normal pointing outwards of the cone's
+		# side
+		var v0 = point.call(t0)
+		var v1 = point.call(t1)
+		var p0 = v0[0]
+		var n0 = v0[1]
+		var p1 = v1[0]
+		var n1 = v1[1]
+		# average normal for the tip
+		var n_avg = (n0 + n1) * 0.5
+		# polygon on the low side (disk sector)
+		var poly_start = Polygon.new().init([start_vertex.clone(), Vertex.new().init(p0, start_normal), Vertex.new().init(p1, start_normal)])
+		polygons.append(poly_start)
+		# polygon extending from the low side to the tip
+		var poly_side = Polygon.new().init([Vertex.new().init(p0, n0), Vertex.new().init(e, n_avg), Vertex.new().init(p1, n1)])
+		polygons.append(poly_side)
+
+	return CSG.from_polygons(polygons)

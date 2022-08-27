@@ -1,0 +1,59 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+_global_script_classes=[{
+"base": "Node",
+"class": &"BSPNode",
+"language": &"GDScript",
+"path": "res://addons/meshbuilder/csg/bsp_node.gd"
+}, {
+"base": "Node",
+"class": &"CSG",
+"language": &"GDScript",
+"path": "res://addons/meshbuilder/csg/csg.gd"
+}, {
+"base": "Node",
+"class": &"MyPlane",
+"language": &"GDScript",
+"path": "res://addons/meshbuilder/csg/my_plane.gd"
+}, {
+"base": "Button",
+"class": &"PluginButton",
+"language": &"GDScript",
+"path": "res://addons/meshbuilder/plugin_button.gd"
+}, {
+"base": "Node",
+"class": &"Polygon",
+"language": &"GDScript",
+"path": "res://addons/meshbuilder/csg/polygon.gd"
+}, {
+"base": "Node",
+"class": &"Vertex",
+"language": &"GDScript",
+"path": "res://addons/meshbuilder/csg/vertex.gd"
+}]
+_global_script_class_icons={
+"BSPNode": "",
+"CSG": "",
+"MyPlane": "",
+"PluginButton": "",
+"Polygon": "",
+"Vertex": ""
+}
+
+[application]
+
+config/name="GodotPlugin-MeshBuilder"
+config/features=PackedStringArray("4.0", "Vulkan Clustered")
+config/icon="res://icon.png"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/meshbuilder/plugin.cfg")
