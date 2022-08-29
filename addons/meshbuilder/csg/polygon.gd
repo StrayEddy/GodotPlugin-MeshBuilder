@@ -23,7 +23,16 @@ func init(vertices :Array, shared=null):
 	return self
 
 func clone():
-	var poly = Polygon.new().init(self.vertices.duplicate(true), self.shared.duplicate(true))
+	var vertices = []
+	for vert in self.vertices:
+		vertices.append(vert.clone())
+	
+	var shared = []
+	if shared:
+		for s in self.shared:
+			shared.append(s.clone())
+	
+	var poly = Polygon.new().init(vertices, shared)
 	return poly
 
 func flip():

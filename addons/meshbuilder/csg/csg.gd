@@ -53,7 +53,10 @@ static func from_polygons(polygons):
 
 func clone():
 	var csg = CSG.new()
-	csg.polygons = polygons.duplicate(true)
+	var polygons = []
+	for poly in self.polygons:
+		polygons.append(poly.clone())
+	csg.polygons = polygons
 	return csg
 
 func to_polygons():
@@ -141,61 +144,6 @@ func rotate(axis, angle_deg):
 			var normal = vert.normal
 			if normal.length() > 0:
 				vert.normal = new_vector.call(vert.normal)
-
-# Return list of vertices, polygons (cells), and the total
-# number of vertex indices in the polygon connectivity list
-# (count).
-func to_vertices_and_polygons():
-	var offset = 1.234567890
-	var verts = []
-	var polys = []
-	var vertex_index_map = {}
-	var count = 0
-	for poly in polygons:
-		verts = poly.vertices
-		var cell = []
-		for v in poly.vertices:
-			var p = v.pos
-			# use string key to remove degeneracy associated
-			# very close points. The format %.10e ensures that
-			# points differing in the 11 digits and higher are 
-			# treated as the same. For instance 1.2e-10 and 
-			# 1.3e-10 are essentially the same.
-			var v_key = '%.10e,%.10e,%.10e' % [p[0] + offset, p[1] + offset, p[2] + offset]
-			if not v_key in vertex_index_map:
-				vertex_index_map[v_key] = len(vertex_index_map)
-			var index = vertex_index_map[v_key]
-			cell.append(index)
-			count += 1
-		polys.append(cell)
-	
-	
-	verts = []
-	for key in vertex_index_map.keys().sort():
-		var p = []
-		for c in vertex_index_map[key].split(','):
-			p.append(float(c) - offset)
-		verts.append(p)
-	var result = [verts, polys, count]
-	return result
-
-# Print polygon to console.
-func print():
-	var csg_info = self.to_vertices_and_polygons()
-	var verts = csg_info[0]
-	var cells = csg_info[1]
-	var count = csg_info[2]
-	
-	print("Points: " + str(len(verts)))
-	for v in verts:
-		print("Vertex: " + str(v[0]) + " " + str(v[1]) + " " + str(v[2]))
-	var nb_cells = len(cells)
-	print("Polygons: " + str(nb_cells) + " " + str(count + nb_cells))
-	for cell in cells:
-		print("Cell: " + str(len(cell)))
-		for index in cell:
-			print(str(index))
-		print("---")
 
 func print_1():
 	print("nb of polygons: " + str(len(polygons)))

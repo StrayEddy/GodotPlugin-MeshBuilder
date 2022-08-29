@@ -1,0 +1,46 @@
+[gd_scene load_steps=2 format=3 uid="uid://bqkh61htltses"]
+
+[ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder/mesh_builder_panel.gd" id="1_k2oop"]
+
+[node name="MeshBuilderPanel" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_k2oop")
+
+[node name="Panel" type="Panel" parent="."]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
+offset_right = 48.0
+offset_bottom = 40.0
+
+[node name="AddCone" type="Button" parent="Panel/HBoxContainer"]
+offset_right = 48.0
+offset_bottom = 40.0
+size_flags_horizontal = 4
+text = "Cone"
+
+[node name="AddCube" type="Button" parent="Panel/HBoxContainer"]
+offset_left = 52.0
+offset_right = 100.0
+offset_bottom = 40.0
+size_flags_horizontal = 4
+text = "Cube"
+
+[node name="AddCylinder" type="Button" parent="Panel/HBoxContainer"]
+offset_left = 104.0
+offset_right = 176.0
+offset_bottom = 40.0
+size_flags_horizontal = 4
+text = "Cylinder"
+
+[node name="AddSphere" type="Button" parent="Panel/HBoxContainer"]
+offset_left = 180.0
+offset_right = 243.0
+offset_bottom = 40.0
+size_flags_horizontal = 4
+text = "Sphere"
+
+[connection signal="pressed" from="Panel/HBoxContainer/AddCone" to="." method="_on_add_cone_pressed"]
+[connection signal="pressed" from="Panel/HBoxContainer/AddCube" to="." method="_on_add_cube_pressed"]
+[connection signal="pressed" from="Panel/HBoxContainer/AddCylinder" to="." method="_on_add_cylinder_pressed"]
+[connection signal="pressed" from="Panel/HBoxContainer/AddSphere" to="." method="_on_add_sphere_pressed"]

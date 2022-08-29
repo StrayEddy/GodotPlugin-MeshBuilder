@@ -54,7 +54,10 @@ func invert():
 # tree.
 func clip_polygons(polygons):
 	if self.plane == null:
-		return polygons.duplicate()
+		var copy = []
+		for poly in polygons:
+			copy.append(poly.clone())
+		return copy
 
 	var front = []
 	var back = []
@@ -83,7 +86,9 @@ func clip_to(bsp):
 
 # Return a list of all polygons in this BSP tree.
 func all_polygons():
-	var polygons = self.polygons.duplicate(true)
+	var polygons = []
+	for poly in self.polygons:
+		polygons.append(poly.clone())
 	if self.front: 
 		polygons.append_array(self.front.all_polygons())
 	if self.back: 
