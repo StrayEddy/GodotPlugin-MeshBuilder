@@ -7,5 +7,5 @@ func _ready():
 	csg = CSG.sphere()
 
 func change_transform():
-	csg = CSG.sphere(transform.origin)
+	csg = CSG.sphere().scale(scale).rotate(rotation).translate(position)
 	super.change_transform()

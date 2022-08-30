@@ -7,5 +7,5 @@ func _ready():
 	csg = CSG.cylinder()
 
 func change_transform():
-	csg = CSG.cylinder(transform.origin + Vector3(0,-1,0), transform.origin + Vector3(0,1,0))
+	csg = CSG.cylinder().scale(scale).rotate(rotation).translate(position)
 	super.change_transform()

@@ -7,5 +7,5 @@ func _ready():
 	csg = CSG.cube()
 
 func change_transform():
-	csg = CSG.cube(transform.origin)
+	csg = CSG.cube().scale(scale).rotate(rotation).translate(position)
 	super.change_transform()

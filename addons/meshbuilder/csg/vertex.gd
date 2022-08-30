@@ -30,6 +30,7 @@ func clone():
 # orientation of a polygon is flipped.
 func flip():
 	normal = -normal
+	return self
 
 # Create a new vertex between this vertex and `other` by linearly
 # interpolating all properties using a parameter of `t`. Subclasses should
@@ -39,3 +40,13 @@ func interpolate(other :Vertex, t :float):
 	vert.pos = Vector3(pos.lerp(other.pos, t))
 	vert.normal = Vector3(normal.lerp(other.normal, t))
 	return vert
+
+func rotated(rotation :Vector3):
+	pos = pos.rotated(Vector3.RIGHT, rotation.x)
+	pos = pos.rotated(Vector3.UP, rotation.y)
+	pos = pos.rotated(Vector3.BACK, rotation.z)
+	return self
+
+func translated(position :Vector3):
+	pos += position
+	return self

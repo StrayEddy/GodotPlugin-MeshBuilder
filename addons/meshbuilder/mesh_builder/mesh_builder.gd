@@ -56,19 +56,20 @@ func build_mesh():
 	var start_time = Time.get_ticks_msec()
 	
 	var real_poly_count = 0
-	for poly in self.csg.polygons:
-		var vertices = []
-		for vert in poly.vertices:
-			vertices.append(vert.clone())
-		vertices.reverse()
-#		var vertices :Array = poly.vertices.duplicate(true)
-#		vertices.reverse()
-		for i in len(vertices)-2:
-			st.add_vertex(vertices[0].pos)
-			st.add_vertex(vertices[i+1].pos)
-			st.add_vertex(vertices[i+2].pos)
-			st.set_smooth_group(real_poly_count)
-			real_poly_count += 1
+	if self.csg != null:
+		for poly in self.csg.polygons:
+			var vertices = []
+			for vert in poly.vertices:
+				vertices.append(vert.clone())
+			vertices.reverse()
+	#		var vertices :Array = poly.vertices.duplicate(true)
+	#		vertices.reverse()
+			for i in len(vertices)-2:
+				st.add_vertex(vertices[0].pos)
+				st.add_vertex(vertices[i+1].pos)
+				st.add_vertex(vertices[i+2].pos)
+				st.set_smooth_group(real_poly_count)
+				real_poly_count += 1
 	
 	st.index()
 	st.generate_normals()

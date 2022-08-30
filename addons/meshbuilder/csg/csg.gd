@@ -105,18 +105,46 @@ func refine():
 
 # Translate Geometry.
 # disp: displacement (Vector3)
-func translate(disp :Vector3):
+func translate(value :Vector3):
+	var vertices = []
 	for poly in polygons:
 		for v in poly.vertices:
-			v.pos = v.pos + disp
-			# no change to the normals
+			if v in vertices:
+				continue
+			else:
+				vertices.append(v)
+				v.pos = v.pos + value
+	return self
+
+func scale(value :Vector3):
+	var vertices = []
+	for poly in polygons:
+		for v in poly.vertices:
+			if v in vertices:
+				continue
+			else:
+				vertices.append(v)
+				v.pos = v.pos * value
+	return self
+
+func rotate(value :Vector3):
+	var vertices = []
+	for poly in polygons:
+		for v in poly.vertices:
+			if v in vertices:
+				continue
+			else:
+				vertices.append(v)
+				v.pos = v.pos.rotated(Vector3.RIGHT, value.x)
+				v.pos = v.pos.rotated(Vector3.UP, value.y)
+				v.pos = v.pos.rotated(Vector3.BACK, value.z)
 	return self
 
 # Rotate geometry.
 # axis: axis of rotation (array of floats)
 # angleDeg: rotation angle in degrees
-func rotate(axis, angle_deg):
-	var ax = Vector3(axis[0], axis[1], axis[2]).normalized()
+func rotate_axis(axis :Vector3, angle_deg :float):
+	var ax = axis.normalized()
 	var cos_angle = cos(PI * angle_deg / 180)
 	var sin_angle = sin(PI * angle_deg / 180)
 
@@ -144,6 +172,7 @@ func rotate(axis, angle_deg):
 			var normal = vert.normal
 			if normal.length() > 0:
 				vert.normal = new_vector.call(vert.normal)
+	return self
 
 func print_1():
 	print("nb of polygons: " + str(len(polygons)))
@@ -240,25 +269,74 @@ func inverse():
 		p.flip()
 	return csg
 
-# Construct an axis-aligned solid cuboid. Optional parameters are `center` and
-# `radius`, which default to `Vector3.ZERO` and `1.0`.
-#
-# Example code::
-#
-#	cube = CSG.cube(
-#	  center=Vector3.ZERO,
-#	  radius=1.0
-#	)
-static func cube(center :Vector3 = Vector3.ZERO, size :float = 1.0):
-	var l = size / 2
+static func cone(start :Vector3 = Vector3(0,-1,0), end :Vector3 = Vector3(0,1,0), radius :float = 1.0, slices :int = 16):
+	var s = start
+	var e = end
+	var r = radius
+	var ray = e - s
+	
+	var axis_z = ray.normalized()
+	var is_y = abs(axis_z.y) > 0.5
+	var axis_x = Vector3(float(is_y), float(not is_y), 0).cross(axis_z).normalized()
+	var axis_y = axis_x.cross(axis_z).normalized()
+	var start_normal = -axis_z
+	var start_vertex = Vertex.new().init(s, start_normal)
+	var polygons = []
+	
+	var taper_angle = atan2(r, ray.length())
+	var sin_taper_angle = sin(taper_angle)
+	var cos_taper_angle = cos(taper_angle)
+	var point = func(angle):
+		# radial direction pointing out
+		var out = (axis_x * cos(angle)) + (axis_y * sin(angle))
+		var pos = s + (out * r)
+		# normal taking into account the tapering of the cone
+		var normal = (out * cos_taper_angle) + (axis_z * sin_taper_angle)
+		return [pos, normal]
+
+	var dt = PI * 2.0 / float(slices)
+	for i in range(0, slices):
+		var t0 = i * dt
+		var i1 = (i + 1) % slices
+		var t1 = i1 * dt
+		# coordinates and associated normal pointing outwards of the cone's
+		# side
+		var v0 = point.call(t0)
+		var v1 = point.call(t1)
+		var p0 = v0[0]
+		var n0 = v0[1]
+		var p1 = v1[0]
+		var n1 = v1[1]
+		# average normal for the tip
+		var n_avg = (n0 + n1) * 0.5
+		# polygon on the low side (disk sector)
+		var poly_start = Polygon.new().init([start_vertex.clone(), Vertex.new().init(p0, start_normal), Vertex.new().init(p1, start_normal)])
+		polygons.append(poly_start)
+		# polygon extending from the low side to the tip
+		var poly_side = Polygon.new().init([Vertex.new().init(p0, n0), Vertex.new().init(e, n_avg), Vertex.new().init(p1, n1)])
+		polygons.append(poly_side)
+
+	return CSG.from_polygons(polygons)
+
+static func cube():
+	var px_py_pz = Vector3(.5,.5,.5)
+	var px_py_pZ = Vector3(.5,.5,-.5)
+	var px_pY_pz = Vector3(.5,-.5,.5)
+	var px_pY_pZ = Vector3(.5,-.5,-.5)
+	var pX_py_pz = Vector3(-.5,.5,.5)
+	var pX_py_pZ = Vector3(-.5,.5,-.5)
+	var pX_pY_pz = Vector3(-.5,-.5,.5)
+	var pX_pY_pZ = Vector3(-.5,-.5,-.5)
+	
 	var vertices = []
-	for i in range(8):
-		var p1 = l if (i & 4) != 0 else -l
-		var p2 = l if (i & 2) != 0 else -l
-		var p3 = l if (i & 1) != 0 else -l
-		var v = Vector3(p1,p2,p3)
-		var vert = Vertex.new().init(v + center)
-		vertices.append(vert)
+	vertices.append(Vertex.new().init(pX_pY_pZ))
+	vertices.append(Vertex.new().init(pX_pY_pz))
+	vertices.append(Vertex.new().init(pX_py_pZ))
+	vertices.append(Vertex.new().init(pX_py_pz))
+	vertices.append(Vertex.new().init(px_pY_pZ))
+	vertices.append(Vertex.new().init(px_pY_pz))
+	vertices.append(Vertex.new().init(px_py_pZ))
+	vertices.append(Vertex.new().init(px_py_pz))
 	
 	var polygons_to_build = [[0,1,2],[3,2,1],[0,4,1],[5,1,4],[0,2,4],[6,4,2],[7,5,6],[4,6,5],[7,6,3],[2,3,6],[7,3,5],[1,5,3]]
 	var polygons = []
@@ -270,14 +348,38 @@ static func cube(center :Vector3 = Vector3.ZERO, size :float = 1.0):
 	
 	return CSG.from_polygons(polygons)
 
-# Example code::
-#
-#	sphere = CSG.shpere(
-#	  center=(0, 0, 0),
-#	  radius=1.0,
-#	  slices=16,
-#	  stacks=8
-#	)
+static func cylinder(start :Vector3 = Vector3(0,-1,0), end :Vector3 = Vector3(0,1,0), radius :float = 1.0, slices :int = 16):
+	var s = start
+	var e = end
+	var r = radius
+	var ray = e - s
+
+	var axis_z = ray.normalized()
+	var is_y = abs(axis_z.y) > 0.5
+	var axis_x = Vector3(float(is_y), float(not is_y), 0).cross(axis_z).normalized()
+	var axis_y = axis_x.cross(axis_z).normalized()
+	var start_vert = Vertex.new().init(s, -axis_z)
+	var end_vert = Vertex.new().init(e, axis_z.normalized())
+	var polygons = []
+	
+	var point = func(stack, angle, normal_blend):
+		var out = (axis_x * cos(angle)) + (axis_y * sin(angle))
+		var pos = s + (ray * stack) + (out * r)
+		var normal = out * (1.0 - abs(normal_blend)) + (axis_z * normal_blend)
+		return Vertex.new().init(pos, normal)
+		
+	var dt = PI * 2.0 / float(slices)
+	for i in range(0, slices):
+		var t0 = i * dt
+		var i1 = (i + 1) % slices
+		var t1 = i1 * dt
+		polygons.append(Polygon.new().init([start_vert, point.call(0., t0, -1.), point.call(0., t1, -1.)]))
+		polygons.append(Polygon.new().init([point.call(0., t0, 0.), point.call(1., t0, 0.), point.call(1., t1, 0.)]))
+		polygons.append(Polygon.new().init([point.call(1., t1, 0.), point.call(0., t1, 0.), point.call(0., t0, 0.)]))
+		polygons.append(Polygon.new().init([end_vert, point.call(1., t1, 1.), point.call(1., t0, 1.)]))
+	
+	return CSG.from_polygons(polygons)
+
 static func sphere(center :Vector3 = Vector3.ZERO, radius :float = 1.0, slices :int = 12, stacks :int = 6):
 	var c = center
 	var r = radius
@@ -339,101 +441,4 @@ static func sphere(center :Vector3 = Vector3.ZERO, radius :float = 1.0, slices :
 			append_vertex.call(verticesR, i1 * dTheta, k1 * dPhi)
 			polygons.append(Polygon.new().init(verticesR))
 			
-	return CSG.from_polygons(polygons)
-
-# Example code::
-#
-#	cylinder = CSG.cylinder(
-#	  start=(0, -1, 0),
-#	  end=(0, 1, 0),
-#	  radius=1.0,
-#	  slices=16
-#	)
-static func cylinder(start :Vector3 = Vector3(0,-1,0), end :Vector3 = Vector3(0,1,0), radius :float = 1.0, slices :int = 16):
-	var s = start
-	var e = end
-	var r = radius
-	var ray = e - s
-
-	var axis_z = ray.normalized()
-	var is_y = abs(axis_z.y) > 0.5
-	var axis_x = Vector3(float(is_y), float(not is_y), 0).cross(axis_z).normalized()
-	var axis_y = axis_x.cross(axis_z).normalized()
-	var start_vert = Vertex.new().init(s, -axis_z)
-	var end_vert = Vertex.new().init(e, axis_z.normalized())
-	var polygons = []
-	
-	var point = func(stack, angle, normal_blend):
-		var out = (axis_x * cos(angle)) + (axis_y * sin(angle))
-		var pos = s + (ray * stack) + (out * r)
-		var normal = out * (1.0 - abs(normal_blend)) + (axis_z * normal_blend)
-		return Vertex.new().init(pos, normal)
-		
-	var dt = PI * 2.0 / float(slices)
-	for i in range(0, slices):
-		var t0 = i * dt
-		var i1 = (i + 1) % slices
-		var t1 = i1 * dt
-		polygons.append(Polygon.new().init([start_vert, point.call(0., t0, -1.), point.call(0., t1, -1.)]))
-		polygons.append(Polygon.new().init([point.call(0., t0, 0.), point.call(1., t0, 0.), point.call(1., t1, 0.)]))
-		polygons.append(Polygon.new().init([point.call(1., t1, 0.), point.call(0., t1, 0.), point.call(0., t0, 0.)]))
-		polygons.append(Polygon.new().init([end_vert, point.call(1., t1, 1.), point.call(1., t0, 1.)]))
-	
-	return CSG.from_polygons(polygons)
-
-# Example code::
-#
-#	cone = CSG.cone(
-#	  start=(0, -1, 0),
-#	  end=(0, 1, 0),
-#	  radius=1.0,
-#	  slices=16
-#	)
-static func cone(start :Vector3 = Vector3(0,-1,0), end :Vector3 = Vector3(0,1,0), radius :float = 1.0, slices :int = 16):
-	var s = start
-	var e = end
-	var r = radius
-	var ray = e - s
-	
-	var axis_z = ray.normalized()
-	var is_y = abs(axis_z.y) > 0.5
-	var axis_x = Vector3(float(is_y), float(not is_y), 0).cross(axis_z).normalized()
-	var axis_y = axis_x.cross(axis_z).normalized()
-	var start_normal = -axis_z
-	var start_vertex = Vertex.new().init(s, start_normal)
-	var polygons = []
-	
-	var taper_angle = atan2(r, ray.length())
-	var sin_taper_angle = sin(taper_angle)
-	var cos_taper_angle = cos(taper_angle)
-	var point = func(angle):
-		# radial direction pointing out
-		var out = (axis_x * cos(angle)) + (axis_y * sin(angle))
-		var pos = s + (out * r)
-		# normal taking into account the tapering of the cone
-		var normal = (out * cos_taper_angle) + (axis_z * sin_taper_angle)
-		return [pos, normal]
-
-	var dt = PI * 2.0 / float(slices)
-	for i in range(0, slices):
-		var t0 = i * dt
-		var i1 = (i + 1) % slices
-		var t1 = i1 * dt
-		# coordinates and associated normal pointing outwards of the cone's
-		# side
-		var v0 = point.call(t0)
-		var v1 = point.call(t1)
-		var p0 = v0[0]
-		var n0 = v0[1]
-		var p1 = v1[0]
-		var n1 = v1[1]
-		# average normal for the tip
-		var n_avg = (n0 + n1) * 0.5
-		# polygon on the low side (disk sector)
-		var poly_start = Polygon.new().init([start_vertex.clone(), Vertex.new().init(p0, start_normal), Vertex.new().init(p1, start_normal)])
-		polygons.append(poly_start)
-		# polygon extending from the low side to the tip
-		var poly_side = Polygon.new().init([Vertex.new().init(p0, n0), Vertex.new().init(e, n_avg), Vertex.new().init(p1, n1)])
-		polygons.append(poly_side)
-
 	return CSG.from_polygons(polygons)

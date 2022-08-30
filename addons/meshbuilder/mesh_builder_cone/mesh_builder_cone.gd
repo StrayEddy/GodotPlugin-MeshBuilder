@@ -7,5 +7,5 @@ func _ready():
 	csg = CSG.cone()
 
 func change_transform():
-	csg = CSG.cone(transform.origin + Vector3(0,-1,0), transform.origin + Vector3(0,1,0))
+	csg = CSG.cone().scale(scale).rotate(rotation).translate(position)
 	super.change_transform()
