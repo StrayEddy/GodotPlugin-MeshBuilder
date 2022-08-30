@@ -269,9 +269,9 @@ func inverse():
 		p.flip()
 	return csg
 
-static func cone(start :Vector3 = Vector3(0,-1,0), end :Vector3 = Vector3(0,1,0), radius :float = 1.0, slices :int = 16):
-	var s = start
-	var e = end
+static func cone(height :float = 1.0, radius :float = 1.0, slices :int = 16):
+	var s = Vector3(0,-1,0) * height
+	var e = Vector3(0,1,0) * height
 	var r = radius
 	var ray = e - s
 	
@@ -348,9 +348,9 @@ static func cube():
 	
 	return CSG.from_polygons(polygons)
 
-static func cylinder(start :Vector3 = Vector3(0,-1,0), end :Vector3 = Vector3(0,1,0), radius :float = 1.0, slices :int = 16):
-	var s = start
-	var e = end
+static func cylinder(height :float = 1.0, radius :float = 1.0, slices :int = 16):
+	var s = Vector3(0,-1,0) * height
+	var e = Vector3(0,1,0) * height
 	var r = radius
 	var ray = e - s
 
@@ -380,9 +380,9 @@ static func cylinder(start :Vector3 = Vector3(0,-1,0), end :Vector3 = Vector3(0,
 	
 	return CSG.from_polygons(polygons)
 
-static func sphere(center :Vector3 = Vector3.ZERO, radius :float = 1.0, slices :int = 12, stacks :int = 6):
-	var c = center
-	var r = radius
+static func sphere(slices :int = 12, stacks :int = 6):
+	var c = Vector3.ZERO # center
+	var r = 1.0 # radius
 	var polygons = []
 	var append_vertex = func(vertices, theta, phi):
 		var d = Vector3(cos(theta) * sin(phi),
