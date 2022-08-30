@@ -50,6 +50,8 @@ func add_sphere():
 	add_shape(MeshBuilderSphere.new(), "Sphere")
 func add_torus():
 	add_shape(MeshBuilderTorus.new(), "Torus")
+func add_ring():
+	add_shape(MeshBuilderRing.new(), "Ring")
 
 func build_mesh():
 	var st = SurfaceTool.new()

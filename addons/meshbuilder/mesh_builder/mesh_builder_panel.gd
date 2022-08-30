@@ -29,3 +29,6 @@ func _on_add_sphere_pressed():
 
 func _on_add_torus_pressed():
 	mesh_builder.add_torus()
+
+func _on_add_ring_pressed():
+	mesh_builder.add_ring()

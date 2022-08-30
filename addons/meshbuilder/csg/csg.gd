@@ -362,21 +362,54 @@ static func cylinder(height :float = 1.0, radius :float = 1.0, slices :int = 16)
 	var end_vert = Vertex.new().init(e, axis_z.normalized())
 	var polygons = []
 	
-	var point = func(stack, angle, normal_blend):
+	var point = func(stack, angle):
 		var out = (axis_x * cos(angle)) + (axis_y * sin(angle))
 		var pos = s + (ray * stack) + (out * r)
-		var normal = out * (1.0 - abs(normal_blend)) + (axis_z * normal_blend)
-		return Vertex.new().init(pos, normal)
+		return Vertex.new().init(pos)
 		
 	var dt = PI * 2.0 / float(slices)
 	for i in range(0, slices):
 		var t0 = i * dt
 		var i1 = (i + 1) % slices
 		var t1 = i1 * dt
-		polygons.append(Polygon.new().init([start_vert, point.call(0., t0, -1.), point.call(0., t1, -1.)]))
-		polygons.append(Polygon.new().init([point.call(0., t0, 0.), point.call(1., t0, 0.), point.call(1., t1, 0.)]))
-		polygons.append(Polygon.new().init([point.call(1., t1, 0.), point.call(0., t1, 0.), point.call(0., t0, 0.)]))
-		polygons.append(Polygon.new().init([end_vert, point.call(1., t1, 1.), point.call(1., t0, 1.)]))
+		polygons.append(Polygon.new().init([start_vert, point.call(0., t0), point.call(0., t1)]))
+		polygons.append(Polygon.new().init([point.call(0., t0), point.call(1., t0), point.call(1., t1)]))
+		polygons.append(Polygon.new().init([point.call(1., t1), point.call(0., t1), point.call(0., t0)]))
+		polygons.append(Polygon.new().init([end_vert, point.call(1., t1), point.call(1., t0)]))
+	
+	return CSG.from_polygons(polygons)
+
+static func ring(height :float = 1.0, inner_radius :float = 0.5, outer_radius :float = 1.0, slices :int = 16):
+	var s = Vector3(0,-1,0) * height
+	var e = Vector3(0,1,0) * height
+	var ray = e - s
+
+	var axis_z = ray.normalized()
+	var is_y = abs(axis_z.y) > 0.5
+	var axis_x = Vector3(float(is_y), float(not is_y), 0).cross(axis_z).normalized()
+	var axis_y = axis_x.cross(axis_z).normalized()
+	var polygons = []
+	
+	var outer_point = func(stack, angle):
+		var out = (axis_x * cos(angle)) + (axis_y * sin(angle))
+		var pos = s + (ray * stack) + (out * outer_radius)
+		return Vertex.new().init(pos)
+	
+	var inner_point = func(stack, angle):
+		var out = (axis_x * cos(angle)) + (axis_y * sin(angle))
+		var pos = s + (ray * stack) + (out * inner_radius)
+		return Vertex.new().init(pos)
+	
+	var dt = PI * 2.0 / float(slices)
+	for i in range(0, slices):
+		var t0 = i * dt
+		var i1 = (i + 1) % slices
+		var t1 = i1 * dt
+		
+		polygons.append(Polygon.new().init([outer_point.call(0., t1), inner_point.call(0., t1), inner_point.call(0., t0), outer_point.call(0., t0)]))
+		polygons.append(Polygon.new().init([outer_point.call(1., t0), inner_point.call(1., t0), inner_point.call(1., t1), outer_point.call(1., t1)]))
+		polygons.append(Polygon.new().init([inner_point.call(0., t0), inner_point.call(0., t1), inner_point.call(1., t1), inner_point.call(1., t0)]))
+		polygons.append(Polygon.new().init([outer_point.call(1., t0), outer_point.call(1., t1), outer_point.call(0., t1), outer_point.call(0., t0)]))
 	
 	return CSG.from_polygons(polygons)
 
