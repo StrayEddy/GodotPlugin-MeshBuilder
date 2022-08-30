@@ -348,10 +348,9 @@ static func cube():
 	
 	return CSG.from_polygons(polygons)
 
-static func cylinder(height :float = 1.0, radius :float = 1.0, slices :int = 16):
+static func cylinder(height :float = 1.0, bottom_radius :float = 1.0, top_radius :float = 1.0, slices :int = 16):
 	var s = Vector3(0,-1,0) * height
 	var e = Vector3(0,1,0) * height
-	var r = radius
 	var ray = e - s
 
 	var axis_z = ray.normalized()
@@ -362,20 +361,20 @@ static func cylinder(height :float = 1.0, radius :float = 1.0, slices :int = 16)
 	var end_vert = Vertex.new().init(e, axis_z.normalized())
 	var polygons = []
 	
-	var point = func(stack, angle):
+	var point = func(stack, angle, radius):
 		var out = (axis_x * cos(angle)) + (axis_y * sin(angle))
-		var pos = s + (ray * stack) + (out * r)
+		var pos = s + (ray * stack) + (out * radius)
 		return Vertex.new().init(pos)
-		
+	
 	var dt = PI * 2.0 / float(slices)
 	for i in range(0, slices):
 		var t0 = i * dt
 		var i1 = (i + 1) % slices
 		var t1 = i1 * dt
-		polygons.append(Polygon.new().init([start_vert, point.call(0., t0), point.call(0., t1)]))
-		polygons.append(Polygon.new().init([point.call(0., t0), point.call(1., t0), point.call(1., t1)]))
-		polygons.append(Polygon.new().init([point.call(1., t1), point.call(0., t1), point.call(0., t0)]))
-		polygons.append(Polygon.new().init([end_vert, point.call(1., t1), point.call(1., t0)]))
+		polygons.append(Polygon.new().init([start_vert, point.call(0., t0, bottom_radius), point.call(0., t1, bottom_radius)]))
+		polygons.append(Polygon.new().init([point.call(0., t0, bottom_radius), point.call(1., t0, top_radius), point.call(1., t1, top_radius)]))
+		polygons.append(Polygon.new().init([point.call(1., t1, top_radius), point.call(0., t1, bottom_radius), point.call(0., t0, bottom_radius)]))
+		polygons.append(Polygon.new().init([end_vert, point.call(1., t1, top_radius), point.call(1., t0, top_radius)]))
 	
 	return CSG.from_polygons(polygons)
 
