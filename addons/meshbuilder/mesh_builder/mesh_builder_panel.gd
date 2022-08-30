@@ -26,3 +26,6 @@ func _on_add_cylinder_pressed():
 
 func _on_add_sphere_pressed():
 	mesh_builder.add_sphere()
+
+func _on_add_torus_pressed():
+	mesh_builder.add_torus()

@@ -8,6 +8,8 @@ anchor_bottom = 1.0
 script = ExtResource("1_k2oop")
 
 [node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(300, 40)
+offset_bottom = 40.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
 offset_right = 48.0
@@ -40,7 +42,15 @@ offset_bottom = 40.0
 size_flags_horizontal = 4
 text = "Sphere"
 
+[node name="AddTorus" type="Button" parent="Panel/HBoxContainer"]
+offset_left = 247.0
+offset_right = 299.0
+offset_bottom = 40.0
+size_flags_horizontal = 4
+text = "Torus"
+
 [connection signal="pressed" from="Panel/HBoxContainer/AddCone" to="." method="_on_add_cone_pressed"]
 [connection signal="pressed" from="Panel/HBoxContainer/AddCube" to="." method="_on_add_cube_pressed"]
 [connection signal="pressed" from="Panel/HBoxContainer/AddCylinder" to="." method="_on_add_cylinder_pressed"]
 [connection signal="pressed" from="Panel/HBoxContainer/AddSphere" to="." method="_on_add_sphere_pressed"]
+[connection signal="pressed" from="Panel/HBoxContainer/AddTorus" to="." method="_on_add_torus_pressed"]

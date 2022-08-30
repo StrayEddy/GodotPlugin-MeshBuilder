@@ -442,3 +442,34 @@ static func sphere(slices :int = 12, stacks :int = 6):
 			polygons.append(Polygon.new().init(verticesR))
 			
 	return CSG.from_polygons(polygons)
+
+static func torus(innerR :float = 0.5, outerR :float = 1.0, stacks :int = 8, slices :int = 6):
+	# ring radius (thick part of donut)
+	var phi = 0.0
+	var dp = (2*PI) / slices
+	# torus radius (whole donut shape)
+	var theta = 0.0
+	var dt = (2*PI) / stacks
+
+	var vertices = []
+	for stack in stacks:
+		theta = dt * stack
+		for slice in slices:
+			phi = dp * slice
+			var v = Vector3()
+			v.x = cos(theta) * (outerR + cos(phi) * innerR)
+			v.y = sin(theta) * (outerR + cos(phi) * innerR)
+			v.z = sin(phi) * innerR
+			vertices.append(Vertex.new().init(v))
+	
+	var polygons = []
+	for stack in stacks:
+		for slice in slices:
+			var i0 = (slice + (stack * slices))
+			var i1 = ((slice+1) % slices) + (stack * slices)
+			var i2 = ((slice+1) % slices) + (((stack+1) % stacks) * slices)
+			var i3 = slice + (((stack+1) % stacks) * slices)
+			var verts = [vertices[i3],vertices[i2],vertices[i1],vertices[i0]]
+			polygons.append(Polygon.new().init(verts))
+	
+	return CSG.from_polygons(polygons)
