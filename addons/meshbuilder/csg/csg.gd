@@ -328,14 +328,14 @@ static func double_cone(height :float = 1.0, radius :float = 0.5, slices :int = 
 	return CSG.from_polygons(polygons)
 
 static func cube():
-	var px_py_pz = Vector3(.5,.5,.5)
-	var px_py_pZ = Vector3(.5,.5,-.5)
-	var px_pY_pz = Vector3(.5,-.5,.5)
-	var px_pY_pZ = Vector3(.5,-.5,-.5)
-	var pX_py_pz = Vector3(-.5,.5,.5)
-	var pX_py_pZ = Vector3(-.5,.5,-.5)
-	var pX_pY_pz = Vector3(-.5,-.5,.5)
-	var pX_pY_pZ = Vector3(-.5,-.5,-.5)
+	var px_py_pz = Vector3(1,1,1)
+	var px_py_pZ = Vector3(1,1,-1)
+	var px_pY_pz = Vector3(1,-1,1)
+	var px_pY_pZ = Vector3(1,-1,-1)
+	var pX_py_pz = Vector3(-1,1,1)
+	var pX_py_pZ = Vector3(-1,1,-1)
+	var pX_pY_pz = Vector3(-1,-1,1)
+	var pX_pY_pZ = Vector3(-1,-1,-1)
 	
 	var vertices = []
 	vertices.append(Vertex.new().init(pX_pY_pZ))

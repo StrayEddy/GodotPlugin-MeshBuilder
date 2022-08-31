@@ -2,8 +2,8 @@
 extends MeshBuilderShape
 class_name MeshBuilderDoubleCone
 
-@export var height :float = 1.0
-@export var radius :float = 0.5
+@export var height :float = 2.0
+@export var radius :float = 1.0
 @export var slices :int = 16
 var current_values :Array = [height, radius, slices]
 
