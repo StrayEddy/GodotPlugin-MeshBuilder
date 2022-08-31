@@ -43,16 +43,23 @@ offset_bottom = 40.0
 size_flags_horizontal = 4
 text = "Sphere"
 
-[node name="AddTorus" type="Button" parent="Panel/HBoxContainer"]
+[node name="AddHalfSphere" type="Button" parent="Panel/HBoxContainer"]
 offset_left = 247.0
-offset_right = 299.0
+offset_right = 345.0
+offset_bottom = 40.0
+size_flags_horizontal = 4
+text = "Half Sphere"
+
+[node name="AddTorus" type="Button" parent="Panel/HBoxContainer"]
+offset_left = 349.0
+offset_right = 401.0
 offset_bottom = 40.0
 size_flags_horizontal = 4
 text = "Torus"
 
 [node name="AddRing" type="Button" parent="Panel/HBoxContainer"]
-offset_left = 303.0
-offset_right = 345.0
+offset_left = 405.0
+offset_right = 447.0
 offset_bottom = 40.0
 size_flags_horizontal = 4
 text = "Ring"
@@ -61,5 +68,6 @@ text = "Ring"
 [connection signal="pressed" from="Panel/HBoxContainer/AddCube" to="." method="_on_add_cube_pressed"]
 [connection signal="pressed" from="Panel/HBoxContainer/AddCylinder" to="." method="_on_add_cylinder_pressed"]
 [connection signal="pressed" from="Panel/HBoxContainer/AddSphere" to="." method="_on_add_sphere_pressed"]
+[connection signal="pressed" from="Panel/HBoxContainer/AddHalfSphere" to="." method="_on_add_half_sphere_pressed"]
 [connection signal="pressed" from="Panel/HBoxContainer/AddTorus" to="." method="_on_add_torus_pressed"]
 [connection signal="pressed" from="Panel/HBoxContainer/AddRing" to="." method="_on_add_ring_pressed"]

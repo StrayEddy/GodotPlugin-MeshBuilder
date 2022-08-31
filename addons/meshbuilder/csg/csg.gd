@@ -140,40 +140,6 @@ func rotate(value :Vector3):
 				v.pos = v.pos.rotated(Vector3.BACK, value.z)
 	return self
 
-# Rotate geometry.
-# axis: axis of rotation (array of floats)
-# angleDeg: rotation angle in degrees
-func rotate_axis(axis :Vector3, angle_deg :float):
-	var ax = axis.normalized()
-	var cos_angle = cos(PI * angle_deg / 180)
-	var sin_angle = sin(PI * angle_deg / 180)
-
-	var new_vector = func(v :Vector3):
-		var v_a :float = v.dot(ax)
-		var v_perp :Vector3 = v - ax * v_a
-		var v_perp_len = v_perp.length()
-		if v_perp_len == 0:
-			# vector is parallel to axis, no need to rotate
-			return v
-		
-		var u1 :Vector3 = v_perp.normalized()
-		var u2 :Vector3 = u1.cross(ax)
-		var v_cos_a = v_perp_len * cos_angle
-		var v_sin_a = v_perp_len * sin_angle
-		
-		var result :Vector3
-		result = ax * v_a
-		result += u1 * (v_cos_a + (u2 * v_sin_a))
-		return result
-	
-	for poly in polygons:
-		for vert in poly.vertices:
-			vert.pos = new_vector.call(vert.pos)
-			var normal = vert.normal
-			if normal.length() > 0:
-				vert.normal = new_vector.call(vert.normal)
-	return self
-
 func print_1():
 	print("nb of polygons: " + str(len(polygons)))
 	for poly in polygons:
@@ -413,14 +379,13 @@ static func ring(height :float = 1.0, inner_radius :float = 0.5, outer_radius :f
 	return CSG.from_polygons(polygons)
 
 static func sphere(slices :int = 12, stacks :int = 6):
-	var c = Vector3.ZERO # center
 	var r = 1.0 # radius
 	var polygons = []
 	var append_vertex = func(vertices, theta, phi):
 		var d = Vector3(cos(theta) * sin(phi),
 			cos(phi), 
 			sin(theta) * sin(phi))
-		vertices.append(Vertex.new().init(c + d * r, d))
+		vertices.append(Vertex.new().init(d * r, d))
 		
 	var dTheta = PI * 2.0 / float(slices)
 	var dPhi = PI / float(stacks)
@@ -452,8 +417,74 @@ static func sphere(slices :int = 12, stacks :int = 6):
 		append_vertex.call(vertices, i1 * dTheta, j0 * dPhi)
 		append_vertex.call(vertices, i0 * dTheta, j1 * dPhi)
 		polygons.append(Polygon.new().init(vertices))
-		
+	
 	for k0 in range(1, stacks - 1):
+		var k1 = k0 + 1
+		for i0 in range(0, slices):
+			var i1 = i0 + 1
+			#  +---+
+			#  |\ /|
+			#  | x |
+			#  |/ \|
+			#  +---+
+			var verticesL = []
+			append_vertex.call(verticesL, i0 * dTheta, k0 * dPhi)
+			append_vertex.call(verticesL, i1 * dTheta, k1 * dPhi)
+			append_vertex.call(verticesL, i0 * dTheta, k1 * dPhi)
+			polygons.append(Polygon.new().init(verticesL))
+			var verticesR = []
+			append_vertex.call(verticesR, i0 * dTheta, k0 * dPhi)
+			append_vertex.call(verticesR, i1 * dTheta, k0 * dPhi)
+			append_vertex.call(verticesR, i1 * dTheta, k1 * dPhi)
+			polygons.append(Polygon.new().init(verticesR))
+			
+	return CSG.from_polygons(polygons)
+
+static func half_sphere(slices :int = 12, stacks :int = 2):
+	var r = 1.0 # radius
+	var polygons = []
+	var append_vertex = func(vertices, theta, phi):
+		var d = Vector3(cos(theta) * sin(phi),
+			cos(phi), 
+			sin(theta) * sin(phi))
+		vertices.append(Vertex.new().init(d * r, d))
+		
+	var dTheta = PI * 2.0 / float(slices)
+	var dPhi = PI / 2.0 / float(stacks)
+
+	# Top of half sphere
+	var j0 = 0
+	var j1 = j0 + 1
+	for i0 in range(0, slices):
+		var i1 = i0 + 1
+		#  +--+
+		#  | /
+		#  |/
+		#  +
+		var vertices = []
+		append_vertex.call(vertices, i0 * dTheta, j0 * dPhi)
+		append_vertex.call(vertices, i1 * dTheta, j1 * dPhi)
+		append_vertex.call(vertices, i0 * dTheta, j1 * dPhi)
+		polygons.append(Polygon.new().init(vertices))
+	
+	# Bottom of half sphere
+	j0 = stacks
+	var center = Vector3.ZERO
+	for i0 in range(0, slices):
+		var i1 = i0 + 1
+		#  +
+		#  |\
+		#  | \
+		#  +--+
+		var vertices = []
+		append_vertex.call(vertices, i0 * dTheta, j0 * dPhi)
+		append_vertex.call(vertices, i1 * dTheta, j0 * dPhi)
+		vertices.append(Vertex.new().init(center))
+		polygons.append(Polygon.new().init(vertices))
+		for v in vertices:
+			print(v.pos)
+	
+	for k0 in range(1, stacks):
 		var k1 = k0 + 1
 		for i0 in range(0, slices):
 			var i1 = i0 + 1

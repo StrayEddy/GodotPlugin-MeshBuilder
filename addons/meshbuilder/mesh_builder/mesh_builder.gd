@@ -48,6 +48,8 @@ func add_cylinder():
 	add_shape(MeshBuilderCylinder.new(), "Cylinder")
 func add_sphere():
 	add_shape(MeshBuilderSphere.new(), "Sphere")
+func add_half_sphere():
+	add_shape(MeshBuilderHalfSphere.new(), "HalfSphere")
 func add_torus():
 	add_shape(MeshBuilderTorus.new(), "Torus")
 func add_ring():
