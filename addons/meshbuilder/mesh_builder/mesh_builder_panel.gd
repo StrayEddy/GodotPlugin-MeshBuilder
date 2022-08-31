@@ -18,6 +18,9 @@ func _on_button_pressed():
 func _on_add_cone_pressed():
 	mesh_builder.add_cone()
 
+func _on_add_double_cone_pressed():
+	mesh_builder.add_double_cone()
+
 func _on_add_cube_pressed():
 	mesh_builder.add_cube()
 

@@ -42,6 +42,8 @@ func add_shape(mbs :MeshBuilderShape, name :String):
 
 func add_cone():
 	add_shape(MeshBuilderCone.new(), "Cone")
+func add_double_cone():
+	add_shape(MeshBuilderDoubleCone.new(), "DoubleCone")
 func add_cube():
 	add_shape(MeshBuilderCube.new(), "Cube")
 func add_cylinder():

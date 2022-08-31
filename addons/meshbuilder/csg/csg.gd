@@ -284,6 +284,49 @@ static func cone(height :float = 1.0, radius :float = 1.0, slices :int = 16):
 
 	return CSG.from_polygons(polygons)
 
+static func double_cone(height :float = 1.0, radius :float = 0.5, slices :int = 16):
+	var s = Vector3(0,0,0) * height
+	var e = Vector3(0,.5,0) * height
+	var r = radius
+	var ray = e - s
+	
+	var axis_z = ray.normalized()
+	var is_y = abs(axis_z.y) > 0.5
+	var axis_x = Vector3(float(is_y), float(not is_y), 0).cross(axis_z).normalized()
+	var axis_y = axis_x.cross(axis_z).normalized()
+	var start_vertex = Vertex.new().init(s)
+	var polygons = []
+	
+	var taper_angle = atan2(r, ray.length())
+	var sin_taper_angle = sin(taper_angle)
+	var cos_taper_angle = cos(taper_angle)
+	var point = func(angle):
+		# radial direction pointing out
+		var out = (axis_x * cos(angle)) + (axis_y * sin(angle))
+		var pos = s + (out * r)
+		return pos
+
+	var dt = PI * 2.0 / float(slices)
+	for i in range(0, slices):
+		var t0 = i * dt
+		var i1 = (i + 1) % slices
+		var t1 = i1 * dt
+		# coordinates and associated normal pointing outwards of the cone's
+		# side
+		var p0 = point.call(t0)
+		var p1 = point.call(t1)
+		# polygon on the disk
+		var poly_disk = Polygon.new().init([start_vertex.clone(), Vertex.new().init(p0), Vertex.new().init(p1)])
+		polygons.append(poly_disk)
+		# polygon extending from the disk to the top tip
+		var poly_top = Polygon.new().init([Vertex.new().init(p0), Vertex.new().init(e), Vertex.new().init(p1)])
+		polygons.append(poly_top)
+		# polygon extending from the disk to the bottom tip
+		var poly_bottom = Polygon.new().init([Vertex.new().init(p1), Vertex.new().init(-e), Vertex.new().init(p0)])
+		polygons.append(poly_bottom)
+
+	return CSG.from_polygons(polygons)
+
 static func cube():
 	var px_py_pz = Vector3(.5,.5,.5)
 	var px_py_pZ = Vector3(.5,.5,-.5)
@@ -481,8 +524,6 @@ static func half_sphere(slices :int = 12, stacks :int = 2):
 		append_vertex.call(vertices, i1 * dTheta, j0 * dPhi)
 		vertices.append(Vertex.new().init(center))
 		polygons.append(Polygon.new().init(vertices))
-		for v in vertices:
-			print(v.pos)
 	
 	for k0 in range(1, stacks):
 		var k1 = k0 + 1

@@ -40,6 +40,11 @@ _global_script_classes=[{
 "path": "res://addons/meshbuilder/mesh_builder_cylinder/mesh_builder_cylinder.gd"
 }, {
 "base": "MeshBuilderShape",
+"class": &"MeshBuilderDoubleCone",
+"language": &"GDScript",
+"path": "res://addons/meshbuilder/mesh_builder_double_cone/mesh_builder_double_cone.gd"
+}, {
+"base": "MeshBuilderShape",
 "class": &"MeshBuilderHalfSphere",
 "language": &"GDScript",
 "path": "res://addons/meshbuilder/mesh_builder_half_sphere/mesh_builder_half_sphere.gd"
@@ -91,6 +96,7 @@ _global_script_class_icons={
 "MeshBuilderCone": "",
 "MeshBuilderCube": "",
 "MeshBuilderCylinder": "",
+"MeshBuilderDoubleCone": "",
 "MeshBuilderHalfSphere": "",
 "MeshBuilderPanel": "",
 "MeshBuilderRing": "",

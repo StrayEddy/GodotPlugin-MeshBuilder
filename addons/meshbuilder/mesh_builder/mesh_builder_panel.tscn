@@ -9,7 +9,7 @@ script = ExtResource("1_k2oop")
 
 [node name="Panel" type="Panel" parent="."]
 custom_minimum_size = Vector2(300, 40)
-offset_right = 347.0
+offset_right = 559.0
 offset_bottom = 40.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
@@ -22,49 +22,57 @@ offset_bottom = 40.0
 size_flags_horizontal = 4
 text = "Cone"
 
-[node name="AddCube" type="Button" parent="Panel/HBoxContainer"]
+[node name="AddDoubleCone" type="Button" parent="Panel/HBoxContainer"]
 offset_left = 52.0
-offset_right = 100.0
+offset_right = 159.0
+offset_bottom = 40.0
+size_flags_horizontal = 4
+text = "Double Cone"
+
+[node name="AddCube" type="Button" parent="Panel/HBoxContainer"]
+offset_left = 163.0
+offset_right = 211.0
 offset_bottom = 40.0
 size_flags_horizontal = 4
 text = "Cube"
 
 [node name="AddCylinder" type="Button" parent="Panel/HBoxContainer"]
-offset_left = 104.0
-offset_right = 176.0
+offset_left = 215.0
+offset_right = 287.0
 offset_bottom = 40.0
 size_flags_horizontal = 4
 text = "Cylinder"
 
 [node name="AddSphere" type="Button" parent="Panel/HBoxContainer"]
-offset_left = 180.0
-offset_right = 243.0
+offset_left = 291.0
+offset_right = 354.0
 offset_bottom = 40.0
 size_flags_horizontal = 4
 text = "Sphere"
 
 [node name="AddHalfSphere" type="Button" parent="Panel/HBoxContainer"]
-offset_left = 247.0
-offset_right = 345.0
+offset_left = 358.0
+offset_right = 456.0
 offset_bottom = 40.0
 size_flags_horizontal = 4
 text = "Half Sphere"
 
 [node name="AddTorus" type="Button" parent="Panel/HBoxContainer"]
-offset_left = 349.0
-offset_right = 401.0
+offset_left = 460.0
+offset_right = 512.0
 offset_bottom = 40.0
 size_flags_horizontal = 4
 text = "Torus"
 
 [node name="AddRing" type="Button" parent="Panel/HBoxContainer"]
-offset_left = 405.0
-offset_right = 447.0
+offset_left = 516.0
+offset_right = 558.0
 offset_bottom = 40.0
 size_flags_horizontal = 4
 text = "Ring"
 
 [connection signal="pressed" from="Panel/HBoxContainer/AddCone" to="." method="_on_add_cone_pressed"]
+[connection signal="pressed" from="Panel/HBoxContainer/AddDoubleCone" to="." method="_on_add_double_cone_pressed"]
 [connection signal="pressed" from="Panel/HBoxContainer/AddCube" to="." method="_on_add_cube_pressed"]
 [connection signal="pressed" from="Panel/HBoxContainer/AddCylinder" to="." method="_on_add_cylinder_pressed"]
 [connection signal="pressed" from="Panel/HBoxContainer/AddSphere" to="." method="_on_add_sphere_pressed"]
