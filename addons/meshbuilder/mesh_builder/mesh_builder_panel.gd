@@ -38,3 +38,11 @@ func _on_add_torus_pressed():
 
 func _on_add_ring_pressed():
 	mesh_builder.add_ring()
+
+func _on_publish_pressed():
+	if mesh_builder.publish_check():
+		$ConfirmationDialog.dialog_text = "Do you really want to publish your MeshBuilder shape, and make it available for anyone to use ?"
+		$ConfirmationDialog.popup_centered()
+
+func _on_confirmation_dialog_confirmed():
+	mesh_builder.publish()

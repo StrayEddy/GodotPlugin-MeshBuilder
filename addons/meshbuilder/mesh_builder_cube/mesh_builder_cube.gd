@@ -2,6 +2,8 @@
 extends MeshBuilderShape
 class_name MeshBuilderCube
 
+var current_values = []
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	csg = CSG.cube()

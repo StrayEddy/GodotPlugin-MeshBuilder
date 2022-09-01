@@ -7,11 +7,11 @@
 [ext_resource type="Texture2D" uid="uid://d4bgntwdpwrpc" path="res://addons/meshbuilder/mesh_builder_cylinder/icon.png" id="5_w84h1"]
 [ext_resource type="Texture2D" uid="uid://d4bgntwdpwrpc" path="res://addons/meshbuilder/mesh_builder_sphere/icon.png" id="6_ywgv3"]
 [ext_resource type="Texture2D" uid="uid://d4bgntwdpwrpc" path="res://addons/meshbuilder/mesh_builder_half_sphere/icon.png" id="7_n0p0u"]
-[ext_resource type="Texture2D" uid="uid://d4bgntwdpwrpc" path="res://addons/meshbuilder/mesh_builder_torus/icon.png" id="8_v5o8m"]
-[ext_resource type="Texture2D" uid="uid://d4bgntwdpwrpc" path="res://addons/meshbuilder/mesh_builder_ring/icon.png" id="9_crk0i"]
+[ext_resource type="Texture2D" uid="uid://d4bgntwdpwrpc" path="res://addons/meshbuilder/mesh_builder_ring/icon.png" id="9_bpnit"]
+[ext_resource type="Texture2D" uid="uid://d4bgntwdpwrpc" path="res://addons/meshbuilder/mesh_builder_torus/icon.png" id="9_crk0i"]
 
 [node name="MeshBuilderPanel" type="Control"]
-custom_minimum_size = Vector2(0, 100)
+custom_minimum_size = Vector2(0, 170)
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
@@ -28,8 +28,8 @@ metadata/_edit_layout_mode = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
 custom_minimum_size = Vector2(0, 170)
-offset_right = 48.0
-offset_bottom = 40.0
+offset_right = 1002.0
+offset_bottom = 170.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer"]
 offset_right = 100.0
@@ -214,7 +214,7 @@ vertical_alignment = 1
 offset_top = 30.0
 offset_right = 100.0
 offset_bottom = 130.0
-texture = ExtResource("8_v5o8m")
+texture = ExtResource("9_crk0i")
 
 [node name="AddTorus" type="Button" parent="Panel/HBoxContainer/VBoxContainer7"]
 self_modulate = Color(0, 1, 0, 1)
@@ -242,7 +242,7 @@ vertical_alignment = 1
 offset_top = 30.0
 offset_right = 100.0
 offset_bottom = 130.0
-texture = ExtResource("9_crk0i")
+texture = ExtResource("9_bpnit")
 
 [node name="AddRing" type="Button" parent="Panel/HBoxContainer/VBoxContainer8"]
 self_modulate = Color(0, 1, 0, 1)
@@ -254,6 +254,18 @@ size_flags_horizontal = 4
 text = "Add
 "
 
+[node name="Publish" type="Button" parent="Panel/HBoxContainer"]
+modulate = Color(1, 0, 0.188235, 1)
+custom_minimum_size = Vector2(190, 0)
+offset_left = 832.0
+offset_right = 1022.0
+offset_bottom = 170.0
+text = "PUBLISH"
+
+[node name="ConfirmationDialog" type="ConfirmationDialog" parent="."]
+size = Vector2i(763, 100)
+dialog_text = "Do you really want to publish your MeshBuilder shape, and make it available for anyone to use ?"
+
 [connection signal="pressed" from="Panel/HBoxContainer/VBoxContainer/AddCone" to="." method="_on_add_cone_pressed"]
 [connection signal="pressed" from="Panel/HBoxContainer/VBoxContainer2/AddDoubleCone" to="." method="_on_add_double_cone_pressed"]
 [connection signal="pressed" from="Panel/HBoxContainer/VBoxContainer3/AddCube" to="." method="_on_add_cube_pressed"]
@@ -262,3 +274,5 @@ text = "Add
 [connection signal="pressed" from="Panel/HBoxContainer/VBoxContainer6/AddHalfSphere" to="." method="_on_add_half_sphere_pressed"]
 [connection signal="pressed" from="Panel/HBoxContainer/VBoxContainer7/AddTorus" to="." method="_on_add_torus_pressed"]
 [connection signal="pressed" from="Panel/HBoxContainer/VBoxContainer8/AddRing" to="." method="_on_add_ring_pressed"]
+[connection signal="pressed" from="Panel/HBoxContainer/Publish" to="." method="_on_publish_pressed"]
+[connection signal="confirmed" from="ConfirmationDialog" to="." method="_on_confirmation_dialog_confirmed"]

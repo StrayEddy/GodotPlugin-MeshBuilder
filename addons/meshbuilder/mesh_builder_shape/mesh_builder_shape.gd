@@ -28,5 +28,4 @@ func _process(delta):
 
 # Exist only to be overriden by all shapes
 func change_transform():
-#	print(rotation)
 	pass
