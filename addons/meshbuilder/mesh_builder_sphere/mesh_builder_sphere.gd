@@ -6,9 +6,14 @@ class_name MeshBuilderSphere
 @export var stacks :int = 6
 var current_values :Array = [slices, stacks]
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
+func init(params):
+	self.slices = params[0]
+	self.stacks = params[1]
+	self.operation = params[2]
+	super.init(params)
+	self.current_values = [slices, stacks]
 	csg = CSG.sphere(slices, stacks)
+	return self
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

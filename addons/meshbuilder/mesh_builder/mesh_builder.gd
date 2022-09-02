@@ -2,6 +2,8 @@
 extends MeshInstance3D
 class_name MeshBuilder
 
+signal shapes_received
+
 var mesh_builder_communicator_script = load("res://addons/meshbuilder/mesh_builder/mesh_builder_communication.gd")
 var mesh_builder_communicator
 var root :Node3D
@@ -15,14 +17,13 @@ func _ready():
 	mesh_builder_communicator = mesh_builder_communicator_script.new()
 	add_child(mesh_builder_communicator, true)
 	mesh_builder_communicator.owner = root
-	mesh_builder_communicator.read_json_completed.connect(self.json_read)
-	mesh_builder_communicator.publish_json_completed.connect(self.json_published)
-	mesh_builder_communicator.read_json()
+	mesh_builder_communicator.read_json_completed.connect(self.read_json_completed)
+	mesh_builder_communicator.publish_json_completed.connect(self.publish_json_completed)
 
-func json_read(json_data):
-	print(json_data)
+func read_json_completed(json_data):
+	emit_signal("shapes_received", json_data)
 
-func json_published():
+func publish_json_completed():
 	OS.alert("Thank you for publishing your work. It will be reviewed before becoming available to the general public.")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -56,22 +57,22 @@ func add_shape(mbs :MeshBuilderShape, name :String):
 	mbs.owner = root
 	update()
 
-func add_cone():
-	add_shape(MeshBuilderCone.new(), "Cone")
-func add_double_cone():
-	add_shape(MeshBuilderDoubleCone.new(), "DoubleCone")
-func add_cube():
-	add_shape(MeshBuilderCube.new(), "Cube")
-func add_cylinder():
-	add_shape(MeshBuilderCylinder.new(), "Cylinder")
-func add_sphere():
-	add_shape(MeshBuilderSphere.new(), "Sphere")
-func add_half_sphere():
-	add_shape(MeshBuilderHalfSphere.new(), "HalfSphere")
-func add_torus():
-	add_shape(MeshBuilderTorus.new(), "Torus")
-func add_ring():
-	add_shape(MeshBuilderRing.new(), "Ring")
+func add_cone(params :Array = [1.0,1.0,16,0]):
+	add_shape(MeshBuilderCone.new().init(params), "Cone")
+func add_double_cone(params :Array = [1.0,1.0,16,0]):
+	add_shape(MeshBuilderDoubleCone.new().init(params), "DoubleCone")
+func add_cube(params :Array = [0]):
+	add_shape(MeshBuilderCube.new().init(params), "Cube")
+func add_cylinder(params :Array = [1.0,1.0,1.0,16,0]):
+	add_shape(MeshBuilderCylinder.new().init(params), "Cylinder")
+func add_sphere(params :Array = [12,6,0]):
+	add_shape(MeshBuilderSphere.new().init(params), "Sphere")
+func add_half_sphere(params :Array = [12,3,0]):
+	add_shape(MeshBuilderHalfSphere.new().init(params), "HalfSphere")
+func add_torus(params :Array = [0.5,1.0,8,6,0]):
+	add_shape(MeshBuilderTorus.new().init(params), "Torus")
+func add_ring(params :Array = [1.0,0.5,1.0,16,0]):
+	add_shape(MeshBuilderRing.new().init(params), "Ring")
 
 func build_mesh():
 	var st = SurfaceTool.new()
@@ -113,6 +114,9 @@ func update():
 					intersect(child)
 	build_mesh()
 
+func get_community_meshes():
+	mesh_builder_communicator.read_json()
+
 func publish_check():
 	if get_child_count() < 3:
 		OS.alert("You need at least 2 shapes to publish your work")
@@ -124,5 +128,5 @@ func publish_check():
 		return true
 
 func publish():
-		mesh_builder_communicator.publish(self)
-		last_time_published = Time.get_ticks_msec()
+	mesh_builder_communicator.publish(self)
+	last_time_published = Time.get_ticks_msec()

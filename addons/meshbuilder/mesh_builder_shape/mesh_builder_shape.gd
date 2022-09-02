@@ -11,8 +11,7 @@ var csg :CSG
 var current_transform :Transform3D
 var current_operation :OPERATION_TYPE
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
+func init(params):
 	self.current_transform = transform
 	self.current_operation = operation
 

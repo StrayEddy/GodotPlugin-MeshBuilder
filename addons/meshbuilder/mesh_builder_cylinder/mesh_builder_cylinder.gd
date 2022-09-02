@@ -8,9 +8,16 @@ class_name MeshBuilderCylinder
 @export var slices :int = 16
 var current_values :Array = [height, bottom_radius, top_radius, slices]
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
+func init(params):
+	self.height = params[0]
+	self.bottom_radius = params[1]
+	self.top_radius = params[2]
+	self.slices = params[3]
+	self.operation = params[4]
+	super.init(params)
+	self.current_values = [height, bottom_radius, top_radius, slices]
 	csg = CSG.cylinder(height, bottom_radius, top_radius, slices)
+	return self
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

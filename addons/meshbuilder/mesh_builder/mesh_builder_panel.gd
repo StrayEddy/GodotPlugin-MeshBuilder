@@ -4,13 +4,15 @@ class_name MeshBuilderPanel
 
 var mesh_builder :MeshBuilder
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass
+func _on_community_visibility_changed():
+	if $TabContainer/Community.visible:
+		if not mesh_builder.shapes_received.is_connected(self.shapes_received):
+			mesh_builder.shapes_received.connect(self.shapes_received)
+		mesh_builder.get_community_meshes()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func shapes_received(shapes):
+	for shape in shapes:
+		print(shape)
 
 func _on_button_pressed():
 	mesh_builder.add_csg()
