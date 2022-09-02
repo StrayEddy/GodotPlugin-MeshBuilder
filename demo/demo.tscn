@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder/mesh_builder.gd" id="1_mo2jr"]
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_ud2pj"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_eexx6"]
 
 [node name="Demo" type="Node3D"]
 
 [node name="MeshBuilder" type="MeshInstance3D" parent="."]
-mesh = SubResource("ArrayMesh_ud2pj")
+mesh = SubResource("ArrayMesh_eexx6")
 script = ExtResource("1_mo2jr")

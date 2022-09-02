@@ -23,31 +23,29 @@ func shapes_received(complex_shapes):
 	for complex_shape in complex_shapes:
 		var callable :Callable = Callable(self, "_on_add_shape_pressed")
 		add_shape_creation_button($TabContainer/Community/HBoxContainer, complex_shape.keys()[0], null, callable.bind(complex_shape))
-		print(complex_shape)
 
 func _on_add_shape_pressed(complex_shape):
-	print(complex_shape)
 	for shape_info in complex_shape[complex_shape.keys()[0]]:
 		var shape :MeshBuilderShape
 		var params :Array = shape_info.params
 		params.append(shape_info.operation)
-		match shape_info.name:
-			"Cone":
-				shape = mesh_builder.add_cone(params)
-			"Cube":
-				shape = mesh_builder.add_cube(params)
-			"Cylinder":
-				shape = mesh_builder.add_cylinder(params)
-			"DoubleCone":
-				shape = mesh_builder.add_double_cone(params)
-			"HalfSphere":
-				shape = mesh_builder.add_half_sphere(params)
-			"Ring":
-				shape = mesh_builder.add_ring(params)
-			"Sphere":
-				shape = mesh_builder.add_sphere(params)
-			"Torus":
-				shape = mesh_builder.add_torus(params)
+		if "Cone" in shape_info.name:
+			shape = mesh_builder.add_cone(params)
+		elif "Cube" in shape_info.name:
+			shape = mesh_builder.add_cube(params)
+		elif "Cylinder" in shape_info.name:
+			shape = mesh_builder.add_cylinder(params)
+		elif "DoubleCone" in shape_info.name:
+			shape = mesh_builder.add_double_cone(params)
+		elif "HalfSphere" in shape_info.name:
+			shape = mesh_builder.add_half_sphere(params)
+		elif "Ring" in shape_info.name:
+			shape = mesh_builder.add_ring(params)
+		elif "Sphere" in shape_info.name:
+			shape = mesh_builder.add_sphere(params)
+		elif "Torus" in shape_info.name:
+			shape = mesh_builder.add_torus(params)
+		
 		shape.position = Vector3(shape_info.position[0], shape_info.position[1], shape_info.position[2])
 		shape.rotation = Vector3(shape_info.rotation[0], shape_info.rotation[1], shape_info.rotation[2])
 		shape.scale = Vector3(shape_info.scale[0], shape_info.scale[1], shape_info.scale[2])

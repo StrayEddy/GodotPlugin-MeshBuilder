@@ -26,7 +26,7 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_layout_mode = 1
 
-[node name="Default" type="Panel" parent="TabContainer"]
+[node name="Basic" type="Panel" parent="TabContainer"]
 custom_minimum_size = Vector2(300, 170)
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -35,31 +35,31 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_layout_mode = 1
 
-[node name="HBoxContainer" type="GridContainer" parent="TabContainer/Default"]
+[node name="HBoxContainer" type="GridContainer" parent="TabContainer/Basic"]
 custom_minimum_size = Vector2(0, 170)
 offset_top = 34.0
 offset_right = 1022.0
 offset_bottom = 204.0
 columns = 9
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Default/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Basic/HBoxContainer"]
 offset_right = 100.0
 offset_bottom = 165.0
 
-[node name="Label" type="Label" parent="TabContainer/Default/HBoxContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/VBoxContainer"]
 offset_right = 100.0
 offset_bottom = 26.0
 text = "Cone"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="TabContainer/Default/HBoxContainer/VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="TabContainer/Basic/HBoxContainer/VBoxContainer"]
 offset_top = 30.0
 offset_right = 100.0
 offset_bottom = 130.0
 texture = ExtResource("2_406lc")
 
-[node name="AddCone" type="Button" parent="TabContainer/Default/HBoxContainer/VBoxContainer"]
+[node name="AddCone" type="Button" parent="TabContainer/Basic/HBoxContainer/VBoxContainer"]
 self_modulate = Color(0.0235294, 1, 0, 1)
 offset_left = 30.0
 offset_top = 134.0
@@ -68,12 +68,12 @@ offset_bottom = 165.0
 size_flags_horizontal = 4
 text = "Add"
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="TabContainer/Default/HBoxContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="TabContainer/Basic/HBoxContainer"]
 offset_left = 104.0
 offset_right = 204.0
 offset_bottom = 165.0
 
-[node name="Label" type="Label" parent="TabContainer/Default/HBoxContainer/VBoxContainer2"]
+[node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/VBoxContainer2"]
 offset_right = 100.0
 offset_bottom = 26.0
 text = "Double Cone
@@ -81,13 +81,13 @@ text = "Double Cone
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="TabContainer/Default/HBoxContainer/VBoxContainer2"]
+[node name="TextureRect" type="TextureRect" parent="TabContainer/Basic/HBoxContainer/VBoxContainer2"]
 offset_top = 30.0
 offset_right = 100.0
 offset_bottom = 130.0
 texture = ExtResource("3_eh2pq")
 
-[node name="AddDoubleCone" type="Button" parent="TabContainer/Default/HBoxContainer/VBoxContainer2"]
+[node name="AddDoubleCone" type="Button" parent="TabContainer/Basic/HBoxContainer/VBoxContainer2"]
 self_modulate = Color(0, 1, 0, 1)
 offset_left = 30.0
 offset_top = 134.0
@@ -97,25 +97,25 @@ size_flags_horizontal = 4
 text = "Add
 "
 
-[node name="VBoxContainer3" type="VBoxContainer" parent="TabContainer/Default/HBoxContainer"]
+[node name="VBoxContainer3" type="VBoxContainer" parent="TabContainer/Basic/HBoxContainer"]
 offset_left = 208.0
 offset_right = 308.0
 offset_bottom = 165.0
 
-[node name="Label" type="Label" parent="TabContainer/Default/HBoxContainer/VBoxContainer3"]
+[node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/VBoxContainer3"]
 offset_right = 100.0
 offset_bottom = 26.0
 text = "Cube"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="TabContainer/Default/HBoxContainer/VBoxContainer3"]
+[node name="TextureRect" type="TextureRect" parent="TabContainer/Basic/HBoxContainer/VBoxContainer3"]
 offset_top = 30.0
 offset_right = 100.0
 offset_bottom = 130.0
 texture = ExtResource("4_ohftw")
 
-[node name="AddCube" type="Button" parent="TabContainer/Default/HBoxContainer/VBoxContainer3"]
+[node name="AddCube" type="Button" parent="TabContainer/Basic/HBoxContainer/VBoxContainer3"]
 self_modulate = Color(0, 1, 0, 1)
 offset_left = 30.0
 offset_top = 134.0
@@ -125,25 +125,25 @@ size_flags_horizontal = 4
 text = "Add
 "
 
-[node name="VBoxContainer4" type="VBoxContainer" parent="TabContainer/Default/HBoxContainer"]
+[node name="VBoxContainer4" type="VBoxContainer" parent="TabContainer/Basic/HBoxContainer"]
 offset_left = 312.0
 offset_right = 412.0
 offset_bottom = 165.0
 
-[node name="Label" type="Label" parent="TabContainer/Default/HBoxContainer/VBoxContainer4"]
+[node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/VBoxContainer4"]
 offset_right = 100.0
 offset_bottom = 26.0
 text = "Cylinder"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="TabContainer/Default/HBoxContainer/VBoxContainer4"]
+[node name="TextureRect" type="TextureRect" parent="TabContainer/Basic/HBoxContainer/VBoxContainer4"]
 offset_top = 30.0
 offset_right = 100.0
 offset_bottom = 130.0
 texture = ExtResource("5_w84h1")
 
-[node name="AddCylinder" type="Button" parent="TabContainer/Default/HBoxContainer/VBoxContainer4"]
+[node name="AddCylinder" type="Button" parent="TabContainer/Basic/HBoxContainer/VBoxContainer4"]
 self_modulate = Color(0, 1, 0, 1)
 offset_left = 30.0
 offset_top = 134.0
@@ -153,25 +153,25 @@ size_flags_horizontal = 4
 text = "Add
 "
 
-[node name="VBoxContainer5" type="VBoxContainer" parent="TabContainer/Default/HBoxContainer"]
+[node name="VBoxContainer5" type="VBoxContainer" parent="TabContainer/Basic/HBoxContainer"]
 offset_left = 416.0
 offset_right = 516.0
 offset_bottom = 165.0
 
-[node name="Label" type="Label" parent="TabContainer/Default/HBoxContainer/VBoxContainer5"]
+[node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/VBoxContainer5"]
 offset_right = 100.0
 offset_bottom = 26.0
 text = "Sphere"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="TabContainer/Default/HBoxContainer/VBoxContainer5"]
+[node name="TextureRect" type="TextureRect" parent="TabContainer/Basic/HBoxContainer/VBoxContainer5"]
 offset_top = 30.0
 offset_right = 100.0
 offset_bottom = 130.0
 texture = ExtResource("6_ywgv3")
 
-[node name="AddSphere" type="Button" parent="TabContainer/Default/HBoxContainer/VBoxContainer5"]
+[node name="AddSphere" type="Button" parent="TabContainer/Basic/HBoxContainer/VBoxContainer5"]
 self_modulate = Color(0, 1, 0, 1)
 offset_left = 30.0
 offset_top = 134.0
@@ -181,25 +181,25 @@ size_flags_horizontal = 4
 text = "Add
 "
 
-[node name="VBoxContainer6" type="VBoxContainer" parent="TabContainer/Default/HBoxContainer"]
+[node name="VBoxContainer6" type="VBoxContainer" parent="TabContainer/Basic/HBoxContainer"]
 offset_left = 520.0
 offset_right = 620.0
 offset_bottom = 165.0
 
-[node name="Label" type="Label" parent="TabContainer/Default/HBoxContainer/VBoxContainer6"]
+[node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/VBoxContainer6"]
 offset_right = 100.0
 offset_bottom = 26.0
 text = "Half Sphere"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="TabContainer/Default/HBoxContainer/VBoxContainer6"]
+[node name="TextureRect" type="TextureRect" parent="TabContainer/Basic/HBoxContainer/VBoxContainer6"]
 offset_top = 30.0
 offset_right = 100.0
 offset_bottom = 130.0
 texture = ExtResource("7_n0p0u")
 
-[node name="AddHalfSphere" type="Button" parent="TabContainer/Default/HBoxContainer/VBoxContainer6"]
+[node name="AddHalfSphere" type="Button" parent="TabContainer/Basic/HBoxContainer/VBoxContainer6"]
 self_modulate = Color(0, 1, 0, 1)
 offset_left = 30.0
 offset_top = 134.0
@@ -209,25 +209,25 @@ size_flags_horizontal = 4
 text = "Add
 "
 
-[node name="VBoxContainer7" type="VBoxContainer" parent="TabContainer/Default/HBoxContainer"]
+[node name="VBoxContainer7" type="VBoxContainer" parent="TabContainer/Basic/HBoxContainer"]
 offset_left = 624.0
 offset_right = 724.0
 offset_bottom = 165.0
 
-[node name="Label" type="Label" parent="TabContainer/Default/HBoxContainer/VBoxContainer7"]
+[node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/VBoxContainer7"]
 offset_right = 100.0
 offset_bottom = 26.0
 text = "Torus"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="TabContainer/Default/HBoxContainer/VBoxContainer7"]
+[node name="TextureRect" type="TextureRect" parent="TabContainer/Basic/HBoxContainer/VBoxContainer7"]
 offset_top = 30.0
 offset_right = 100.0
 offset_bottom = 130.0
 texture = ExtResource("9_crk0i")
 
-[node name="AddTorus" type="Button" parent="TabContainer/Default/HBoxContainer/VBoxContainer7"]
+[node name="AddTorus" type="Button" parent="TabContainer/Basic/HBoxContainer/VBoxContainer7"]
 self_modulate = Color(0, 1, 0, 1)
 offset_left = 30.0
 offset_top = 134.0
@@ -237,25 +237,25 @@ size_flags_horizontal = 4
 text = "Add
 "
 
-[node name="VBoxContainer8" type="VBoxContainer" parent="TabContainer/Default/HBoxContainer"]
+[node name="VBoxContainer8" type="VBoxContainer" parent="TabContainer/Basic/HBoxContainer"]
 offset_left = 728.0
 offset_right = 828.0
 offset_bottom = 165.0
 
-[node name="Label" type="Label" parent="TabContainer/Default/HBoxContainer/VBoxContainer8"]
+[node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/VBoxContainer8"]
 offset_right = 100.0
 offset_bottom = 26.0
 text = "Ring"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="TabContainer/Default/HBoxContainer/VBoxContainer8"]
+[node name="TextureRect" type="TextureRect" parent="TabContainer/Basic/HBoxContainer/VBoxContainer8"]
 offset_top = 30.0
 offset_right = 100.0
 offset_bottom = 130.0
 texture = ExtResource("9_bpnit")
 
-[node name="AddRing" type="Button" parent="TabContainer/Default/HBoxContainer/VBoxContainer8"]
+[node name="AddRing" type="Button" parent="TabContainer/Basic/HBoxContainer/VBoxContainer8"]
 self_modulate = Color(0, 1, 0, 1)
 offset_left = 30.0
 offset_top = 134.0
@@ -292,14 +292,14 @@ text = "PUBLISH"
 size = Vector2i(763, 100)
 dialog_text = "Do you really want to publish your MeshBuilder shape, and make it available for anyone to use ?"
 
-[connection signal="pressed" from="TabContainer/Default/HBoxContainer/VBoxContainer/AddCone" to="." method="_on_add_cone_pressed"]
-[connection signal="pressed" from="TabContainer/Default/HBoxContainer/VBoxContainer2/AddDoubleCone" to="." method="_on_add_double_cone_pressed"]
-[connection signal="pressed" from="TabContainer/Default/HBoxContainer/VBoxContainer3/AddCube" to="." method="_on_add_cube_pressed"]
-[connection signal="pressed" from="TabContainer/Default/HBoxContainer/VBoxContainer4/AddCylinder" to="." method="_on_add_cylinder_pressed"]
-[connection signal="pressed" from="TabContainer/Default/HBoxContainer/VBoxContainer5/AddSphere" to="." method="_on_add_sphere_pressed"]
-[connection signal="pressed" from="TabContainer/Default/HBoxContainer/VBoxContainer6/AddHalfSphere" to="." method="_on_add_half_sphere_pressed"]
-[connection signal="pressed" from="TabContainer/Default/HBoxContainer/VBoxContainer7/AddTorus" to="." method="_on_add_torus_pressed"]
-[connection signal="pressed" from="TabContainer/Default/HBoxContainer/VBoxContainer8/AddRing" to="." method="_on_add_ring_pressed"]
+[connection signal="pressed" from="TabContainer/Basic/HBoxContainer/VBoxContainer/AddCone" to="." method="_on_add_cone_pressed"]
+[connection signal="pressed" from="TabContainer/Basic/HBoxContainer/VBoxContainer2/AddDoubleCone" to="." method="_on_add_double_cone_pressed"]
+[connection signal="pressed" from="TabContainer/Basic/HBoxContainer/VBoxContainer3/AddCube" to="." method="_on_add_cube_pressed"]
+[connection signal="pressed" from="TabContainer/Basic/HBoxContainer/VBoxContainer4/AddCylinder" to="." method="_on_add_cylinder_pressed"]
+[connection signal="pressed" from="TabContainer/Basic/HBoxContainer/VBoxContainer5/AddSphere" to="." method="_on_add_sphere_pressed"]
+[connection signal="pressed" from="TabContainer/Basic/HBoxContainer/VBoxContainer6/AddHalfSphere" to="." method="_on_add_half_sphere_pressed"]
+[connection signal="pressed" from="TabContainer/Basic/HBoxContainer/VBoxContainer7/AddTorus" to="." method="_on_add_torus_pressed"]
+[connection signal="pressed" from="TabContainer/Basic/HBoxContainer/VBoxContainer8/AddRing" to="." method="_on_add_ring_pressed"]
 [connection signal="visibility_changed" from="TabContainer/Community" to="." method="_on_community_visibility_changed"]
 [connection signal="pressed" from="TabContainer/Community/HBoxContainer/Publish" to="." method="_on_publish_pressed"]
 [connection signal="confirmed" from="ConfirmationDialog" to="." method="_on_confirmation_dialog_confirmed"]
