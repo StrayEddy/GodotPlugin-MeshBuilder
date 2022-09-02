@@ -58,21 +58,37 @@ func add_shape(mbs :MeshBuilderShape, name :String):
 	update()
 
 func add_cone(params :Array = [1.0,1.0,16,0]):
-	add_shape(MeshBuilderCone.new().init(params), "Cone")
+	var shape = MeshBuilderCone.new().init(params)
+	add_shape(shape, "Cone")
+	return shape
 func add_double_cone(params :Array = [1.0,1.0,16,0]):
-	add_shape(MeshBuilderDoubleCone.new().init(params), "DoubleCone")
+	var shape = MeshBuilderDoubleCone.new().init(params)
+	add_shape(shape, "DoubleCone")
+	return shape
 func add_cube(params :Array = [0]):
-	add_shape(MeshBuilderCube.new().init(params), "Cube")
+	var shape = MeshBuilderCube.new().init(params)
+	add_shape(shape, "Cube")
+	return shape
 func add_cylinder(params :Array = [1.0,1.0,1.0,16,0]):
-	add_shape(MeshBuilderCylinder.new().init(params), "Cylinder")
+	var shape = MeshBuilderCylinder.new().init(params)
+	add_shape(shape, "Cylinder")
+	return shape
 func add_sphere(params :Array = [12,6,0]):
-	add_shape(MeshBuilderSphere.new().init(params), "Sphere")
+	var shape = MeshBuilderSphere.new().init(params)
+	add_shape(shape, "Sphere")
+	return shape
 func add_half_sphere(params :Array = [12,3,0]):
-	add_shape(MeshBuilderHalfSphere.new().init(params), "HalfSphere")
+	var shape = MeshBuilderHalfSphere.new().init(params)
+	add_shape(shape, "HalfSphere")
+	return shape
 func add_torus(params :Array = [0.5,1.0,8,6,0]):
-	add_shape(MeshBuilderTorus.new().init(params), "Torus")
+	var shape = MeshBuilderTorus.new().init(params)
+	add_shape(shape, "Torus")
+	return shape
 func add_ring(params :Array = [1.0,0.5,1.0,16,0]):
-	add_shape(MeshBuilderRing.new().init(params), "Ring")
+	var shape = MeshBuilderRing.new().init(params)
+	add_shape(shape, "Ring")
+	return shape
 
 func build_mesh():
 	var st = SurfaceTool.new()

@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://bwo7tt6etdpqi"]
+
+[ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder_panel/shape_creation_button.gd" id="1_3emhs"]
+
+[node name="ShapeCreationButton" type="VBoxContainer"]
+offset_right = 100.0
+offset_bottom = 165.0
+script = ExtResource("1_3emhs")
+
+[node name="Label" type="Label" parent="."]
+offset_right = 100.0
+offset_bottom = 26.0
+text = "Test"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_top = 30.0
+offset_right = 100.0
+offset_bottom = 30.0
+
+[node name="AddCone" type="Button" parent="."]
+self_modulate = Color(0.0235294, 1, 0, 1)
+offset_left = 30.0
+offset_top = 34.0
+offset_right = 69.0
+offset_bottom = 65.0
+size_flags_horizontal = 4
+text = "Add"

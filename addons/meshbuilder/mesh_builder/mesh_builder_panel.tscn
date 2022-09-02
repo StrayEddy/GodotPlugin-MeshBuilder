@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bqkh61htltses"]
+[gd_scene load_steps=11 format=3 uid="uid://bqkh61htltses"]
 
 [ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder/mesh_builder_panel.gd" id="1_k2oop"]
 [ext_resource type="Texture2D" uid="uid://d4bgntwdpwrpc" path="res://addons/meshbuilder/mesh_builder_cone/icon.png" id="2_406lc"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://d4bgntwdpwrpc" path="res://addons/meshbuilder/mesh_builder_half_sphere/icon.png" id="7_n0p0u"]
 [ext_resource type="Texture2D" uid="uid://d4bgntwdpwrpc" path="res://addons/meshbuilder/mesh_builder_ring/icon.png" id="9_bpnit"]
 [ext_resource type="Texture2D" uid="uid://d4bgntwdpwrpc" path="res://addons/meshbuilder/mesh_builder_torus/icon.png" id="9_crk0i"]
+[ext_resource type="PackedScene" uid="uid://bwo7tt6etdpqi" path="res://addons/meshbuilder/mesh_builder_panel/shape_creation_button.tscn" id="10_ib6xc"]
 
 [node name="MeshBuilderPanel" type="Control"]
 custom_minimum_size = Vector2(0, 210)
@@ -26,7 +27,6 @@ grow_vertical = 2
 metadata/_edit_layout_mode = 1
 
 [node name="Default" type="Panel" parent="TabContainer"]
-visible = false
 custom_minimum_size = Vector2(300, 170)
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -266,6 +266,7 @@ text = "Add
 "
 
 [node name="Community" type="Panel" parent="TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 31.0
@@ -277,31 +278,7 @@ offset_right = 1022.0
 offset_bottom = 204.0
 columns = 9
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Community/HBoxContainer"]
-offset_right = 100.0
-offset_bottom = 165.0
-
-[node name="Label" type="Label" parent="TabContainer/Community/HBoxContainer/VBoxContainer"]
-offset_right = 100.0
-offset_bottom = 26.0
-text = "Cone"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="TextureRect" type="TextureRect" parent="TabContainer/Community/HBoxContainer/VBoxContainer"]
-offset_top = 30.0
-offset_right = 100.0
-offset_bottom = 130.0
-texture = ExtResource("2_406lc")
-
-[node name="AddCone" type="Button" parent="TabContainer/Community/HBoxContainer/VBoxContainer"]
-self_modulate = Color(0.0235294, 1, 0, 1)
-offset_left = 30.0
-offset_top = 134.0
-offset_right = 69.0
-offset_bottom = 165.0
-size_flags_horizontal = 4
-text = "Add"
+[node name="ShapeCreationButton" parent="TabContainer/Community/HBoxContainer" instance=ExtResource("10_ib6xc")]
 
 [node name="Publish" type="Button" parent="TabContainer/Community/HBoxContainer"]
 modulate = Color(1, 0, 0.188235, 1)
@@ -324,6 +301,5 @@ dialog_text = "Do you really want to publish your MeshBuilder shape, and make it
 [connection signal="pressed" from="TabContainer/Default/HBoxContainer/VBoxContainer7/AddTorus" to="." method="_on_add_torus_pressed"]
 [connection signal="pressed" from="TabContainer/Default/HBoxContainer/VBoxContainer8/AddRing" to="." method="_on_add_ring_pressed"]
 [connection signal="visibility_changed" from="TabContainer/Community" to="." method="_on_community_visibility_changed"]
-[connection signal="pressed" from="TabContainer/Community/HBoxContainer/VBoxContainer/AddCone" to="." method="_on_add_cone_pressed"]
 [connection signal="pressed" from="TabContainer/Community/HBoxContainer/Publish" to="." method="_on_publish_pressed"]
 [connection signal="confirmed" from="ConfirmationDialog" to="." method="_on_confirmation_dialog_confirmed"]

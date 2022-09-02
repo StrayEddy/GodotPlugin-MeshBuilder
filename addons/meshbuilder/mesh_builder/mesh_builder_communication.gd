@@ -27,9 +27,9 @@ func publish(mesh_builder :MeshBuilder):
 			simple_shapes_array.append({
 				"name": child.name,
 				"operation": child.operation,
-				"scale": child.scale,
-				"rotation": child.rotation,
-				"position": child.position + Vector3(3,0,0),
+				"scale": [child.scale.x, child.scale.y, child.scale.z],
+				"rotation": [child.rotation.x, child.rotation.y, child.rotation.z],
+				"position": [child.position.x, child.position.y, child.position.z],
 				"params": child.current_values,
 			})
 	var new_json = {"id":str(randi()), "shapes": simple_shapes_array}
