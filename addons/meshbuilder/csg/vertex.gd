@@ -15,15 +15,12 @@ var normal :Vector3
 #    is not used anywhere else.
 
 ### Had to change normal default from null to Vector3.ZERO
-func init(pos :Vector3, normal :Vector3 = Vector3.ZERO):
+func _init(pos :Vector3, normal :Vector3 = Vector3.ZERO):
 	self.pos = Vector3(pos)
 	self.normal = Vector3(normal)
-	return self
 	
 func clone():
-	var vert = Vertex.new()
-	vert.pos = Vector3(pos)
-	vert.normal = Vector3(normal)
+	var vert = Vertex.new(Vector3(pos), Vector3(normal))
 	return vert
 
 # Invert all orientation-specific data (e.g. vertex normal). Called when the
@@ -36,9 +33,9 @@ func flip():
 # interpolating all properties using a parameter of `t`. Subclasses should
 # override this to interpolate additional properties.
 func interpolate(other :Vertex, t :float):
-	var vert = Vertex.new()
-	vert.pos = Vector3(pos.lerp(other.pos, t))
-	vert.normal = Vector3(normal.lerp(other.normal, t))
+	var new_pos = Vector3(pos.lerp(other.pos, t))
+	var new_normal = Vector3(normal.lerp(other.normal, t))
+	var vert = Vertex.new(new_pos, new_normal)
 	return vert
 
 func rotated(rotation :Vector3):

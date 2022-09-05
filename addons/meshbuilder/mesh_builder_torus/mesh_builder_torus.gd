@@ -8,16 +8,15 @@ class_name MeshBuilderTorus
 @export var slices :int = 6
 var current_values :Array = [innerR, outerR, stacks, slices]
 
-func init(params):
+func _init(params=[0.5,1.0,8,6,0]):
 	self.innerR = params[0]
 	self.outerR = params[1]
 	self.stacks = params[2]
 	self.slices = params[3]
 	self.operation = params[4]
-	super.init(params)
+	super._init(params)
 	self.current_values = [innerR, outerR, stacks, slices]
 	csg = CSG.torus(innerR, outerR, stacks, slices)
-	return self
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

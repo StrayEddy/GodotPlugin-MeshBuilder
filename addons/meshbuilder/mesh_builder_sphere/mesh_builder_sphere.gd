@@ -6,14 +6,13 @@ class_name MeshBuilderSphere
 @export var stacks :int = 6
 var current_values :Array = [slices, stacks]
 
-func init(params):
+func _init(params=[12,6,0]):
 	self.slices = params[0]
 	self.stacks = params[1]
 	self.operation = params[2]
-	super.init(params)
+	super._init(params)
 	self.current_values = [slices, stacks]
 	csg = CSG.sphere(slices, stacks)
-	return self
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

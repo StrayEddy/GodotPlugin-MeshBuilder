@@ -13,14 +13,13 @@ var front
 var back
 var polygons = []
 
-func init(polygons=null):
+func _init(polygons=null):
 	self.plane = null # Plane instance
 	self.front = null # BSPNode
 	self.back = null  # BSPNode
 	self.polygons = []
 	if polygons:
 		self.build(polygons)
-	return self
 
 func clone():
 	var node = BSPNode.new()

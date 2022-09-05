@@ -80,7 +80,7 @@ func refine():
 		var mid_normal = null
 		if verts[0].normal != null:
 			mid_normal = poly.plane.normal
-		var mid_vert = Vertex.new().init(mid_pos, mid_normal)
+		var mid_vert = Vertex.new(mid_pos, mid_normal)
 		
 		var new_verts = verts
 		for i in range(nb_verts):
@@ -166,8 +166,8 @@ func print_2():
 #		 |       |            |       |
 #		 +-------+            +-------+
 func union(csg):
-	var a = BSPNode.new().init(self.clone().polygons)
-	var b = BSPNode.new().init(csg.clone().polygons)
+	var a = BSPNode.new(self.clone().polygons)
+	var b = BSPNode.new(csg.clone().polygons)
 	a.clip_to(b)
 	b.clip_to(a)
 	b.invert()
@@ -190,8 +190,8 @@ func union(csg):
 #		 |       |
 #		 +-------+
 func subtract(csg):
-	var a = BSPNode.new().init(self.clone().polygons)
-	var b = BSPNode.new().init(csg.clone().polygons)
+	var a = BSPNode.new(self.clone().polygons)
+	var b = BSPNode.new(csg.clone().polygons)
 	a.invert()
 	a.clip_to(b)
 	b.clip_to(a)
@@ -216,8 +216,8 @@ func subtract(csg):
 #		 |       |
 #		 +-------+
 func intersect(csg):
-	var a = BSPNode.new().init(self.clone().polygons)
-	var b = BSPNode.new().init(csg.clone().polygons)
+	var a = BSPNode.new(self.clone().polygons)
+	var b = BSPNode.new(csg.clone().polygons)
 	a.invert()
 	b.clip_to(a)
 	b.invert()
@@ -246,7 +246,7 @@ static func cone(height :float = 1.0, radius :float = 1.0, slices :int = 16):
 	var axis_x = Vector3(float(is_y), float(not is_y), 0).cross(axis_z).normalized()
 	var axis_y = axis_x.cross(axis_z).normalized()
 	var start_normal = -axis_z
-	var start_vertex = Vertex.new().init(s, start_normal)
+	var start_vertex = Vertex.new(s, start_normal)
 	var polygons = []
 	
 	var taper_angle = atan2(r, ray.length())
@@ -276,10 +276,10 @@ static func cone(height :float = 1.0, radius :float = 1.0, slices :int = 16):
 		# average normal for the tip
 		var n_avg = (n0 + n1) * 0.5
 		# polygon on the low side (disk sector)
-		var poly_start = Polygon.new().init([start_vertex.clone(), Vertex.new().init(p0, start_normal), Vertex.new().init(p1, start_normal)])
+		var poly_start = Polygon.new([start_vertex.clone(), Vertex.new(p0, start_normal), Vertex.new(p1, start_normal)])
 		polygons.append(poly_start)
 		# polygon extending from the low side to the tip
-		var poly_side = Polygon.new().init([Vertex.new().init(p0, n0), Vertex.new().init(e, n_avg), Vertex.new().init(p1, n1)])
+		var poly_side = Polygon.new([Vertex.new(p0, n0), Vertex.new(e, n_avg), Vertex.new(p1, n1)])
 		polygons.append(poly_side)
 
 	return CSG.from_polygons(polygons)
@@ -294,7 +294,7 @@ static func double_cone(height :float = 1.0, radius :float = 0.5, slices :int = 
 	var is_y = abs(axis_z.y) > 0.5
 	var axis_x = Vector3(float(is_y), float(not is_y), 0).cross(axis_z).normalized()
 	var axis_y = axis_x.cross(axis_z).normalized()
-	var start_vertex = Vertex.new().init(s)
+	var start_vertex = Vertex.new(s)
 	var polygons = []
 	
 	var taper_angle = atan2(r, ray.length())
@@ -316,13 +316,13 @@ static func double_cone(height :float = 1.0, radius :float = 0.5, slices :int = 
 		var p0 = point.call(t0)
 		var p1 = point.call(t1)
 		# polygon on the disk
-		var poly_disk = Polygon.new().init([start_vertex.clone(), Vertex.new().init(p0), Vertex.new().init(p1)])
+		var poly_disk = Polygon.new([start_vertex.clone(), Vertex.new(p0), Vertex.new(p1)])
 		polygons.append(poly_disk)
 		# polygon extending from the disk to the top tip
-		var poly_top = Polygon.new().init([Vertex.new().init(p0), Vertex.new().init(e), Vertex.new().init(p1)])
+		var poly_top = Polygon.new([Vertex.new(p0), Vertex.new(e), Vertex.new(p1)])
 		polygons.append(poly_top)
 		# polygon extending from the disk to the bottom tip
-		var poly_bottom = Polygon.new().init([Vertex.new().init(p1), Vertex.new().init(-e), Vertex.new().init(p0)])
+		var poly_bottom = Polygon.new([Vertex.new(p1), Vertex.new(-e), Vertex.new(p0)])
 		polygons.append(poly_bottom)
 
 	return CSG.from_polygons(polygons)
@@ -338,14 +338,14 @@ static func cube():
 	var pX_pY_pZ = Vector3(-1,-1,-1)
 	
 	var vertices = []
-	vertices.append(Vertex.new().init(pX_pY_pZ))
-	vertices.append(Vertex.new().init(pX_pY_pz))
-	vertices.append(Vertex.new().init(pX_py_pZ))
-	vertices.append(Vertex.new().init(pX_py_pz))
-	vertices.append(Vertex.new().init(px_pY_pZ))
-	vertices.append(Vertex.new().init(px_pY_pz))
-	vertices.append(Vertex.new().init(px_py_pZ))
-	vertices.append(Vertex.new().init(px_py_pz))
+	vertices.append(Vertex.new(pX_pY_pZ))
+	vertices.append(Vertex.new(pX_pY_pz))
+	vertices.append(Vertex.new(pX_py_pZ))
+	vertices.append(Vertex.new(pX_py_pz))
+	vertices.append(Vertex.new(px_pY_pZ))
+	vertices.append(Vertex.new(px_pY_pz))
+	vertices.append(Vertex.new(px_py_pZ))
+	vertices.append(Vertex.new(px_py_pz))
 	
 	var polygons_to_build = [[0,1,2],[3,2,1],[0,4,1],[5,1,4],[0,2,4],[6,4,2],[7,5,6],[4,6,5],[7,6,3],[2,3,6],[7,3,5],[1,5,3]]
 	var polygons = []
@@ -353,7 +353,7 @@ static func cube():
 		var v0 = vertices[poly[0]]
 		var v1 = vertices[poly[1]]
 		var v2 = vertices[poly[2]]
-		polygons.append(Polygon.new().init([v0,v1,v2]))
+		polygons.append(Polygon.new([v0,v1,v2]))
 	
 	return CSG.from_polygons(polygons)
 
@@ -366,24 +366,24 @@ static func cylinder(height :float = 1.0, bottom_radius :float = 1.0, top_radius
 	var is_y = abs(axis_z.y) > 0.5
 	var axis_x = Vector3(float(is_y), float(not is_y), 0).cross(axis_z).normalized()
 	var axis_y = axis_x.cross(axis_z).normalized()
-	var start_vert = Vertex.new().init(s, -axis_z)
-	var end_vert = Vertex.new().init(e, axis_z.normalized())
+	var start_vert = Vertex.new(s, -axis_z)
+	var end_vert = Vertex.new(e, axis_z.normalized())
 	var polygons = []
 	
 	var point = func(stack, angle, radius):
 		var out = (axis_x * cos(angle)) + (axis_y * sin(angle))
 		var pos = s + (ray * stack) + (out * radius)
-		return Vertex.new().init(pos)
+		return Vertex.new(pos)
 	
 	var dt = PI * 2.0 / float(slices)
 	for i in range(0, slices):
 		var t0 = i * dt
 		var i1 = (i + 1) % slices
 		var t1 = i1 * dt
-		polygons.append(Polygon.new().init([start_vert, point.call(0., t0, bottom_radius), point.call(0., t1, bottom_radius)]))
-		polygons.append(Polygon.new().init([point.call(0., t0, bottom_radius), point.call(1., t0, top_radius), point.call(1., t1, top_radius)]))
-		polygons.append(Polygon.new().init([point.call(1., t1, top_radius), point.call(0., t1, bottom_radius), point.call(0., t0, bottom_radius)]))
-		polygons.append(Polygon.new().init([end_vert, point.call(1., t1, top_radius), point.call(1., t0, top_radius)]))
+		polygons.append(Polygon.new([start_vert, point.call(0., t0, bottom_radius), point.call(0., t1, bottom_radius)]))
+		polygons.append(Polygon.new([point.call(0., t0, bottom_radius), point.call(1., t0, top_radius), point.call(1., t1, top_radius)]))
+		polygons.append(Polygon.new([point.call(1., t1, top_radius), point.call(0., t1, bottom_radius), point.call(0., t0, bottom_radius)]))
+		polygons.append(Polygon.new([end_vert, point.call(1., t1, top_radius), point.call(1., t0, top_radius)]))
 	
 	return CSG.from_polygons(polygons)
 
@@ -401,12 +401,12 @@ static func ring(height :float = 1.0, inner_radius :float = 0.5, outer_radius :f
 	var outer_point = func(stack, angle):
 		var out = (axis_x * cos(angle)) + (axis_y * sin(angle))
 		var pos = s + (ray * stack) + (out * outer_radius)
-		return Vertex.new().init(pos)
+		return Vertex.new(pos)
 	
 	var inner_point = func(stack, angle):
 		var out = (axis_x * cos(angle)) + (axis_y * sin(angle))
 		var pos = s + (ray * stack) + (out * inner_radius)
-		return Vertex.new().init(pos)
+		return Vertex.new(pos)
 	
 	var dt = PI * 2.0 / float(slices)
 	for i in range(0, slices):
@@ -414,10 +414,10 @@ static func ring(height :float = 1.0, inner_radius :float = 0.5, outer_radius :f
 		var i1 = (i + 1) % slices
 		var t1 = i1 * dt
 		
-		polygons.append(Polygon.new().init([outer_point.call(0., t1), inner_point.call(0., t1), inner_point.call(0., t0), outer_point.call(0., t0)]))
-		polygons.append(Polygon.new().init([outer_point.call(1., t0), inner_point.call(1., t0), inner_point.call(1., t1), outer_point.call(1., t1)]))
-		polygons.append(Polygon.new().init([inner_point.call(0., t0), inner_point.call(0., t1), inner_point.call(1., t1), inner_point.call(1., t0)]))
-		polygons.append(Polygon.new().init([outer_point.call(1., t0), outer_point.call(1., t1), outer_point.call(0., t1), outer_point.call(0., t0)]))
+		polygons.append(Polygon.new([outer_point.call(0., t1), inner_point.call(0., t1), inner_point.call(0., t0), outer_point.call(0., t0)]))
+		polygons.append(Polygon.new([outer_point.call(1., t0), inner_point.call(1., t0), inner_point.call(1., t1), outer_point.call(1., t1)]))
+		polygons.append(Polygon.new([inner_point.call(0., t0), inner_point.call(0., t1), inner_point.call(1., t1), inner_point.call(1., t0)]))
+		polygons.append(Polygon.new([outer_point.call(1., t0), outer_point.call(1., t1), outer_point.call(0., t1), outer_point.call(0., t0)]))
 	
 	return CSG.from_polygons(polygons)
 
@@ -428,7 +428,7 @@ static func sphere(slices :int = 12, stacks :int = 6):
 		var d = Vector3(cos(theta) * sin(phi),
 			cos(phi), 
 			sin(theta) * sin(phi))
-		vertices.append(Vertex.new().init(d * r, d))
+		vertices.append(Vertex.new(d * r, d))
 		
 	var dTheta = PI * 2.0 / float(slices)
 	var dPhi = PI / float(stacks)
@@ -445,7 +445,7 @@ static func sphere(slices :int = 12, stacks :int = 6):
 		append_vertex.call(vertices, i0 * dTheta, j0 * dPhi)
 		append_vertex.call(vertices, i1 * dTheta, j1 * dPhi)
 		append_vertex.call(vertices, i0 * dTheta, j1 * dPhi)
-		polygons.append(Polygon.new().init(vertices))
+		polygons.append(Polygon.new(vertices))
 
 	j0 = stacks - 1
 	j1 = j0 + 1
@@ -459,7 +459,7 @@ static func sphere(slices :int = 12, stacks :int = 6):
 		append_vertex.call(vertices, i0 * dTheta, j0 * dPhi)
 		append_vertex.call(vertices, i1 * dTheta, j0 * dPhi)
 		append_vertex.call(vertices, i0 * dTheta, j1 * dPhi)
-		polygons.append(Polygon.new().init(vertices))
+		polygons.append(Polygon.new(vertices))
 	
 	for k0 in range(1, stacks - 1):
 		var k1 = k0 + 1
@@ -474,12 +474,12 @@ static func sphere(slices :int = 12, stacks :int = 6):
 			append_vertex.call(verticesL, i0 * dTheta, k0 * dPhi)
 			append_vertex.call(verticesL, i1 * dTheta, k1 * dPhi)
 			append_vertex.call(verticesL, i0 * dTheta, k1 * dPhi)
-			polygons.append(Polygon.new().init(verticesL))
+			polygons.append(Polygon.new(verticesL))
 			var verticesR = []
 			append_vertex.call(verticesR, i0 * dTheta, k0 * dPhi)
 			append_vertex.call(verticesR, i1 * dTheta, k0 * dPhi)
 			append_vertex.call(verticesR, i1 * dTheta, k1 * dPhi)
-			polygons.append(Polygon.new().init(verticesR))
+			polygons.append(Polygon.new(verticesR))
 			
 	return CSG.from_polygons(polygons)
 
@@ -490,7 +490,7 @@ static func half_sphere(slices :int = 12, stacks :int = 2):
 		var d = Vector3(cos(theta) * sin(phi),
 			cos(phi), 
 			sin(theta) * sin(phi))
-		vertices.append(Vertex.new().init(d * r, d))
+		vertices.append(Vertex.new(d * r, d))
 		
 	var dTheta = PI * 2.0 / float(slices)
 	var dPhi = PI / 2.0 / float(stacks)
@@ -508,7 +508,7 @@ static func half_sphere(slices :int = 12, stacks :int = 2):
 		append_vertex.call(vertices, i0 * dTheta, j0 * dPhi)
 		append_vertex.call(vertices, i1 * dTheta, j1 * dPhi)
 		append_vertex.call(vertices, i0 * dTheta, j1 * dPhi)
-		polygons.append(Polygon.new().init(vertices))
+		polygons.append(Polygon.new(vertices))
 	
 	# Bottom of half sphere
 	j0 = stacks
@@ -522,8 +522,8 @@ static func half_sphere(slices :int = 12, stacks :int = 2):
 		var vertices = []
 		append_vertex.call(vertices, i0 * dTheta, j0 * dPhi)
 		append_vertex.call(vertices, i1 * dTheta, j0 * dPhi)
-		vertices.append(Vertex.new().init(center))
-		polygons.append(Polygon.new().init(vertices))
+		vertices.append(Vertex.new(center))
+		polygons.append(Polygon.new(vertices))
 	
 	for k0 in range(1, stacks):
 		var k1 = k0 + 1
@@ -538,12 +538,12 @@ static func half_sphere(slices :int = 12, stacks :int = 2):
 			append_vertex.call(verticesL, i0 * dTheta, k0 * dPhi)
 			append_vertex.call(verticesL, i1 * dTheta, k1 * dPhi)
 			append_vertex.call(verticesL, i0 * dTheta, k1 * dPhi)
-			polygons.append(Polygon.new().init(verticesL))
+			polygons.append(Polygon.new(verticesL))
 			var verticesR = []
 			append_vertex.call(verticesR, i0 * dTheta, k0 * dPhi)
 			append_vertex.call(verticesR, i1 * dTheta, k0 * dPhi)
 			append_vertex.call(verticesR, i1 * dTheta, k1 * dPhi)
-			polygons.append(Polygon.new().init(verticesR))
+			polygons.append(Polygon.new(verticesR))
 			
 	return CSG.from_polygons(polygons)
 
@@ -564,7 +564,7 @@ static func torus(innerR :float = 0.5, outerR :float = 1.0, stacks :int = 8, sli
 			v.x = cos(theta) * (outerR + cos(phi) * innerR)
 			v.y = sin(theta) * (outerR + cos(phi) * innerR)
 			v.z = sin(phi) * innerR
-			vertices.append(Vertex.new().init(v))
+			vertices.append(Vertex.new(v))
 	
 	var polygons = []
 	for stack in stacks:
@@ -574,6 +574,6 @@ static func torus(innerR :float = 0.5, outerR :float = 1.0, stacks :int = 8, sli
 			var i2 = ((slice+1) % slices) + (((stack+1) % stacks) * slices)
 			var i3 = slice + (((stack+1) % stacks) * slices)
 			var verts = [vertices[i3],vertices[i2],vertices[i1],vertices[i0]]
-			polygons.append(Polygon.new().init(verts))
+			polygons.append(Polygon.new(verts))
 	
 	return CSG.from_polygons(polygons)

@@ -4,11 +4,10 @@ class_name MeshBuilderCube
 
 var current_values = []
 
-func init(params):
+func _init(params=[0]):
 	self.operation = params[0]
-	super.init(params)
+	super._init(params)
 	csg = CSG.cube()
-	return self
 
 func change_transform():
 	csg = CSG.cube().scale(scale).rotate(rotation).translate(position)

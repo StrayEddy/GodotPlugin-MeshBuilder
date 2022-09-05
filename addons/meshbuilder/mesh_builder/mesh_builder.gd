@@ -58,35 +58,35 @@ func add_shape(mbs :MeshBuilderShape, name :String):
 	update()
 
 func add_cone(params :Array = [1.0,1.0,16,0]):
-	var shape = MeshBuilderCone.new().init(params)
+	var shape = MeshBuilderCone.new(params)
 	add_shape(shape, "Cone")
 	return shape
 func add_double_cone(params :Array = [1.0,1.0,16,0]):
-	var shape = MeshBuilderDoubleCone.new().init(params)
+	var shape = MeshBuilderDoubleCone.new(params)
 	add_shape(shape, "DoubleCone")
 	return shape
 func add_cube(params :Array = [0]):
-	var shape = MeshBuilderCube.new().init(params)
+	var shape = MeshBuilderCube.new(params)
 	add_shape(shape, "Cube")
 	return shape
 func add_cylinder(params :Array = [1.0,1.0,1.0,16,0]):
-	var shape = MeshBuilderCylinder.new().init(params)
+	var shape = MeshBuilderCylinder.new(params)
 	add_shape(shape, "Cylinder")
 	return shape
 func add_sphere(params :Array = [12,6,0]):
-	var shape = MeshBuilderSphere.new().init(params)
+	var shape = MeshBuilderSphere.new(params)
 	add_shape(shape, "Sphere")
 	return shape
 func add_half_sphere(params :Array = [12,3,0]):
-	var shape = MeshBuilderHalfSphere.new().init(params)
+	var shape = MeshBuilderHalfSphere.new(params)
 	add_shape(shape, "HalfSphere")
 	return shape
 func add_torus(params :Array = [0.5,1.0,8,6,0]):
-	var shape = MeshBuilderTorus.new().init(params)
+	var shape = MeshBuilderTorus.new(params)
 	add_shape(shape, "Torus")
 	return shape
 func add_ring(params :Array = [1.0,0.5,1.0,16,0]):
-	var shape = MeshBuilderRing.new().init(params)
+	var shape = MeshBuilderRing.new(params)
 	add_shape(shape, "Ring")
 	return shape
 
@@ -103,8 +103,6 @@ func build_mesh():
 			for vert in poly.vertices:
 				vertices.append(vert.clone())
 			vertices.reverse()
-	#		var vertices :Array = poly.vertices.duplicate(true)
-	#		vertices.reverse()
 			for i in len(vertices)-2:
 				st.add_vertex(vertices[0].pos)
 				st.add_vertex(vertices[i+1].pos)
@@ -121,6 +119,9 @@ func update():
 	for i in get_child_count():
 		if get_child(i) is MeshBuilderShape:
 			var child :MeshBuilderShape = get_child(i)
+			
+			if not child.is_connected("csg_change", update):
+				child.csg_change.connect(update)
 			match child.operation:
 				MeshBuilderShape.OPERATION_TYPE.Union:
 					union(child)

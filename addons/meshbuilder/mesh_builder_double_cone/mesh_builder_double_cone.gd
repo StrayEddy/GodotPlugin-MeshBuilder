@@ -7,15 +7,14 @@ class_name MeshBuilderDoubleCone
 @export var slices :int = 16
 var current_values :Array = [height, radius, slices]
 
-func init(params):
+func _init(params=[2.0,1.0,16,0]):
 	self.height = params[0]
 	self.radius = params[1]
 	self.slices = params[2]
 	self.operation = params[3]
-	super.init(params)
+	super._init(params)
 	self.current_values = [height, radius, slices]
 	csg = CSG.double_cone(height, radius, slices)
-	return self
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

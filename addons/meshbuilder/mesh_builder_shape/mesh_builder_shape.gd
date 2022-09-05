@@ -11,7 +11,7 @@ var csg :CSG
 var current_transform :Transform3D
 var current_operation :OPERATION_TYPE
 
-func init(params):
+func _init(params=[]):
 	self.current_transform = transform
 	self.current_operation = operation
 
@@ -28,3 +28,6 @@ func _process(delta):
 # Exist only to be overriden by all shapes
 func change_transform():
 	pass
+
+func _input(event):
+	print("I am here")

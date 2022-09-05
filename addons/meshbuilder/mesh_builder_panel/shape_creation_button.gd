@@ -6,7 +6,7 @@ var label :Label
 var texture_rect :TextureRect
 var button :Button
 
-func init(label_text :String, texture :Texture2D, on_pressed :Callable):
+func _init(label_text :String, texture :Texture2D, on_pressed :Callable):
 	label = Label.new()
 	label.text = label_text
 	texture_rect = TextureRect.new()
@@ -19,5 +19,3 @@ func init(label_text :String, texture :Texture2D, on_pressed :Callable):
 	add_child(label, true)
 	add_child(texture_rect, true)
 	add_child(button, true)
-	
-	return self

@@ -10,17 +10,16 @@ var d :float
 
 var poly_script = load("res://addons/meshbuilder/csg/polygon.gd")
 
-func init(normal :Vector3, d=0.0):
+func _init(normal :Vector3, d=0.0):
 	self.normal = normal
 	self.d = d
-	return self
 
 static func from_points(a :Vector3, b :Vector3, c :Vector3):
 	var n = (b - a).cross(c - a).normalized()
-	return MyPlane.new().init(n, n.dot(a))
+	return MyPlane.new(n, n.dot(a))
 
 func clone():
-	return MyPlane.new().init(self.normal, self.d)
+	return MyPlane.new(self.normal, self.d)
 	
 func flip():
 	self.normal = -self.normal
@@ -89,8 +88,8 @@ func split_polygon(polygon, coplanar_front, coplanar_back, front, back):
 				f.append(v)
 				b.append(v.clone())
 		if len(f) >= 3: 
-			var poly = poly_script.new().init(f, polygon.shared)
+			var poly = poly_script.new(f, polygon.shared)
 			front.append(poly)
 		if len(b) >= 3: 
-			var poly = poly_script.new().init(b, polygon.shared)
+			var poly = poly_script.new(b, polygon.shared)
 			back.append(poly)

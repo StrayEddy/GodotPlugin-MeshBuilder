@@ -16,11 +16,10 @@ var plane
 # polygons that are clones of each other or were split from the same polygon.
 # This can be used to define per-polygon properties (such as surface color).
 
-func init(vertices :Array, shared=null):
+func _init(vertices :Array=[], shared=null):
 	self.vertices = vertices
 	self.shared = shared
 	self.plane = MyPlane.from_points(vertices[0].pos, vertices[1].pos, vertices[2].pos)
-	return self
 
 func clone():
 	var vertices = []
@@ -32,7 +31,7 @@ func clone():
 		for s in self.shared:
 			shared.append(s.clone())
 	
-	var poly = Polygon.new().init(vertices, shared)
+	var poly = Polygon.new(vertices, shared)
 	return poly
 
 func flip():

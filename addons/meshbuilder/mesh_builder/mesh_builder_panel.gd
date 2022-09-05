@@ -5,7 +5,7 @@ class_name MeshBuilderPanel
 var mesh_builder :MeshBuilder
 
 func add_shape_creation_button(parent :Control, label_text :String, texture :Texture2D, on_pressed :Callable):
-	var button = ShapeCreationButton.new().init(label_text, texture, on_pressed)
+	var button = ShapeCreationButton.new(label_text, texture, on_pressed)
 	parent.add_child(button, true)
 	button.owner = self
 
