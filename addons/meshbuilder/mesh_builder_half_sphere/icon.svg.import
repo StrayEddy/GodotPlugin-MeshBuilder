@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d4bgntwdpwrpc"
-path="res://.godot/imported/icon.png-cfa976e512af78c84c2157ce100dd850.ctex"
+uid="uid://dths4bgdfn44x"
+path="res://.godot/imported/icon.svg-94215d16563463acaa0bb4179bb94100.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/meshbuilder/mesh_builder_double_cone/icon.png"
-dest_files=["res://.godot/imported/icon.png-cfa976e512af78c84c2157ce100dd850.ctex"]
+source_file="res://addons/meshbuilder/mesh_builder_half_sphere/icon.svg"
+dest_files=["res://.godot/imported/icon.svg-94215d16563463acaa0bb4179bb94100.ctex"]
 
 [params]
 
@@ -32,3 +32,4 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0

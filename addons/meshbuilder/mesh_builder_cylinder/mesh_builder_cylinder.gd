@@ -1,6 +1,7 @@
 @tool
 extends MeshBuilderShape
 class_name MeshBuilderCylinder
+@icon("res://addons/meshbuilder/mesh_builder_cylinder/icon.svg")
 
 @export var height :float = 1.0
 @export var bottom_radius :float = 1.0

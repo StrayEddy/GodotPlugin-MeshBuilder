@@ -1,6 +1,7 @@
 @tool
 extends MeshBuilderShape
 class_name MeshBuilderCone
+@icon("res://addons/meshbuilder/mesh_builder_cone/icon.svg")
 
 @export var height :float = 1.0
 @export var radius :float = 1.0

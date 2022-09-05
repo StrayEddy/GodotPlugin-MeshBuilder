@@ -1,14 +1,14 @@
 [gd_scene load_steps=11 format=3 uid="uid://bqkh61htltses"]
 
 [ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder/mesh_builder_panel.gd" id="1_k2oop"]
-[ext_resource type="Texture2D" uid="uid://d4bgntwdpwrpc" path="res://addons/meshbuilder/mesh_builder_cone/icon.png" id="2_406lc"]
-[ext_resource type="Texture2D" uid="uid://d4bgntwdpwrpc" path="res://addons/meshbuilder/mesh_builder_double_cone/icon.png" id="3_eh2pq"]
-[ext_resource type="Texture2D" uid="uid://d4bgntwdpwrpc" path="res://addons/meshbuilder/mesh_builder_cube/icon.png" id="4_ohftw"]
-[ext_resource type="Texture2D" uid="uid://d4bgntwdpwrpc" path="res://addons/meshbuilder/mesh_builder_cylinder/icon.png" id="5_w84h1"]
-[ext_resource type="Texture2D" uid="uid://d4bgntwdpwrpc" path="res://addons/meshbuilder/mesh_builder_sphere/icon.png" id="6_ywgv3"]
-[ext_resource type="Texture2D" uid="uid://d4bgntwdpwrpc" path="res://addons/meshbuilder/mesh_builder_half_sphere/icon.png" id="7_n0p0u"]
-[ext_resource type="Texture2D" uid="uid://d4bgntwdpwrpc" path="res://addons/meshbuilder/mesh_builder_ring/icon.png" id="9_bpnit"]
-[ext_resource type="Texture2D" uid="uid://d4bgntwdpwrpc" path="res://addons/meshbuilder/mesh_builder_torus/icon.png" id="9_crk0i"]
+[ext_resource type="Texture2D" uid="uid://o2exa74ok6fv" path="res://addons/meshbuilder/mesh_builder_cone/icon.svg" id="2_i3da2"]
+[ext_resource type="Texture2D" uid="uid://vcfc77n0gisf" path="res://addons/meshbuilder/mesh_builder_double_cone/icon.svg" id="3_suich"]
+[ext_resource type="Texture2D" uid="uid://dswvr7slq4wno" path="res://addons/meshbuilder/mesh_builder_cube/icon.svg" id="4_hyxkw"]
+[ext_resource type="Texture2D" uid="uid://rnrjjkj20q43" path="res://addons/meshbuilder/mesh_builder_cylinder/icon.svg" id="5_urkxq"]
+[ext_resource type="Texture2D" uid="uid://xsd7vaeemdne" path="res://addons/meshbuilder/mesh_builder_sphere/icon.svg" id="6_lxkfd"]
+[ext_resource type="Texture2D" uid="uid://dths4bgdfn44x" path="res://addons/meshbuilder/mesh_builder_half_sphere/icon.svg" id="7_rp3na"]
+[ext_resource type="Texture2D" uid="uid://d0cmn3rw6l44n" path="res://addons/meshbuilder/mesh_builder_torus/icon.svg" id="8_sl717"]
+[ext_resource type="Texture2D" uid="uid://d4fbc6stm1fg1" path="res://addons/meshbuilder/mesh_builder_ring/icon.svg" id="9_vcw0u"]
 [ext_resource type="PackedScene" uid="uid://bwo7tt6etdpqi" path="res://addons/meshbuilder/mesh_builder_panel/shape_creation_button.tscn" id="10_ib6xc"]
 
 [node name="MeshBuilderPanel" type="Control"]
@@ -54,10 +54,11 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="TabContainer/Basic/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
 offset_top = 30.0
 offset_right = 100.0
 offset_bottom = 130.0
-texture = ExtResource("2_406lc")
+texture = ExtResource("2_i3da2")
 
 [node name="AddCone" type="Button" parent="TabContainer/Basic/HBoxContainer/VBoxContainer"]
 self_modulate = Color(0.0235294, 1, 0, 1)
@@ -82,20 +83,20 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="TabContainer/Basic/HBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(100, 100)
 offset_top = 30.0
 offset_right = 100.0
 offset_bottom = 130.0
-texture = ExtResource("3_eh2pq")
+texture = ExtResource("3_suich")
 
 [node name="AddDoubleCone" type="Button" parent="TabContainer/Basic/HBoxContainer/VBoxContainer2"]
-self_modulate = Color(0, 1, 0, 1)
+self_modulate = Color(0.0235294, 1, 0, 1)
 offset_left = 30.0
 offset_top = 134.0
 offset_right = 69.0
 offset_bottom = 165.0
 size_flags_horizontal = 4
-text = "Add
-"
+text = "Add"
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="TabContainer/Basic/HBoxContainer"]
 offset_left = 208.0
@@ -110,20 +111,20 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="TabContainer/Basic/HBoxContainer/VBoxContainer3"]
+custom_minimum_size = Vector2(100, 100)
 offset_top = 30.0
 offset_right = 100.0
 offset_bottom = 130.0
-texture = ExtResource("4_ohftw")
+texture = ExtResource("4_hyxkw")
 
 [node name="AddCube" type="Button" parent="TabContainer/Basic/HBoxContainer/VBoxContainer3"]
-self_modulate = Color(0, 1, 0, 1)
+self_modulate = Color(0.0235294, 1, 0, 1)
 offset_left = 30.0
 offset_top = 134.0
 offset_right = 69.0
 offset_bottom = 165.0
 size_flags_horizontal = 4
-text = "Add
-"
+text = "Add"
 
 [node name="VBoxContainer4" type="VBoxContainer" parent="TabContainer/Basic/HBoxContainer"]
 offset_left = 312.0
@@ -138,20 +139,20 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="TabContainer/Basic/HBoxContainer/VBoxContainer4"]
+custom_minimum_size = Vector2(100, 100)
 offset_top = 30.0
 offset_right = 100.0
 offset_bottom = 130.0
-texture = ExtResource("5_w84h1")
+texture = ExtResource("5_urkxq")
 
 [node name="AddCylinder" type="Button" parent="TabContainer/Basic/HBoxContainer/VBoxContainer4"]
-self_modulate = Color(0, 1, 0, 1)
+self_modulate = Color(0.0235294, 1, 0, 1)
 offset_left = 30.0
 offset_top = 134.0
 offset_right = 69.0
 offset_bottom = 165.0
 size_flags_horizontal = 4
-text = "Add
-"
+text = "Add"
 
 [node name="VBoxContainer5" type="VBoxContainer" parent="TabContainer/Basic/HBoxContainer"]
 offset_left = 416.0
@@ -166,20 +167,20 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="TabContainer/Basic/HBoxContainer/VBoxContainer5"]
+custom_minimum_size = Vector2(100, 100)
 offset_top = 30.0
 offset_right = 100.0
 offset_bottom = 130.0
-texture = ExtResource("6_ywgv3")
+texture = ExtResource("6_lxkfd")
 
 [node name="AddSphere" type="Button" parent="TabContainer/Basic/HBoxContainer/VBoxContainer5"]
-self_modulate = Color(0, 1, 0, 1)
+self_modulate = Color(0.0235294, 1, 0, 1)
 offset_left = 30.0
 offset_top = 134.0
 offset_right = 69.0
 offset_bottom = 165.0
 size_flags_horizontal = 4
-text = "Add
-"
+text = "Add"
 
 [node name="VBoxContainer6" type="VBoxContainer" parent="TabContainer/Basic/HBoxContainer"]
 offset_left = 520.0
@@ -194,20 +195,20 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="TabContainer/Basic/HBoxContainer/VBoxContainer6"]
+custom_minimum_size = Vector2(100, 100)
 offset_top = 30.0
 offset_right = 100.0
 offset_bottom = 130.0
-texture = ExtResource("7_n0p0u")
+texture = ExtResource("7_rp3na")
 
 [node name="AddHalfSphere" type="Button" parent="TabContainer/Basic/HBoxContainer/VBoxContainer6"]
-self_modulate = Color(0, 1, 0, 1)
+self_modulate = Color(0.0235294, 1, 0, 1)
 offset_left = 30.0
 offset_top = 134.0
 offset_right = 69.0
 offset_bottom = 165.0
 size_flags_horizontal = 4
-text = "Add
-"
+text = "Add"
 
 [node name="VBoxContainer7" type="VBoxContainer" parent="TabContainer/Basic/HBoxContainer"]
 offset_left = 624.0
@@ -222,20 +223,20 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="TabContainer/Basic/HBoxContainer/VBoxContainer7"]
+custom_minimum_size = Vector2(100, 100)
 offset_top = 30.0
 offset_right = 100.0
 offset_bottom = 130.0
-texture = ExtResource("9_crk0i")
+texture = ExtResource("8_sl717")
 
 [node name="AddTorus" type="Button" parent="TabContainer/Basic/HBoxContainer/VBoxContainer7"]
-self_modulate = Color(0, 1, 0, 1)
+self_modulate = Color(0.0235294, 1, 0, 1)
 offset_left = 30.0
 offset_top = 134.0
 offset_right = 69.0
 offset_bottom = 165.0
 size_flags_horizontal = 4
-text = "Add
-"
+text = "Add"
 
 [node name="VBoxContainer8" type="VBoxContainer" parent="TabContainer/Basic/HBoxContainer"]
 offset_left = 728.0
@@ -250,20 +251,20 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="TabContainer/Basic/HBoxContainer/VBoxContainer8"]
+custom_minimum_size = Vector2(100, 100)
 offset_top = 30.0
 offset_right = 100.0
 offset_bottom = 130.0
-texture = ExtResource("9_bpnit")
+texture = ExtResource("9_vcw0u")
 
 [node name="AddRing" type="Button" parent="TabContainer/Basic/HBoxContainer/VBoxContainer8"]
-self_modulate = Color(0, 1, 0, 1)
+self_modulate = Color(0.0235294, 1, 0, 1)
 offset_left = 30.0
 offset_top = 134.0
 offset_right = 69.0
 offset_bottom = 165.0
 size_flags_horizontal = 4
-text = "Add
-"
+text = "Add"
 
 [node name="Finalize" type="Button" parent="TabContainer/Basic/HBoxContainer"]
 modulate = Color(1, 0, 0.188235, 1)

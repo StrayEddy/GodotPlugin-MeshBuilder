@@ -1,6 +1,7 @@
 @tool
 extends MeshBuilderShape
 class_name MeshBuilderRing
+@icon("res://addons/meshbuilder/mesh_builder_ring/icon.svg")
 
 @export var height :float = 1.0
 @export var inner_radius :float = 0.5

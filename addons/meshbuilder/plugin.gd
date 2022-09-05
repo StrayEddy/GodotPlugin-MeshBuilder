@@ -33,9 +33,16 @@ func _enter_tree():
 	add_control_to_container(EditorPlugin.CONTAINER_SPATIAL_EDITOR_BOTTOM, mesh_builder_panel)
 	mesh_builder_panel.hide()
 
-	add_custom_type("MeshBuilder", "MeshBuilder", preload("res://addons/meshbuilder/mesh_builder/mesh_builder.gd"), preload("res://addons/meshbuilder/mesh_builder/icon.png"))
+	add_custom_type("MeshBuilder", "MeshBuilder", preload("res://addons/meshbuilder/mesh_builder/mesh_builder.gd"), preload("res://addons/meshbuilder/mesh_builder/icon.svg"))
 	
-	add_custom_type("MeshBuilderCone", "MeshBuilderShape", preload("res://addons/meshbuilder/mesh_builder_cone/mesh_builder_cone.gd"), preload("res://addons/meshbuilder/mesh_builder_cone/icon.png"))
+	add_custom_type("MeshBuilderCone", "MeshBuilderCone", preload("res://addons/meshbuilder/mesh_builder_cone/mesh_builder_cone.gd"), preload("res://addons/meshbuilder/mesh_builder_cone/icon.svg"))
+	add_custom_type("MeshBuilderCube", "MeshBuilderCube", preload("res://addons/meshbuilder/mesh_builder_cube/mesh_builder_cube.gd"), preload("res://addons/meshbuilder/mesh_builder_cube/icon.svg"))
+	add_custom_type("MeshBuilderCylinder", "MeshBuilderCylinder", preload("res://addons/meshbuilder/mesh_builder_cylinder/mesh_builder_cylinder.gd"), preload("res://addons/meshbuilder/mesh_builder_cylinder/icon.svg"))
+	add_custom_type("MeshBuilderDoubleCone", "MeshBuilderDoubleCone", preload("res://addons/meshbuilder/mesh_builder_double_cone/mesh_builder_double_cone.gd"), preload("res://addons/meshbuilder/mesh_builder_double_cone/icon.svg"))
+	add_custom_type("MeshBuilderHalfSphere", "MeshBuilderHalfSphere", preload("res://addons/meshbuilder/mesh_builder_half_sphere/mesh_builder_half_sphere.gd"), preload("res://addons/meshbuilder/mesh_builder_half_sphere/icon.svg"))
+	add_custom_type("MeshBuilderRing", "MeshBuilderRing", preload("res://addons/meshbuilder/mesh_builder_ring/mesh_builder_ring.gd"), preload("res://addons/meshbuilder/mesh_builder_ring/icon.svg"))
+	add_custom_type("MeshBuilderSphere", "MeshBuilderSphere", preload("res://addons/meshbuilder/mesh_builder_sphere/mesh_builder_sphere.gd"), preload("res://addons/meshbuilder/mesh_builder_sphere/icon.svg"))
+	add_custom_type("MeshBuilderTorus", "MeshBuilderTorus", preload("res://addons/meshbuilder/mesh_builder_torus/mesh_builder_torus.gd"), preload("res://addons/meshbuilder/mesh_builder_torus/icon.svg"))
 
 	# Spy on event when object selected in tree changes
 	get_editor_interface().get_selection().selection_changed.connect(self.selection_changed)

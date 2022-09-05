@@ -1,6 +1,7 @@
 @tool
 extends MeshBuilderShape
 class_name MeshBuilderTorus
+@icon("res://addons/meshbuilder/mesh_builder_torus/icon.svg")
 
 @export var innerR :float = 0.5
 @export var outerR :float = 1.0

@@ -1,6 +1,7 @@
 @tool
 extends MeshInstance3D
 class_name MeshBuilder
+@icon("res://addons/meshbuilder/mesh_builder/icon.svg")
 
 signal shapes_received
 

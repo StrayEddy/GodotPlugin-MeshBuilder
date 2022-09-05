@@ -1,6 +1,7 @@
 @tool
 extends MeshBuilderShape
 class_name MeshBuilderSphere
+@icon("res://addons/meshbuilder/mesh_builder_sphere/icon.svg")
 
 @export var slices :int = 12
 @export var stacks :int = 6

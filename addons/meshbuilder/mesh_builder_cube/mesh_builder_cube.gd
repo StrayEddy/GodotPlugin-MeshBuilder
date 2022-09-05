@@ -1,6 +1,7 @@
 @tool
 extends MeshBuilderShape
 class_name MeshBuilderCube
+@icon("res://addons/meshbuilder/mesh_builder_cube/icon.svg")
 
 var current_values = []
 
