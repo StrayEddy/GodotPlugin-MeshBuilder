@@ -7,6 +7,7 @@ var mesh_builder :MeshBuilder
 func add_shape_creation_button(parent :Control, label_text :String, texture :Texture2D, on_pressed :Callable):
 	var button = ShapeCreationButton.new(label_text, texture, on_pressed)
 	parent.add_child(button, true)
+	parent.move_child(button, 0)
 	button.owner = self
 
 func _on_community_visibility_changed():
@@ -17,7 +18,7 @@ func _on_community_visibility_changed():
 
 func shapes_received(complex_shapes):
 	for child in $TabContainer/Community/HBoxContainer.get_children():
-		if child.name != "Publish":
+		if child.name != "Publish" and child.name != "Finalize":
 			child.queue_free()
 	
 	for complex_shape in complex_shapes:
@@ -81,3 +82,6 @@ func _on_publish_pressed():
 
 func _on_confirmation_dialog_confirmed():
 	mesh_builder.publish()
+
+func _on_finalize_pressed():
+	mesh_builder.finalize()

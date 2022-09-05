@@ -265,6 +265,14 @@ size_flags_horizontal = 4
 text = "Add
 "
 
+[node name="Finalize" type="Button" parent="TabContainer/Basic/HBoxContainer"]
+modulate = Color(1, 0, 0.188235, 1)
+custom_minimum_size = Vector2(190, 0)
+offset_left = 832.0
+offset_right = 1022.0
+offset_bottom = 165.0
+text = "FINALIZE"
+
 [node name="Community" type="Panel" parent="TabContainer"]
 visible = false
 anchor_right = 1.0
@@ -279,14 +287,25 @@ offset_bottom = 204.0
 columns = 9
 
 [node name="ShapeCreationButton" parent="TabContainer/Community/HBoxContainer" instance=ExtResource("10_ib6xc")]
+offset_right = 39.0
+offset_bottom = 65.0
+script = null
 
 [node name="Publish" type="Button" parent="TabContainer/Community/HBoxContainer"]
 modulate = Color(1, 0, 0.188235, 1)
-custom_minimum_size = Vector2(190, 0)
-offset_left = 104.0
-offset_right = 294.0
-offset_bottom = 165.0
+custom_minimum_size = Vector2(190, 10)
+offset_left = 43.0
+offset_right = 233.0
+offset_bottom = 65.0
 text = "PUBLISH"
+
+[node name="Finalize" type="Button" parent="TabContainer/Community/HBoxContainer"]
+modulate = Color(1, 0, 0.188235, 1)
+custom_minimum_size = Vector2(190, 10)
+offset_left = 237.0
+offset_right = 427.0
+offset_bottom = 65.0
+text = "FINALIZE"
 
 [node name="ConfirmationDialog" type="ConfirmationDialog" parent="."]
 size = Vector2i(763, 100)
@@ -300,6 +319,8 @@ dialog_text = "Do you really want to publish your MeshBuilder shape, and make it
 [connection signal="pressed" from="TabContainer/Basic/HBoxContainer/VBoxContainer6/AddHalfSphere" to="." method="_on_add_half_sphere_pressed"]
 [connection signal="pressed" from="TabContainer/Basic/HBoxContainer/VBoxContainer7/AddTorus" to="." method="_on_add_torus_pressed"]
 [connection signal="pressed" from="TabContainer/Basic/HBoxContainer/VBoxContainer8/AddRing" to="." method="_on_add_ring_pressed"]
+[connection signal="pressed" from="TabContainer/Basic/HBoxContainer/Finalize" to="." method="_on_finalize_pressed"]
 [connection signal="visibility_changed" from="TabContainer/Community" to="." method="_on_community_visibility_changed"]
 [connection signal="pressed" from="TabContainer/Community/HBoxContainer/Publish" to="." method="_on_publish_pressed"]
+[connection signal="pressed" from="TabContainer/Community/HBoxContainer/Finalize" to="." method="_on_finalize_pressed"]
 [connection signal="confirmed" from="ConfirmationDialog" to="." method="_on_confirmation_dialog_confirmed"]

@@ -147,3 +147,10 @@ func publish_check():
 func publish():
 	mesh_builder_communicator.publish(self)
 	last_time_published = Time.get_ticks_msec()
+
+func finalize():
+	var mesh_instance_3D = MeshInstance3D.new()
+	mesh_instance_3D.mesh = mesh.duplicate(true)
+	get_parent().add_child(mesh_instance_3D, true)
+	mesh_instance_3D.owner = get_tree().get_edited_scene_root()
+	queue_free()
