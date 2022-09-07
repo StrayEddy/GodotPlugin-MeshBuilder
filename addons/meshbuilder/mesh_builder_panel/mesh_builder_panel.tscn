@@ -1,23 +1,23 @@
-[gd_scene load_steps=11 format=3 uid="uid://bqkh61htltses"]
+[gd_scene load_steps=11 format=3 uid="uid://c7ukdipg81dw5"]
 
-[ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder/mesh_builder_panel.gd" id="1_k2oop"]
-[ext_resource type="Texture2D" uid="uid://o2exa74ok6fv" path="res://addons/meshbuilder/mesh_builder_cone/icon.svg" id="2_i3da2"]
-[ext_resource type="Texture2D" uid="uid://vcfc77n0gisf" path="res://addons/meshbuilder/mesh_builder_double_cone/icon.svg" id="3_suich"]
-[ext_resource type="Texture2D" uid="uid://dswvr7slq4wno" path="res://addons/meshbuilder/mesh_builder_cube/icon.svg" id="4_hyxkw"]
-[ext_resource type="Texture2D" uid="uid://rnrjjkj20q43" path="res://addons/meshbuilder/mesh_builder_cylinder/icon.svg" id="5_urkxq"]
-[ext_resource type="Texture2D" uid="uid://xsd7vaeemdne" path="res://addons/meshbuilder/mesh_builder_sphere/icon.svg" id="6_lxkfd"]
-[ext_resource type="Texture2D" uid="uid://dths4bgdfn44x" path="res://addons/meshbuilder/mesh_builder_half_sphere/icon.svg" id="7_rp3na"]
-[ext_resource type="Texture2D" uid="uid://d0cmn3rw6l44n" path="res://addons/meshbuilder/mesh_builder_torus/icon.svg" id="8_sl717"]
-[ext_resource type="Texture2D" uid="uid://d4fbc6stm1fg1" path="res://addons/meshbuilder/mesh_builder_ring/icon.svg" id="9_vcw0u"]
-[ext_resource type="PackedScene" uid="uid://bwo7tt6etdpqi" path="res://addons/meshbuilder/mesh_builder_panel/shape_creation_button.tscn" id="10_ib6xc"]
+[ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder_panel/mesh_builder_panel.gd" id="1_xpl4b"]
+[ext_resource type="Texture2D" uid="uid://o2exa74ok6fv" path="res://addons/meshbuilder/mesh_builder_cone/icon.svg" id="2_57ccy"]
+[ext_resource type="Texture2D" uid="uid://vcfc77n0gisf" path="res://addons/meshbuilder/mesh_builder_double_cone/icon.svg" id="3_flbfj"]
+[ext_resource type="Texture2D" uid="uid://dswvr7slq4wno" path="res://addons/meshbuilder/mesh_builder_cube/icon.svg" id="4_wvgrk"]
+[ext_resource type="Texture2D" uid="uid://rnrjjkj20q43" path="res://addons/meshbuilder/mesh_builder_cylinder/icon.svg" id="5_0kbug"]
+[ext_resource type="Texture2D" uid="uid://xsd7vaeemdne" path="res://addons/meshbuilder/mesh_builder_sphere/icon.svg" id="6_2j4gq"]
+[ext_resource type="Texture2D" uid="uid://dths4bgdfn44x" path="res://addons/meshbuilder/mesh_builder_half_sphere/icon.svg" id="7_jrcgj"]
+[ext_resource type="Texture2D" uid="uid://d0cmn3rw6l44n" path="res://addons/meshbuilder/mesh_builder_torus/icon.svg" id="8_yfbcy"]
+[ext_resource type="Texture2D" uid="uid://d4fbc6stm1fg1" path="res://addons/meshbuilder/mesh_builder_ring/icon.svg" id="9_152ra"]
+[ext_resource type="PackedScene" uid="uid://bwo7tt6etdpqi" path="res://addons/meshbuilder/mesh_builder_panel/shape_creation_button.tscn" id="10_gusm6"]
 
 [node name="MeshBuilderPanel" type="Control"]
-custom_minimum_size = Vector2(0, 210)
+custom_minimum_size = Vector2(0, 250)
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_k2oop")
+script = ExtResource("1_xpl4b")
 
 [node name="TabContainer" type="TabContainer" parent="."]
 anchor_right = 1.0
@@ -58,7 +58,7 @@ custom_minimum_size = Vector2(100, 100)
 offset_top = 30.0
 offset_right = 100.0
 offset_bottom = 130.0
-texture = ExtResource("2_i3da2")
+texture = ExtResource("2_57ccy")
 
 [node name="AddCone" type="Button" parent="TabContainer/Basic/HBoxContainer/VBoxContainer"]
 self_modulate = Color(0.0235294, 1, 0, 1)
@@ -87,7 +87,7 @@ custom_minimum_size = Vector2(100, 100)
 offset_top = 30.0
 offset_right = 100.0
 offset_bottom = 130.0
-texture = ExtResource("3_suich")
+texture = ExtResource("3_flbfj")
 
 [node name="AddDoubleCone" type="Button" parent="TabContainer/Basic/HBoxContainer/VBoxContainer2"]
 self_modulate = Color(0.0235294, 1, 0, 1)
@@ -115,7 +115,7 @@ custom_minimum_size = Vector2(100, 100)
 offset_top = 30.0
 offset_right = 100.0
 offset_bottom = 130.0
-texture = ExtResource("4_hyxkw")
+texture = ExtResource("4_wvgrk")
 
 [node name="AddCube" type="Button" parent="TabContainer/Basic/HBoxContainer/VBoxContainer3"]
 self_modulate = Color(0.0235294, 1, 0, 1)
@@ -143,7 +143,7 @@ custom_minimum_size = Vector2(100, 100)
 offset_top = 30.0
 offset_right = 100.0
 offset_bottom = 130.0
-texture = ExtResource("5_urkxq")
+texture = ExtResource("5_0kbug")
 
 [node name="AddCylinder" type="Button" parent="TabContainer/Basic/HBoxContainer/VBoxContainer4"]
 self_modulate = Color(0.0235294, 1, 0, 1)
@@ -171,7 +171,7 @@ custom_minimum_size = Vector2(100, 100)
 offset_top = 30.0
 offset_right = 100.0
 offset_bottom = 130.0
-texture = ExtResource("6_lxkfd")
+texture = ExtResource("6_2j4gq")
 
 [node name="AddSphere" type="Button" parent="TabContainer/Basic/HBoxContainer/VBoxContainer5"]
 self_modulate = Color(0.0235294, 1, 0, 1)
@@ -199,7 +199,7 @@ custom_minimum_size = Vector2(100, 100)
 offset_top = 30.0
 offset_right = 100.0
 offset_bottom = 130.0
-texture = ExtResource("7_rp3na")
+texture = ExtResource("7_jrcgj")
 
 [node name="AddHalfSphere" type="Button" parent="TabContainer/Basic/HBoxContainer/VBoxContainer6"]
 self_modulate = Color(0.0235294, 1, 0, 1)
@@ -227,7 +227,7 @@ custom_minimum_size = Vector2(100, 100)
 offset_top = 30.0
 offset_right = 100.0
 offset_bottom = 130.0
-texture = ExtResource("8_sl717")
+texture = ExtResource("8_yfbcy")
 
 [node name="AddTorus" type="Button" parent="TabContainer/Basic/HBoxContainer/VBoxContainer7"]
 self_modulate = Color(0.0235294, 1, 0, 1)
@@ -255,7 +255,7 @@ custom_minimum_size = Vector2(100, 100)
 offset_top = 30.0
 offset_right = 100.0
 offset_bottom = 130.0
-texture = ExtResource("9_vcw0u")
+texture = ExtResource("9_152ra")
 
 [node name="AddRing" type="Button" parent="TabContainer/Basic/HBoxContainer/VBoxContainer8"]
 self_modulate = Color(0.0235294, 1, 0, 1)
@@ -287,10 +287,9 @@ offset_right = 1022.0
 offset_bottom = 204.0
 columns = 9
 
-[node name="ShapeCreationButton" parent="TabContainer/Community/HBoxContainer" instance=ExtResource("10_ib6xc")]
+[node name="ShapeCreationButton" parent="TabContainer/Community/HBoxContainer" instance=ExtResource("10_gusm6")]
 offset_right = 39.0
 offset_bottom = 65.0
-script = null
 
 [node name="Publish" type="Button" parent="TabContainer/Community/HBoxContainer"]
 modulate = Color(1, 0, 0.188235, 1)

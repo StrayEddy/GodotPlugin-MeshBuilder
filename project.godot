@@ -57,7 +57,7 @@ _global_script_classes=[{
 "base": "Control",
 "class": &"MeshBuilderPanel",
 "language": &"GDScript",
-"path": "res://addons/meshbuilder/mesh_builder/mesh_builder_panel.gd"
+"path": "res://addons/meshbuilder/mesh_builder_panel/mesh_builder_panel.gd"
 }, {
 "base": "MeshBuilderShape",
 "class": &"MeshBuilderRing",

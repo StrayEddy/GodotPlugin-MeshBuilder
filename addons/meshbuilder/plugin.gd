@@ -29,7 +29,7 @@ func _handles(obj) -> bool:
 
 # Create whole plugin
 func _enter_tree():
-	mesh_builder_panel = preload("res://addons/meshbuilder/mesh_builder/mesh_builder_panel.tscn").instantiate()
+	mesh_builder_panel = preload("res://addons/meshbuilder/mesh_builder_panel/mesh_builder_panel.tscn").instantiate()
 	add_control_to_container(EditorPlugin.CONTAINER_SPATIAL_EDITOR_BOTTOM, mesh_builder_panel)
 	mesh_builder_panel.hide()
 

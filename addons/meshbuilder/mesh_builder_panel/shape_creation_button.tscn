@@ -1,11 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://bwo7tt6etdpqi"]
-
-[ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder_panel/shape_creation_button.gd" id="1_3emhs"]
+[gd_scene format=3 uid="uid://bwo7tt6etdpqi"]
 
 [node name="ShapeCreationButton" type="VBoxContainer"]
 offset_right = 100.0
 offset_bottom = 165.0
-script = ExtResource("1_3emhs")
 
 [node name="Label" type="Label" parent="."]
 offset_right = 100.0

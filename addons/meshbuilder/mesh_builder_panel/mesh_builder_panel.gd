@@ -12,18 +12,15 @@ func add_shape_creation_button(parent :Control, label_text :String, texture :Tex
 
 func _on_community_visibility_changed():
 	if $TabContainer/Community.visible:
-		if not mesh_builder.shapes_received.is_connected(self.shapes_received):
-			mesh_builder.shapes_received.connect(self.shapes_received)
-		mesh_builder.get_community_meshes()
-
-func shapes_received(complex_shapes):
-	for child in $TabContainer/Community/HBoxContainer.get_children():
-		if child.name != "Publish" and child.name != "Finalize":
-			child.queue_free()
-	
-	for complex_shape in complex_shapes:
-		var callable :Callable = Callable(self, "_on_add_shape_pressed")
-		add_shape_creation_button($TabContainer/Community/HBoxContainer, complex_shape.keys()[0], null, callable.bind(complex_shape))
+		var on_completed = func(complex_shapes):
+			for child in $TabContainer/Community/HBoxContainer.get_children():
+				if child.name != "Publish" and child.name != "Finalize":
+					child.queue_free()
+			
+			for complex_shape in complex_shapes:
+				var callable :Callable = Callable(self, "_on_add_shape_pressed")
+				add_shape_creation_button($TabContainer/Community/HBoxContainer, complex_shape.keys()[0], null, callable.bind(complex_shape))
+		mesh_builder.get_community_meshes(on_completed)
 
 func _on_add_shape_pressed(complex_shape):
 	for shape_info in complex_shape[complex_shape.keys()[0]]:
@@ -81,7 +78,9 @@ func _on_publish_pressed():
 		$ConfirmationDialog.popup_centered()
 
 func _on_confirmation_dialog_confirmed():
-	mesh_builder.publish()
+	var on_completed = func():
+		OS.alert("Thank you for publishing your work. It will be reviewed before becoming available to the general public.")
+	mesh_builder.publish(on_completed)
 
 func _on_finalize_pressed():
 	mesh_builder.finalize()

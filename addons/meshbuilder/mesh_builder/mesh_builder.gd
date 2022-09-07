@@ -3,8 +3,6 @@ extends MeshInstance3D
 class_name MeshBuilder
 @icon("res://addons/meshbuilder/mesh_builder/icon.svg")
 
-signal shapes_received
-
 var mesh_builder_communicator_script = load("res://addons/meshbuilder/mesh_builder/mesh_builder_communication.gd")
 var mesh_builder_communicator
 var root :Node3D
@@ -18,11 +16,6 @@ func _ready():
 	mesh_builder_communicator = mesh_builder_communicator_script.new()
 	add_child(mesh_builder_communicator, true)
 	mesh_builder_communicator.owner = root
-	mesh_builder_communicator.read_json_completed.connect(self.read_json_completed)
-	mesh_builder_communicator.publish_json_completed.connect(self.publish_json_completed)
-
-func read_json_completed(json_data):
-	emit_signal("shapes_received", json_data)
 
 func publish_json_completed():
 	OS.alert("Thank you for publishing your work. It will be reviewed before becoming available to the general public.")
@@ -132,8 +125,8 @@ func update():
 					intersect(child)
 	build_mesh()
 
-func get_community_meshes():
-	mesh_builder_communicator.read_json()
+func get_community_meshes(on_completed :Callable):
+	mesh_builder_communicator.read_json(on_completed)
 
 func publish_check():
 	if get_child_count() < 3:
@@ -145,8 +138,8 @@ func publish_check():
 	else:
 		return true
 
-func publish():
-	mesh_builder_communicator.publish(self)
+func publish(on_completed :Callable):
+	mesh_builder_communicator.publish(on_completed)
 	last_time_published = Time.get_ticks_msec()
 
 func finalize():
