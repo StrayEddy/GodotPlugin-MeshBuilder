@@ -4,12 +4,12 @@ class_name MeshBuilderPanel
 
 var mesh_builder :MeshBuilder
 
-func add_shape_creation_button(parent :Control, label_text :String, on_pressed :Callable):
+func add_shape_creation_button(parent :Control, label_text :String, image_base64 :String, on_pressed :Callable):
 	var button = ShapeCreationButton.new()
 	parent.add_child(button, true)
 	parent.move_child(button, 0)
 	button.owner = self
-	button.setup(label_text, on_pressed)
+	button.setup(label_text, image_base64, on_pressed)
 	return button
 
 func _on_community_visibility_changed():
@@ -21,13 +21,12 @@ func _on_community_visibility_changed():
 			
 			for complex_shape in complex_shapes:
 				var callable :Callable = Callable(self, "_on_add_shape_pressed")
-				var button = add_shape_creation_button($TabContainer/Community/HBoxContainer, complex_shape.keys()[0], callable.bind(complex_shape))
-				mesh_builder.get_image(complex_shape.keys()[0], button.setup_image)
+				var button = add_shape_creation_button($TabContainer/Community/HBoxContainer, complex_shape.name, complex_shape.image_base64, callable.bind(complex_shape.shapes))
 		
 		mesh_builder.get_community_meshes(on_completed)
 
-func _on_add_shape_pressed(complex_shape):
-	for shape_info in complex_shape[complex_shape.keys()[0]]:
+func _on_add_shape_pressed(shapes):
+	for shape_info in shapes:
 		var shape :MeshBuilderShape
 		var params :Array = shape_info.params
 		params.append(shape_info.operation)
