@@ -20,12 +20,6 @@ func selection_changed() -> void:
 # Override functions to capture mouse events when painting an object
 func _handles(obj) -> bool:
 	return editable
-#
-## Consumes InputEventMouseMotion and forwards other InputEvent types.
-#func _forward_3d_gui_input(camera, event):
-#	if event is InputEventKey:
-#		print(OS.get_keycode_string(event.get_keycode_with_modifiers()))
-#	return EditorPlugin.AFTER_GUI_INPUT_STOP
 
 # Create whole plugin
 func _enter_tree():

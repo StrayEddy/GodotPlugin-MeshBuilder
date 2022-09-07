@@ -28,6 +28,3 @@ func _process(delta):
 # Exist only to be overriden by all shapes
 func change_transform():
 	pass
-
-func _input(event):
-	print("I am here")

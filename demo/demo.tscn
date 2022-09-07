@@ -1,13 +1,13 @@
 [gd_scene load_steps=6 format=3 uid="uid://byapsytbqrrb7"]
 
 [ext_resource type="Script" path="res://demo/demo.gd" id="1_sugoq"]
-[ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder/mesh_builder.gd" id="2_6ne8s"]
-[ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder_cube/mesh_builder_cube.gd" id="3_5mdaa"]
+[ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder/mesh_builder.gd" id="2_mf6eb"]
+[ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder_cube/mesh_builder_cube.gd" id="3_6dfc2"]
 
 [sub_resource type="Environment" id="Environment_j230i"]
 ambient_light_source = 1
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_fps4l"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_wddyx"]
 _surfaces = [{
 "aabb": AABB(-0.7, 0, -0.7, 1.4, 2.2, 1.4),
 "format": 4099,
@@ -25,29 +25,29 @@ script = ExtResource("1_sugoq")
 environment = SubResource("Environment_j230i")
 
 [node name="MeshBuilder" type="MeshInstance3D" parent="."]
-mesh = SubResource("ArrayMesh_fps4l")
-script = ExtResource("2_6ne8s")
+mesh = SubResource("ArrayMesh_wddyx")
+script = ExtResource("2_mf6eb")
 
 [node name="Cube" type="Node3D" parent="MeshBuilder"]
 transform = Transform3D(0.1, 0, 0, 0, 0.5, 0, 0, 0, 0.1, 0.5, 0.5, -0.5)
-script = ExtResource("3_5mdaa")
+script = ExtResource("3_6dfc2")
 
 [node name="Cube2" type="Node3D" parent="MeshBuilder"]
 transform = Transform3D(0.1, 0, 0, 0, 0.5, 0, 0, 0, 0.1, -0.5, 0.5, -0.5)
-script = ExtResource("3_5mdaa")
+script = ExtResource("3_6dfc2")
 
 [node name="Cube3" type="Node3D" parent="MeshBuilder"]
 transform = Transform3D(0.1, 0, 0, 0, 0.5, 0, 0, 0, 0.1, 0.5, 0.5, 0.5)
-script = ExtResource("3_5mdaa")
+script = ExtResource("3_6dfc2")
 
 [node name="Cube4" type="Node3D" parent="MeshBuilder"]
 transform = Transform3D(0.1, 0, 0, 0, 0.5, 0, 0, 0, 0.1, -0.5, 0.5, 0.5)
-script = ExtResource("3_5mdaa")
+script = ExtResource("3_6dfc2")
 
 [node name="Cube5" type="Node3D" parent="MeshBuilder"]
 transform = Transform3D(0.7, 0, 0, 0, 0.1, 0, 0, 0, 0.7, 0, 0.9, 0)
-script = ExtResource("3_5mdaa")
+script = ExtResource("3_6dfc2")
 
 [node name="Cube6" type="Node3D" parent="MeshBuilder"]
 transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.1, 0, 1.5, 0.6)
-script = ExtResource("3_5mdaa")
+script = ExtResource("3_6dfc2")

@@ -47,3 +47,16 @@ func publish_json(json_data :Dictionary, on_completed :Callable):
 	var error = http_request.request("http://206.253.69.60:8080/publish-requests", ["content-type: application/json"], true, HTTPClient.METHOD_POST, json_string)
 	if error != OK:
 		push_error("An error occurred in the HTTP request.")
+
+func get_image(image_name :String, on_completed :Callable):
+	var on_get_completed = func(result, response_code, headers, body, on_completed):
+		print(response_code)
+		if response_code == 200:
+			var image = Image.new()
+			var image_error = image.load_png_from_buffer(body)
+			on_completed.call(image)
+	var http_request = new_httprequest(on_get_completed.bind(on_completed))
+	var error = http_request.request("http://206.253.69.60:8080/assets/images/" + image_name + ".png", [])
+	if error != OK:
+		push_error("An error occurred in the HTTP request.")
+

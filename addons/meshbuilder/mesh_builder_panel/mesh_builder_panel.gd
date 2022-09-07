@@ -4,11 +4,13 @@ class_name MeshBuilderPanel
 
 var mesh_builder :MeshBuilder
 
-func add_shape_creation_button(parent :Control, label_text :String, texture :Texture2D, on_pressed :Callable):
-	var button = ShapeCreationButton.new(label_text, texture, on_pressed)
+func add_shape_creation_button(parent :Control, label_text :String, on_pressed :Callable):
+	var button = ShapeCreationButton.new()
 	parent.add_child(button, true)
 	parent.move_child(button, 0)
 	button.owner = self
+	button.setup(label_text, on_pressed)
+	return button
 
 func _on_community_visibility_changed():
 	if $TabContainer/Community.visible:
@@ -19,7 +21,9 @@ func _on_community_visibility_changed():
 			
 			for complex_shape in complex_shapes:
 				var callable :Callable = Callable(self, "_on_add_shape_pressed")
-				add_shape_creation_button($TabContainer/Community/HBoxContainer, complex_shape.keys()[0], null, callable.bind(complex_shape))
+				var button = add_shape_creation_button($TabContainer/Community/HBoxContainer, complex_shape.keys()[0], callable.bind(complex_shape))
+				mesh_builder.get_image(complex_shape.keys()[0], button.setup_image)
+		
 		mesh_builder.get_community_meshes(on_completed)
 
 func _on_add_shape_pressed(complex_shape):

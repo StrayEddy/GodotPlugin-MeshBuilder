@@ -128,6 +128,9 @@ func update():
 func get_community_meshes(on_completed :Callable):
 	mesh_builder_communicator.read_json(on_completed)
 
+func get_image(image_name :String, on_completed :Callable):
+	mesh_builder_communicator.get_image(image_name, on_completed)
+
 func publish_check():
 	if get_child_count() < 3:
 		OS.alert("You need at least 2 shapes to publish your work")
@@ -139,7 +142,7 @@ func publish_check():
 		return true
 
 func publish(on_completed :Callable):
-	mesh_builder_communicator.publish(on_completed)
+	mesh_builder_communicator.publish(self, on_completed)
 	last_time_published = Time.get_ticks_msec()
 
 func finalize():
