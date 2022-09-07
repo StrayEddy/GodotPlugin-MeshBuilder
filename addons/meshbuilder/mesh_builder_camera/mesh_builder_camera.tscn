@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://ghio38vqvfj0"]
+
+[ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder_camera/mesh_builder_camera.gd" id="1_vjbaa"]
+
+[sub_resource type="Environment" id="Environment_3rm75"]
+background_mode = 1
+background_color = Color(1, 1, 1, 1)
+ambient_light_source = 1
+
+[node name="MeshBuilderCamera" type="Camera3D"]
+transform = Transform3D(-0.707106, 0.40558, -0.579228, 0, 0.819152, 0.573577, 0.707106, 0.40558, -0.579228, -2, 2, -2)
+cull_mask = 524288
+environment = SubResource("Environment_3rm75")
+script = ExtResource("1_vjbaa")

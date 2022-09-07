@@ -8,7 +8,7 @@ func new_httprequest(on_request_completed :Callable) -> HTTPRequest:
 	http_request.request_completed.connect(on_request_completed)
 	return http_request
 
-func publish(mesh_builder :MeshBuilder, on_completed :Callable):
+func publish(mesh_builder :MeshBuilder, image_base64 :String, on_completed :Callable):
 	var simple_shapes_array = []
 	for i in mesh_builder.get_child_count():
 		if mesh_builder.get_child(i) is MeshBuilderShape:
@@ -21,7 +21,7 @@ func publish(mesh_builder :MeshBuilder, on_completed :Callable):
 				"position": [child.position.x, child.position.y, child.position.z],
 				"params": child.current_values,
 			})
-	var new_json = {"id":str(randi()), "shapes": simple_shapes_array}
+	var new_json = {"id":str(randi()), "image_base64":image_base64, "shapes": simple_shapes_array}
 	
 	publish_json(new_json, on_completed)
 
@@ -45,18 +45,6 @@ func publish_json(json_data :Dictionary, on_completed :Callable):
 			on_completed.call()
 	var http_request = new_httprequest(on_publish_completed)
 	var error = http_request.request("http://206.253.69.60:8080/publish-requests", ["content-type: application/json"], true, HTTPClient.METHOD_POST, json_string)
-	if error != OK:
-		push_error("An error occurred in the HTTP request.")
-
-func get_image(image_name :String, on_completed :Callable):
-	var on_get_completed = func(result, response_code, headers, body, on_completed):
-		print(response_code)
-		if response_code == 200:
-			var image = Image.new()
-			var image_error = image.load_png_from_buffer(body)
-			on_completed.call(image)
-	var http_request = new_httprequest(on_get_completed.bind(on_completed))
-	var error = http_request.request("http://206.253.69.60:8080/assets/images/" + image_name + ".png", [])
 	if error != OK:
 		push_error("An error occurred in the HTTP request.")
 

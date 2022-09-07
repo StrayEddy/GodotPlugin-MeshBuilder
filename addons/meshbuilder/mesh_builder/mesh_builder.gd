@@ -128,9 +128,6 @@ func update():
 func get_community_meshes(on_completed :Callable):
 	mesh_builder_communicator.read_json(on_completed)
 
-func get_image(image_name :String, on_completed :Callable):
-	mesh_builder_communicator.get_image(image_name, on_completed)
-
 func publish_check():
 	if get_child_count() < 3:
 		OS.alert("You need at least 2 shapes to publish your work")
@@ -142,7 +139,13 @@ func publish_check():
 		return true
 
 func publish(on_completed :Callable):
-	mesh_builder_communicator.publish(self, on_completed)
+	$SubViewport/MeshBuilderCamera.focus_camera_on_node(self)
+	await RenderingServer.frame_post_draw
+	var tex :ViewportTexture = $SubViewport.get_texture()
+	var image = tex.get_image()
+	image.resize(100,100)
+	var image_base64 = Marshalls.raw_to_base64(image.save_png_to_buffer())
+	mesh_builder_communicator.publish(self, image_base64, on_completed)
 	last_time_published = Time.get_ticks_msec()
 
 func finalize():

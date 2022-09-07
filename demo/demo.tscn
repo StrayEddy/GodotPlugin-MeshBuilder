@@ -1,13 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://byapsytbqrrb7"]
+[gd_scene load_steps=7 format=3 uid="uid://byapsytbqrrb7"]
 
 [ext_resource type="Script" path="res://demo/demo.gd" id="1_sugoq"]
 [ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder/mesh_builder.gd" id="2_do68l"]
-[ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder_cube/mesh_builder_cube.gd" id="3_l88n4"]
+[ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder_cube/mesh_builder_cube.gd" id="4_k74pt"]
+[ext_resource type="PackedScene" uid="uid://ghio38vqvfj0" path="res://addons/meshbuilder/mesh_builder_camera/mesh_builder_camera.tscn" id="4_qliji"]
 
 [sub_resource type="Environment" id="Environment_j230i"]
 ambient_light_source = 1
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_ufiep"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_u26uq"]
 _surfaces = [{
 "aabb": AABB(-0.7, 0, -0.7, 1.4, 2.2, 1.4),
 "format": 4099,
@@ -25,29 +26,37 @@ script = ExtResource("1_sugoq")
 environment = SubResource("Environment_j230i")
 
 [node name="MeshBuilder" type="MeshInstance3D" parent="."]
-mesh = SubResource("ArrayMesh_ufiep")
+layers = 524289
+mesh = SubResource("ArrayMesh_u26uq")
 script = ExtResource("2_do68l")
+
+[node name="SubViewport" type="SubViewport" parent="MeshBuilder"]
+size_2d_override_stretch = true
+render_target_update_mode = 4
+
+[node name="MeshBuilderCamera" parent="MeshBuilder/SubViewport" instance=ExtResource("4_qliji")]
+transform = Transform3D(-0.685654, -0.0765461, -0.723892, 0, 0.994456, -0.105156, 0.727928, -0.0721008, -0.681853, -1.73492, 0.847977, -1.63417)
 
 [node name="Cube" type="Node3D" parent="MeshBuilder"]
 transform = Transform3D(0.1, 0, 0, 0, 0.5, 0, 0, 0, 0.1, 0.5, 0.5, -0.5)
-script = ExtResource("3_l88n4")
+script = ExtResource("4_k74pt")
 
 [node name="Cube2" type="Node3D" parent="MeshBuilder"]
 transform = Transform3D(0.1, 0, 0, 0, 0.5, 0, 0, 0, 0.1, -0.5, 0.5, -0.5)
-script = ExtResource("3_l88n4")
+script = ExtResource("4_k74pt")
 
 [node name="Cube3" type="Node3D" parent="MeshBuilder"]
 transform = Transform3D(0.1, 0, 0, 0, 0.5, 0, 0, 0, 0.1, 0.5, 0.5, 0.5)
-script = ExtResource("3_l88n4")
+script = ExtResource("4_k74pt")
 
 [node name="Cube4" type="Node3D" parent="MeshBuilder"]
 transform = Transform3D(0.1, 0, 0, 0, 0.5, 0, 0, 0, 0.1, -0.5, 0.5, 0.5)
-script = ExtResource("3_l88n4")
+script = ExtResource("4_k74pt")
 
 [node name="Cube5" type="Node3D" parent="MeshBuilder"]
 transform = Transform3D(0.7, 0, 0, 0, 0.1, 0, 0, 0, 0.7, 0, 0.9, 0)
-script = ExtResource("3_l88n4")
+script = ExtResource("4_k74pt")
 
 [node name="Cube6" type="Node3D" parent="MeshBuilder"]
 transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.1, 0, 1.5, 0.6)
-script = ExtResource("3_l88n4")
+script = ExtResource("4_k74pt")
