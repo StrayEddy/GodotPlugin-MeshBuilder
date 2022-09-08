@@ -28,7 +28,6 @@ func _ready():
 	mesh_builder_camera = MeshBuilderCamera.new()
 	sub_viewport.add_child(mesh_builder_camera, true, Node.INTERNAL_MODE_FRONT)
 	mesh_builder_camera.owner = root
-	
 
 func publish_json_completed():
 	OS.alert("Thank you for publishing your work. It will be reviewed before becoming available to the general public.")

@@ -17,7 +17,7 @@ func _init(params=[0.5,1.0,8,6,0]):
 	self.operation = params[4]
 	super._init(params)
 	self.current_values = [innerR, outerR, stacks, slices]
-	csg = CSG.torus(innerR, outerR, stacks, slices)
+	csg = CSG.torus(innerR, outerR, stacks, slices).scale(scale).rotate(rotation).translate(position)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

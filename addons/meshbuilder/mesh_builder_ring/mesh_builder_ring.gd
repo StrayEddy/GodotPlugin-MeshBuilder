@@ -17,7 +17,7 @@ func _init(params=[1.0,0.5,1.0,16,0]):
 	self.operation = params[4]
 	super._init(params)
 	self.current_values = [height, inner_radius, outer_radius, slices]
-	csg = CSG.ring(height, inner_radius, outer_radius, slices)
+	csg = CSG.ring(height, inner_radius, outer_radius, slices).scale(scale).rotate(rotation).translate(position)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

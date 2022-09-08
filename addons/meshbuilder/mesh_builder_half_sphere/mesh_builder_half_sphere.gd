@@ -13,7 +13,7 @@ func _init(params=[12,3,0]):
 	self.operation = params[2]
 	super._init(params)
 	self.current_values = [slices, stacks]
-	csg = CSG.half_sphere(slices, stacks)
+	csg = CSG.half_sphere(slices, stacks).scale(scale).rotate(rotation).translate(position)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
