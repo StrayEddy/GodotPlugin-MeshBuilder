@@ -14,9 +14,12 @@ func add_shape_creation_button(parent :Control, label_text :String, image_base64
 
 func _on_community_visibility_changed():
 	if $TabContainer/Community.visible:
-		var on_completed = func(complex_shapes):
+		var on_completed = func(complex_shapes :Array):
 			for child in $TabContainer/Community/HBoxContainer/ScrollContainer/GridContainer.get_children():
 				child.queue_free()
+			
+			# Sort shapes alphabetically
+			complex_shapes.sort_custom(func(a,b): return a.name > b.name)
 			
 			for complex_shape in complex_shapes:
 				var callable :Callable = Callable(self, "_on_add_shape_pressed")
