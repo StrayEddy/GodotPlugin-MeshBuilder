@@ -27,7 +27,6 @@ func publish(mesh_builder :MeshBuilder, image_base64 :String, on_completed :Call
 
 func read_json(on_completed :Callable):
 	var on_read_completed = func(result, response_code, headers, body):
-		print(response_code)
 		if response_code == 200:
 			var json = JSON.new()
 			json.parse(body.get_string_from_utf8())
@@ -40,7 +39,6 @@ func read_json(on_completed :Callable):
 func publish_json(json_data :Dictionary, on_completed :Callable):
 	var json_string = JSON.new().stringify(json_data)
 	var on_publish_completed = func(result, response_code, headers, body):
-		print(response_code)
 		if response_code == 201:
 			on_completed.call()
 	var http_request = new_httprequest(on_publish_completed)

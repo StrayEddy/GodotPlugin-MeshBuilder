@@ -8,14 +8,27 @@ var mesh_builder_communicator
 var root :Node3D
 var csg :CSG
 var nb_children = 0
-
 var last_time_published = 0
+
+var sub_viewport :SubViewport
+var mesh_builder_camera :MeshBuilderCamera
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	mesh_builder_communicator = mesh_builder_communicator_script.new()
 	add_child(mesh_builder_communicator, true)
 	mesh_builder_communicator.owner = root
+
+	sub_viewport = SubViewport.new()
+	sub_viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	sub_viewport.size_2d_override_stretch = true
+	add_child(sub_viewport, true, Node.INTERNAL_MODE_FRONT)
+	sub_viewport.owner = root
+	
+	mesh_builder_camera = MeshBuilderCamera.new()
+	sub_viewport.add_child(mesh_builder_camera, true, Node.INTERNAL_MODE_FRONT)
+	mesh_builder_camera.owner = root
+	
 
 func publish_json_completed():
 	OS.alert("Thank you for publishing your work. It will be reviewed before becoming available to the general public.")
@@ -139,9 +152,9 @@ func publish_check():
 		return true
 
 func publish(on_completed :Callable):
-	$SubViewport/MeshBuilderCamera.focus_camera_on_node(self)
+	mesh_builder_camera.focus_camera_on_node(self)
 	await RenderingServer.frame_post_draw
-	var tex :ViewportTexture = $SubViewport.get_texture()
+	var tex :ViewportTexture = sub_viewport.get_texture()
 	var image = tex.get_image()
 	image.resize(100,100)
 	var image_base64 = Marshalls.raw_to_base64(image.save_png_to_buffer())
