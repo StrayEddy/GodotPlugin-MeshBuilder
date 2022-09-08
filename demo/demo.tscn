@@ -7,7 +7,7 @@
 [sub_resource type="Environment" id="Environment_j230i"]
 ambient_light_source = 1
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_n7ndy"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_3hr7p"]
 _surfaces = [{
 "aabb": AABB(-0.7, 0, -0.7, 1.4, 2.2, 1.4),
 "format": 4099,
@@ -25,7 +25,7 @@ script = ExtResource("1_sugoq")
 environment = SubResource("Environment_j230i")
 
 [node name="MeshBuilder" type="MeshInstance3D" parent="."]
-mesh = SubResource("ArrayMesh_n7ndy")
+mesh = SubResource("ArrayMesh_3hr7p")
 script = ExtResource("2_8asux")
 
 [node name="Cube" type="Node3D" parent="MeshBuilder"]
