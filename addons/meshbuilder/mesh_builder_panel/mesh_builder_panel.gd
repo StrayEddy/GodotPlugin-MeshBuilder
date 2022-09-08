@@ -15,13 +15,12 @@ func add_shape_creation_button(parent :Control, label_text :String, image_base64
 func _on_community_visibility_changed():
 	if $TabContainer/Community.visible:
 		var on_completed = func(complex_shapes):
-			for child in $TabContainer/Community/HBoxContainer.get_children():
-				if child.name != "Publish" and child.name != "Finalize":
-					child.queue_free()
+			for child in $TabContainer/Community/HBoxContainer/ScrollContainer/GridContainer.get_children():
+				child.queue_free()
 			
 			for complex_shape in complex_shapes:
 				var callable :Callable = Callable(self, "_on_add_shape_pressed")
-				var button = add_shape_creation_button($TabContainer/Community/HBoxContainer, complex_shape.name, complex_shape.image_base64, callable.bind(complex_shape.shapes))
+				var button = add_shape_creation_button($TabContainer/Community/HBoxContainer/ScrollContainer/GridContainer, complex_shape.name, complex_shape.image_base64, callable.bind(complex_shape.shapes))
 		
 		mesh_builder.get_community_meshes(on_completed)
 

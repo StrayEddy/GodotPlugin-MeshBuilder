@@ -27,6 +27,7 @@ grow_vertical = 2
 metadata/_edit_layout_mode = 1
 
 [node name="Basic" type="Panel" parent="TabContainer"]
+visible = false
 custom_minimum_size = Vector2(300, 170)
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -275,36 +276,52 @@ offset_bottom = 165.0
 text = "FINALIZE"
 
 [node name="Community" type="Panel" parent="TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 31.0
 
-[node name="HBoxContainer" type="GridContainer" parent="TabContainer/Community"]
-custom_minimum_size = Vector2(0, 170)
-offset_top = 34.0
-offset_right = 1022.0
-offset_bottom = 204.0
-columns = 9
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Community"]
+offset_right = 40.0
+offset_bottom = 40.0
 
-[node name="ShapeCreationButton" parent="TabContainer/Community/HBoxContainer" instance=ExtResource("10_gusm6")]
-offset_right = 39.0
-offset_bottom = 65.0
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/Community/HBoxContainer"]
+custom_minimum_size = Vector2(630, 170)
+offset_right = 630.0
+offset_bottom = 170.0
 
-[node name="Publish" type="Button" parent="TabContainer/Community/HBoxContainer"]
+[node name="GridContainer" type="GridContainer" parent="TabContainer/Community/HBoxContainer/ScrollContainer"]
+offset_right = 104.0
+offset_bottom = 100.0
+columns = 6
+
+[node name="ShapeCreationButton" parent="TabContainer/Community/HBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("10_gusm6")]
+offset_right = 0.0
+offset_bottom = 100.0
+
+[node name="ColorRect" type="ColorRect" parent="TabContainer/Community/HBoxContainer/ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(100, 100)
+offset_left = 4.0
+offset_right = 104.0
+offset_bottom = 100.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Community/HBoxContainer"]
+offset_left = 634.0
+offset_right = 1018.0
+offset_bottom = 170.0
+
+[node name="Publish" type="Button" parent="TabContainer/Community/HBoxContainer/HBoxContainer"]
 modulate = Color(1, 0, 0.188235, 1)
 custom_minimum_size = Vector2(190, 10)
-offset_left = 43.0
-offset_right = 233.0
-offset_bottom = 65.0
+offset_right = 190.0
+offset_bottom = 170.0
 text = "PUBLISH"
 
-[node name="Finalize" type="Button" parent="TabContainer/Community/HBoxContainer"]
+[node name="Finalize" type="Button" parent="TabContainer/Community/HBoxContainer/HBoxContainer"]
 modulate = Color(1, 0, 0.188235, 1)
 custom_minimum_size = Vector2(190, 10)
-offset_left = 237.0
-offset_right = 427.0
-offset_bottom = 65.0
+offset_left = 194.0
+offset_right = 384.0
+offset_bottom = 170.0
 text = "FINALIZE"
 
 [node name="ConfirmationDialog" type="ConfirmationDialog" parent="."]
@@ -321,6 +338,6 @@ dialog_text = "Do you really want to publish your MeshBuilder shape, and make it
 [connection signal="pressed" from="TabContainer/Basic/HBoxContainer/VBoxContainer8/AddRing" to="." method="_on_add_ring_pressed"]
 [connection signal="pressed" from="TabContainer/Basic/HBoxContainer/Finalize" to="." method="_on_finalize_pressed"]
 [connection signal="visibility_changed" from="TabContainer/Community" to="." method="_on_community_visibility_changed"]
-[connection signal="pressed" from="TabContainer/Community/HBoxContainer/Publish" to="." method="_on_publish_pressed"]
-[connection signal="pressed" from="TabContainer/Community/HBoxContainer/Finalize" to="." method="_on_finalize_pressed"]
+[connection signal="pressed" from="TabContainer/Community/HBoxContainer/HBoxContainer/Publish" to="." method="_on_publish_pressed"]
+[connection signal="pressed" from="TabContainer/Community/HBoxContainer/HBoxContainer/Finalize" to="." method="_on_finalize_pressed"]
 [connection signal="confirmed" from="ConfirmationDialog" to="." method="_on_confirmation_dialog_confirmed"]
