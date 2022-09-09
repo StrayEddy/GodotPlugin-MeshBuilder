@@ -16,7 +16,7 @@ var mesh_builder_camera :MeshBuilderCamera
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	mesh_builder_communicator = mesh_builder_communicator_script.new()
-	add_child(mesh_builder_communicator, true)
+	add_child(mesh_builder_communicator, true, Node.INTERNAL_MODE_FRONT)
 	mesh_builder_communicator.owner = root
 
 	sub_viewport = SubViewport.new()
@@ -56,45 +56,111 @@ func intersect(mbs :MeshBuilderShape):
 	else:
 		self.csg = self.csg.intersect(mbs.csg)
 
-func add_shape(mbs :MeshBuilderShape, name :String):
+func add_shape(mbs :MeshBuilderShape, name :String, selected_node :Node3D):
 	mbs.csg_change.connect(update)
 	mbs.name = name
-	add_child(mbs, true)
+	selected_node.add_child(mbs, true)
 	mbs.owner = root
-	update()
 
-func add_cone(params :Array = [1.0,1.0,16,0]):
-	var shape = MeshBuilderCone.new(params)
-	add_shape(shape, "Cone")
+func add_cone(selected_node :Node3D, params :Array = []):
+	var shape
+	if params.is_empty():
+		shape = MeshBuilderCone.new()
+	else:
+		shape = MeshBuilderCone.new(params)
+	add_shape(shape, "Cone", selected_node)
 	return shape
-func add_double_cone(params :Array = [1.0,1.0,16,0]):
-	var shape = MeshBuilderDoubleCone.new(params)
-	add_shape(shape, "DoubleCone")
+func add_double_cone(selected_node :Node3D, params :Array = []):
+	var shape
+	if params.is_empty():
+		shape = MeshBuilderDoubleCone.new()
+	else:
+		shape = MeshBuilderDoubleCone.new(params)
+	add_shape(shape, "DoubleCone", selected_node)
 	return shape
-func add_cube(params :Array = [0]):
-	var shape = MeshBuilderCube.new(params)
-	add_shape(shape, "Cube")
+func add_cube(selected_node :Node3D, params :Array = []):
+	var shape
+	if params.is_empty():
+		shape = MeshBuilderCube.new()
+	else:
+		shape = MeshBuilderCube.new(params)
+	add_shape(shape, "Cube", selected_node)
 	return shape
-func add_cylinder(params :Array = [1.0,1.0,1.0,16,0]):
-	var shape = MeshBuilderCylinder.new(params)
-	add_shape(shape, "Cylinder")
+func add_cylinder(selected_node :Node3D, params :Array = []):
+	var shape
+	if params.is_empty():
+		shape = MeshBuilderCylinder.new()
+	else:
+		shape = MeshBuilderCylinder.new(params)
+	add_shape(shape, "Cylinder", selected_node)
 	return shape
-func add_sphere(params :Array = [12,6,0]):
-	var shape = MeshBuilderSphere.new(params)
-	add_shape(shape, "Sphere")
+func add_sphere(selected_node :Node3D, params :Array = []):
+	var shape
+	if params.is_empty():
+		shape = MeshBuilderSphere.new()
+	else:
+		shape = MeshBuilderSphere.new(params)
+	add_shape(shape, "Sphere", selected_node)
 	return shape
-func add_half_sphere(params :Array = [12,3,0]):
-	var shape = MeshBuilderHalfSphere.new(params)
-	add_shape(shape, "HalfSphere")
+func add_half_sphere(selected_node :Node3D, params :Array = []):
+	var shape
+	if params.is_empty():
+		shape = MeshBuilderHalfSphere.new()
+	else:
+		shape = MeshBuilderHalfSphere.new(params)
+	add_shape(shape, "HalfSphere", selected_node)
 	return shape
-func add_torus(params :Array = [0.5,1.0,8,6,0]):
-	var shape = MeshBuilderTorus.new(params)
-	add_shape(shape, "Torus")
+func add_torus(selected_node :Node3D, params :Array = []):
+	var shape
+	if params.is_empty():
+		shape = MeshBuilderTorus.new()
+	else:
+		shape = MeshBuilderTorus.new(params)
+	add_shape(shape, "Torus", selected_node)
 	return shape
-func add_ring(params :Array = [1.0,0.5,1.0,16,0]):
-	var shape = MeshBuilderRing.new(params)
-	add_shape(shape, "Ring")
+func add_ring(selected_node :Node3D, params :Array = []):
+	var shape
+	if params.is_empty():
+		shape = MeshBuilderRing.new()
+	else:
+		shape = MeshBuilderRing.new(params)
+	add_shape(shape, "Ring", selected_node)
 	return shape
+
+func build_csg(main_csg :CSG, shapes :Array):
+	var new_csg = main_csg
+	for shape in shapes:
+		if not shape is MeshBuilderShape:
+			continue
+		if not shape.is_connected("csg_change", update):
+			shape.csg_change.connect(update)
+		match shape.operation:
+			MeshBuilderShape.OPERATION_TYPE.Union:
+				if shape.get_child_count() == 0:
+					print("union with " + str(shape.name))
+					new_csg = new_csg.union(shape.csg)
+				else:
+					print("union with children of " + str(shape.name))
+					new_csg = new_csg.union(build_csg(shape.csg, shape.get_children()))
+			MeshBuilderShape.OPERATION_TYPE.Subtract:
+				if shape.get_child_count() == 0:
+					print("subtract with " + str(shape.name))
+					new_csg = new_csg.subtract(shape.csg)
+				else:
+					print("subtract with children of " + str(shape.name))
+					new_csg = new_csg.subtract(build_csg(shape.csg, shape.get_children()))
+			MeshBuilderShape.OPERATION_TYPE.Intersect:
+				if shape.get_child_count() == 0:
+					print("intersect with " + str(shape.name))
+					new_csg = new_csg.intersect(shape.csg)
+				else:
+					print("intersect with children of " + str(shape.name))
+					new_csg = new_csg.intersect(build_csg(shape.csg, shape.get_children()))
+	return new_csg
+
+func update():
+	csg = build_csg(CSG.new(), get_children())
+	build_mesh()
 
 func build_mesh():
 	var st = SurfaceTool.new()
@@ -119,23 +185,6 @@ func build_mesh():
 	st.index()
 	st.generate_normals()
 	self.mesh = st.commit()
-
-func update():
-	csg = null
-	for i in get_child_count():
-		if get_child(i) is MeshBuilderShape:
-			var child :MeshBuilderShape = get_child(i)
-			
-			if not child.is_connected("csg_change", update):
-				child.csg_change.connect(update)
-			match child.operation:
-				MeshBuilderShape.OPERATION_TYPE.Union:
-					union(child)
-				MeshBuilderShape.OPERATION_TYPE.Subtract:
-					subtract(child)
-				MeshBuilderShape.OPERATION_TYPE.Intersect:
-					intersect(child)
-	build_mesh()
 
 func get_community_meshes(on_completed :Callable):
 	mesh_builder_communicator.read_json(on_completed)

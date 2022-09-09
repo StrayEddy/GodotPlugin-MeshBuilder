@@ -17,14 +17,19 @@ func _init(params=[]):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if self.current_transform != transform:
+	if self.current_transform != transform or self.current_operation != operation:
 		self.current_transform = transform
-		change_transform()
-		emit_signal("csg_change")
-	if self.current_operation != operation:
 		self.current_operation = operation
+		change_transform()
 		emit_signal("csg_change")
 
 # Exist only to be overriden by all shapes
 func change_transform():
 	pass
+
+func get_mesh_builder():
+	var parent = self
+	while not parent is MeshBuilder:
+		parent = parent.get_parent()
+	return parent
+	

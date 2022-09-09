@@ -8,11 +8,16 @@ func selection_changed() -> void:
 	var selection = get_editor_interface().get_selection().get_selected_nodes()
 	if selection.size() == 1 and selection[0] is MeshBuilder:
 		mesh_builder_panel.show()
+		mesh_builder_panel.selected_node = selection[0]
 		mesh_builder_panel.mesh_builder = selection[0]
 		mesh_builder_panel.mesh_builder.root = get_tree().get_edited_scene_root()
 		editable = false
 	elif selection.size() == 1 and selection[0] is MeshBuilderShape:
-		editable = true 
+		mesh_builder_panel.show()
+		mesh_builder_panel.selected_node = selection[0]
+		mesh_builder_panel.mesh_builder = selection[0].get_mesh_builder()
+		mesh_builder_panel.mesh_builder.root = get_tree().get_edited_scene_root()
+		editable = true
 	else:
 		editable = false
 		mesh_builder_panel.hide()
