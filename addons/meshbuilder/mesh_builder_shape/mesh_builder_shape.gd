@@ -9,6 +9,7 @@ enum OPERATION_TYPE {Union, Subtract, Intersect}
 
 var current_transform :Transform3D
 var current_operation :OPERATION_TYPE
+var nb_children = 0
 
 func _init(params=[]):
 	self.current_transform = transform
@@ -16,10 +17,12 @@ func _init(params=[]):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if self.current_transform != transform or self.current_operation != operation:
-		self.current_transform = transform
-		self.current_operation = operation
-		emit_signal("csg_change")
+	if Engine.get_frames_drawn() % 3 == 0:
+		if self.current_transform != transform or self.current_operation != operation or self.nb_children != get_child_count():
+			self.current_transform = transform
+			self.current_operation = operation
+			self.nb_children = get_child_count()
+			emit_signal("csg_change")
 
 func get_mesh_builder():
 	var parent = self

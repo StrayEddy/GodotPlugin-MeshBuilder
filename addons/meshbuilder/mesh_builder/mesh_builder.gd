@@ -38,19 +38,13 @@ func _process(delta):
 		update()
 
 func add_shape(mbs :MeshBuilderShape, name :String, selected_node :Node3D):
-	if selected_node == self:
-		# Add combiner
-		var combiner = MeshBuilderCombiner.new()
-		combiner.csg_change.connect(update)
-		combiner.name = "Combiner"
-		selected_node.add_child(combiner, true)
-		combiner.owner = root
-		# Add shape under combiner
+	if selected_node == self or selected_node is MeshBuilderCombiner:
+		# Add shape under selected node (combiner or builder)
 		mbs.csg_change.connect(update)
 		mbs.name = name
-		combiner.add_child(mbs, true)
+		selected_node.add_child(mbs, true)
 		mbs.owner = root
-	elif not selected_node is MeshBuilderCombiner:
+	else:
 		# Add combiner to parent
 		var combiner = MeshBuilderCombiner.new()
 		combiner.csg_change.connect(update)
@@ -66,12 +60,6 @@ func add_shape(mbs :MeshBuilderShape, name :String, selected_node :Node3D):
 		mbs.csg_change.connect(update)
 		mbs.name = name
 		combiner.add_child(mbs, true)
-		mbs.owner = root
-	else:
-		# Add shape under selected combiner
-		mbs.csg_change.connect(update)
-		mbs.name = name
-		selected_node.add_child(mbs, true)
 		mbs.owner = root
 
 static func reparent(child: Node, new_parent: Node):
@@ -157,7 +145,7 @@ func get_csg() -> CSG:
 					csg = csg.subtract(shape.get_csg())
 				MeshBuilderShape.OPERATION_TYPE.Intersect:
 					csg = csg.intersect(shape.get_csg())
-	return csg
+	return csg.scale(scale).rotate(rotation).translate(position)
 
 func update():
 	var csg = get_csg()
