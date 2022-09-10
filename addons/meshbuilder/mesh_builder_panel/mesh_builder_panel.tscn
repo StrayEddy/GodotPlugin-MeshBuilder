@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder_panel/mesh_builder_panel.gd" id="1_xpl4b"]
 [ext_resource type="Texture2D" uid="uid://o2exa74ok6fv" path="res://addons/meshbuilder/mesh_builder_cone/icon.svg" id="2_57ccy"]
 [ext_resource type="Texture2D" uid="uid://vcfc77n0gisf" path="res://addons/meshbuilder/mesh_builder_double_cone/icon.svg" id="3_flbfj"]
-[ext_resource type="Texture2D" uid="uid://dswvr7slq4wno" path="res://addons/meshbuilder/mesh_builder_cube/icon.svg" id="4_wvgrk"]
+[ext_resource type="Texture2D" uid="uid://dswvr7slq4wno" path="res://addons/meshbuilder/mesh_builder_combiner/icon.svg" id="4_wrl1s"]
 [ext_resource type="Texture2D" uid="uid://rnrjjkj20q43" path="res://addons/meshbuilder/mesh_builder_cylinder/icon.svg" id="5_0kbug"]
 [ext_resource type="Texture2D" uid="uid://xsd7vaeemdne" path="res://addons/meshbuilder/mesh_builder_sphere/icon.svg" id="6_2j4gq"]
 [ext_resource type="Texture2D" uid="uid://dths4bgdfn44x" path="res://addons/meshbuilder/mesh_builder_half_sphere/icon.svg" id="7_jrcgj"]
@@ -116,7 +116,7 @@ custom_minimum_size = Vector2(100, 100)
 offset_top = 30.0
 offset_right = 100.0
 offset_bottom = 130.0
-texture = ExtResource("4_wvgrk")
+texture = ExtResource("4_wrl1s")
 
 [node name="AddCube" type="Button" parent="TabContainer/Basic/HBoxContainer/VBoxContainer3"]
 self_modulate = Color(0.0235294, 1, 0, 1)

@@ -6,7 +6,6 @@ class_name MeshBuilder
 var mesh_builder_communicator_script = load("res://addons/meshbuilder/mesh_builder/mesh_builder_communication.gd")
 var mesh_builder_communicator
 var root :Node3D
-var csg :CSG
 var nb_children = 0
 var last_time_published = 0
 
@@ -38,29 +37,47 @@ func _process(delta):
 		nb_children = get_child_count()
 		update()
 
-func union(mbs :MeshBuilderShape):
-	if self.csg == null:
-		self.csg = mbs.csg
-	else:
-		self.csg = self.csg.union(mbs.csg)
-
-func subtract(mbs :MeshBuilderShape):
-	if self.csg == null:
-		self.csg = mbs.csg
-	else:
-		self.csg = self.csg.subtract(mbs.csg)
-
-func intersect(mbs :MeshBuilderShape):
-	if self.csg == null:
-		self.csg = mbs.csg
-	else:
-		self.csg = self.csg.intersect(mbs.csg)
-
 func add_shape(mbs :MeshBuilderShape, name :String, selected_node :Node3D):
-	mbs.csg_change.connect(update)
-	mbs.name = name
-	selected_node.add_child(mbs, true)
-	mbs.owner = root
+	if selected_node == self:
+		# Add combiner
+		var combiner = MeshBuilderCombiner.new()
+		combiner.csg_change.connect(update)
+		combiner.name = "Combiner"
+		selected_node.add_child(combiner, true)
+		combiner.owner = root
+		# Add shape under combiner
+		mbs.csg_change.connect(update)
+		mbs.name = name
+		combiner.add_child(mbs, true)
+		mbs.owner = root
+	elif not selected_node is MeshBuilderCombiner:
+		# Add combiner to parent
+		var combiner = MeshBuilderCombiner.new()
+		combiner.csg_change.connect(update)
+		combiner.name = "Combiner"
+		selected_node.get_parent().add_child(combiner, true)
+		combiner.owner = root
+		# Move selected node under combiner
+		reparent(selected_node, combiner)
+		combiner.operation = selected_node.operation
+		selected_node.operation = MeshBuilderShape.OPERATION_TYPE.Union
+		selected_node.owner = root
+		# Add shape under combiner
+		mbs.csg_change.connect(update)
+		mbs.name = name
+		combiner.add_child(mbs, true)
+		mbs.owner = root
+	else:
+		# Add shape under selected combiner
+		mbs.csg_change.connect(update)
+		mbs.name = name
+		selected_node.add_child(mbs, true)
+		mbs.owner = root
+
+static func reparent(child: Node, new_parent: Node):
+	var old_parent = child.get_parent()
+	old_parent.remove_child(child)
+	new_parent.add_child(child)
 
 func add_cone(selected_node :Node3D, params :Array = []):
 	var shape
@@ -127,50 +144,31 @@ func add_ring(selected_node :Node3D, params :Array = []):
 	add_shape(shape, "Ring", selected_node)
 	return shape
 
-func build_csg(main_csg :CSG, shapes :Array):
-	var new_csg = main_csg
-	for shape in shapes:
+func get_csg() -> CSG:
+	var csg = CSG.new()
+	for shape in get_children():
 		if not shape is MeshBuilderShape:
 			continue
-		if not shape.is_connected("csg_change", update):
-			shape.csg_change.connect(update)
-		match shape.operation:
-			MeshBuilderShape.OPERATION_TYPE.Union:
-				if shape.get_child_count() == 0:
-					print("union with " + str(shape.name))
-					new_csg = new_csg.union(shape.csg)
-				else:
-					print("union with children of " + str(shape.name))
-					new_csg = new_csg.union(build_csg(shape.csg, shape.get_children()))
-			MeshBuilderShape.OPERATION_TYPE.Subtract:
-				if shape.get_child_count() == 0:
-					print("subtract with " + str(shape.name))
-					new_csg = new_csg.subtract(shape.csg)
-				else:
-					print("subtract with children of " + str(shape.name))
-					new_csg = new_csg.subtract(build_csg(shape.csg, shape.get_children()))
-			MeshBuilderShape.OPERATION_TYPE.Intersect:
-				if shape.get_child_count() == 0:
-					print("intersect with " + str(shape.name))
-					new_csg = new_csg.intersect(shape.csg)
-				else:
-					print("intersect with children of " + str(shape.name))
-					new_csg = new_csg.intersect(build_csg(shape.csg, shape.get_children()))
-	return new_csg
+		else:
+			match shape.operation:
+				MeshBuilderShape.OPERATION_TYPE.Union:
+					csg = csg.union(shape.get_csg())
+				MeshBuilderShape.OPERATION_TYPE.Subtract:
+					csg = csg.subtract(shape.get_csg())
+				MeshBuilderShape.OPERATION_TYPE.Intersect:
+					csg = csg.intersect(shape.get_csg())
+	return csg
 
 func update():
-	csg = build_csg(CSG.new(), get_children())
-	build_mesh()
-
-func build_mesh():
+	var csg = get_csg()
 	var st = SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 	
 	var start_time = Time.get_ticks_msec()
 	
 	var real_poly_count = 0
-	if self.csg != null:
-		for poly in self.csg.polygons:
+	if csg != null:
+		for poly in csg.polygons:
 			var vertices = []
 			for vert in poly.vertices:
 				vertices.append(vert.clone())

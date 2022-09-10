@@ -17,16 +17,13 @@ func _init(params=[0.5,1.0,8,6,0]):
 	self.operation = params[4]
 	super._init(params)
 	self.current_values = [innerR, outerR, stacks, slices]
-	csg = CSG.torus(innerR, outerR, stacks, slices).scale(scale).rotate(rotation).translate(position)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if self.current_values != [innerR, outerR, stacks, slices]:
 		self.current_values = [innerR, outerR, stacks, slices]
-		change_transform()
 		emit_signal("csg_change")
 	super._process(delta)
 
-func change_transform():
-	csg = CSG.torus(innerR, outerR, stacks, slices).scale(scale).rotate(rotation).translate(position)
-	super.change_transform()
+func get_csg():
+	return CSG.torus(innerR, outerR, stacks, slices).scale(scale).rotate(rotation).translate(position)

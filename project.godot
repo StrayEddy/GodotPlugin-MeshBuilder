@@ -29,6 +29,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://addons/meshbuilder/mesh_builder_camera/mesh_builder_camera.gd"
 }, {
+"base": "MeshBuilderShape",
+"class": &"MeshBuilderCombiner",
+"language": &"GDScript",
+"path": "res://addons/meshbuilder/mesh_builder_combiner/mesh_builder_combiner.gd"
+}, {
 "base": "Node",
 "class": &"MeshBuilderCommunication",
 "language": &"GDScript",
@@ -109,6 +114,7 @@ _global_script_class_icons={
 "CSG": "",
 "MeshBuilder": "res://addons/meshbuilder/mesh_builder/icon.svg",
 "MeshBuilderCamera": "",
+"MeshBuilderCombiner": "res://addons/meshbuilder/mesh_builder_combiner/icon.svg",
 "MeshBuilderCommunication": "",
 "MeshBuilderCone": "res://addons/meshbuilder/mesh_builder_cone/icon.svg",
 "MeshBuilderCube": "res://addons/meshbuilder/mesh_builder_cube/icon.svg",
