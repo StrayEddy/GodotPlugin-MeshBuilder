@@ -15,16 +15,16 @@ func add_shape_creation_button(parent :Control, label_text :String, image_base64
 
 func _on_community_visibility_changed():
 	if $TabContainer/Community.visible:
-		var on_completed = func(complex_shapes :Array):
+		var on_completed = func(shapes :Array):
 			for child in $TabContainer/Community/HBoxContainer/VBoxContainer/ScrollContainer/GridContainer.get_children():
 				child.queue_free()
 			
 			# Sort shapes alphabetically
-			complex_shapes.sort_custom(func(a,b): return a.name > b.name)
+			shapes.sort_custom(func(a,b): return a.name > b.name)
 			
-			for complex_shape in complex_shapes:
+			for shape in shapes:
 				var callable :Callable = Callable(self, "_on_add_shape_pressed")
-				var button = add_shape_creation_button($TabContainer/Community/HBoxContainer/VBoxContainer/ScrollContainer/GridContainer, complex_shape.name, complex_shape.image_base64, callable.bind(complex_shape.shapes))
+				var button = add_shape_creation_button($TabContainer/Community/HBoxContainer/VBoxContainer/ScrollContainer/GridContainer, shape.name, shape.image_base64, callable.bind(shape.shapes))
 		
 		mesh_builder.get_community_meshes(on_completed)
 
@@ -33,6 +33,8 @@ func _on_add_shape_pressed(shapes):
 		var shape :MeshBuilderShape
 		var params :Array = shape_info.params
 		params.append(shape_info.operation)
+		if "Combiner" in shape_info.name:
+			shape = mesh_builder.add_combiner(selected_node)
 		if "Cone" in shape_info.name:
 			shape = mesh_builder.add_cone(selected_node, params)
 		elif "Cube" in shape_info.name:
@@ -53,6 +55,8 @@ func _on_add_shape_pressed(shapes):
 		shape.position = Vector3(shape_info.position[0], shape_info.position[1], shape_info.position[2])
 		shape.rotation = Vector3(shape_info.rotation[0], shape_info.rotation[1], shape_info.rotation[2])
 		shape.scale = Vector3(shape_info.scale[0], shape_info.scale[1], shape_info.scale[2])
+		for child_shape in shape_info.children:
+			_on_add_shape_pressed(child_shape)
 
 func _on_add_cone_pressed():
 	mesh_builder.add_cone(selected_node)

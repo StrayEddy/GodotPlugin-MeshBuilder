@@ -5,7 +5,6 @@ class_name MeshBuilderSphere
 
 @export var slices :int = 12
 @export var stacks :int = 6
-var current_values :Array = [slices, stacks]
 
 func _init(params=[12,6,0]):
 	self.slices = params[0]

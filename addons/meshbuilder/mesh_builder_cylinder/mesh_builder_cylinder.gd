@@ -7,7 +7,6 @@ class_name MeshBuilderCylinder
 @export var bottom_radius :float = 1.0
 @export var top_radius :float = 1.0
 @export var slices :int = 16
-var current_values :Array = [height, bottom_radius, top_radius, slices]
 
 func _init(params=[1.0,1.0,1.0,16,0]):
 	self.height = params[0]

@@ -6,7 +6,6 @@ class_name MeshBuilderCone
 @export var height :float = 1.0
 @export var radius :float = 1.0
 @export var slices :int = 16
-var current_values :Array = [height, radius, slices]
 
 func _init(params=[1.0,1.0,16,0]):
 	self.height = params[0]

@@ -9,21 +9,11 @@ func new_httprequest(on_request_completed :Callable) -> HTTPRequest:
 	return http_request
 
 func publish(mesh_builder :MeshBuilder, image_base64 :String, on_completed :Callable):
-	var simple_shapes_array = []
-	for i in mesh_builder.get_child_count():
-		if mesh_builder.get_child(i) is MeshBuilderShape:
-			var child :MeshBuilderShape = mesh_builder.get_child(i)
-			simple_shapes_array.append({
-				"name": child.name,
-				"operation": child.operation,
-				"scale": [child.scale.x, child.scale.y, child.scale.z],
-				"rotation": [child.rotation.x, child.rotation.y, child.rotation.z],
-				"position": [child.position.x, child.position.y, child.position.z],
-				"params": child.current_values,
-			})
-	var new_json = {"id":str(randi()), "image_base64":image_base64, "shapes": simple_shapes_array}
-	
-	publish_json(new_json, on_completed)
+	var shapes = []
+	for child in mesh_builder.get_children():
+		shapes.append(child.to_json())
+	var json = {"id":str(randi()), "image_base64":image_base64, "shapes":shapes}
+	publish_json(json, on_completed)
 
 func read_json(on_completed :Callable):
 	var on_read_completed = func(result, response_code, headers, body):

@@ -9,7 +9,9 @@ enum OPERATION_TYPE {Union, Subtract, Intersect}
 
 var current_transform :Transform3D
 var current_operation :OPERATION_TYPE
+var current_values :Array = []
 var nb_children = 0
+var needs_update = false
 
 func _init(params=[]):
 	self.current_transform = transform
@@ -22,6 +24,7 @@ func _process(delta):
 			self.current_transform = transform
 			self.current_operation = operation
 			self.nb_children = get_child_count()
+			needs_update = true
 			emit_signal("csg_change")
 
 func get_mesh_builder():
@@ -44,3 +47,18 @@ func get_csg() -> CSG:
 				MeshBuilderShape.OPERATION_TYPE.Intersect:
 					csg = csg.intersect(shape.get_csg())
 	return csg.scale(scale).rotate(rotation).translate(position)
+
+func to_json():
+	var children = []
+	for child in get_children():
+		children.append(child.to_json())
+	var json = {
+		"name": name,
+		"operation": operation,
+		"scale": [scale.x, scale.y, scale.z],
+		"rotation": [rotation.x, rotation.y, rotation.z],
+		"position": [position.x, position.y, position.z],
+		"params": current_values,
+		"children": children
+	}
+	return json

@@ -7,7 +7,6 @@ class_name MeshBuilderRing
 @export var inner_radius :float = 0.5
 @export var outer_radius :float = 1.0
 @export var slices :int = 16
-var current_values :Array = [height, inner_radius, outer_radius, slices]
 
 func _init(params=[1.0,0.5,1.0,16,0]):
 	self.height = params[0]

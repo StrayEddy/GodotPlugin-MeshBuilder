@@ -67,6 +67,14 @@ static func reparent(child: Node, new_parent: Node):
 	old_parent.remove_child(child)
 	new_parent.add_child(child)
 
+func add_combiner(selected_node :Node3D):
+	var combiner = MeshBuilderCombiner.new()
+	combiner.csg_change.connect(update)
+	combiner.name = "Combiner"
+	selected_node.add_child(combiner, true)
+	combiner.owner = root
+	return combiner
+
 func add_cone(selected_node :Node3D, params :Array = []):
 	var shape
 	if params.is_empty():
@@ -176,7 +184,7 @@ func get_community_meshes(on_completed :Callable):
 	mesh_builder_communicator.read_json(on_completed)
 
 func publish_check():
-	if get_child_count() < 3:
+	if get_child_count() < 2:
 		OS.alert("You need at least 2 shapes to publish your work")
 		return false
 	elif Time.get_ticks_msec() - last_time_published < 60000:

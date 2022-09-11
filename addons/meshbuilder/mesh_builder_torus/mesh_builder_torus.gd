@@ -7,7 +7,6 @@ class_name MeshBuilderTorus
 @export var outerR :float = 1.0
 @export var stacks :int = 8
 @export var slices :int = 6
-var current_values :Array = [innerR, outerR, stacks, slices]
 
 func _init(params=[0.5,1.0,8,6,0]):
 	self.innerR = params[0]
