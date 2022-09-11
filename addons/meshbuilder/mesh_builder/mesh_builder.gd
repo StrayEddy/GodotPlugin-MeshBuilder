@@ -58,12 +58,16 @@ func add_shape(mbs :MeshBuilderShape, name :String):
 	self.add_child(mbs, true)
 	mbs.owner = root
 
-func add_combiner():
-	var combiner = MeshBuilderCombiner.new()
-	combiner.name = "Combiner"
-	self.add_child(combiner, true)
-	combiner.owner = root
-	return combiner
+func add_combiner(params :Array = []):
+	var shape
+	if params.is_empty():
+		shape = MeshBuilderCombiner.new()
+	else:
+		shape = MeshBuilderCombiner.new(params)
+	self.add_child(shape, true)
+	shape.name = "Combiner"
+	shape.owner = root
+	return shape
 func add_cone(params :Array = []):
 	var shape
 	if params.is_empty():

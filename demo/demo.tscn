@@ -1,11 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://byapsytbqrrb7"]
+[gd_scene load_steps=5 format=3 uid="uid://byapsytbqrrb7"]
 
 [ext_resource type="Script" path="res://demo/demo.gd" id="1_sugoq"]
+[ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder/mesh_builder.gd" id="2_jyt2k"]
 
 [sub_resource type="Environment" id="Environment_j230i"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_hw3b5"]
 
 [node name="Demo" type="Node3D"]
 script = ExtResource("1_sugoq")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_j230i")
+
+[node name="MeshBuilder" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.2705, 0, 0.96272, 0, 1, 0, -0.96272, 0, -0.2705, 0, 0, 0)
+mesh = SubResource("ArrayMesh_hw3b5")
+script = ExtResource("2_jyt2k")

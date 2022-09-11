@@ -92,12 +92,16 @@ static func reparent(child: Node, new_parent: Node):
 	old_parent.remove_child(child)
 	new_parent.add_child(child)
 
-func add_combiner():
-	var combiner = load("res://addons/meshbuilder/mesh_builder_combiner/mesh_builder_combiner.gd").new()
-	combiner.name = "Combiner"
-	self.add_child(combiner, true)
-	combiner.owner = root
-	return combiner
+func add_combiner(params :Array = []):
+	var shape
+	if params.is_empty():
+		shape = load("res://addons/meshbuilder/mesh_builder_combiner/mesh_builder_combiner.gd").new()
+	else:
+		shape = load("res://addons/meshbuilder/mesh_builder_combiner/mesh_builder_combiner.gd").new(params)
+	self.add_child(shape, true)
+	shape.name = "Combiner"
+	shape.owner = root
+	return shape
 func add_cone(params :Array = []):
 	var shape
 	if params.is_empty():

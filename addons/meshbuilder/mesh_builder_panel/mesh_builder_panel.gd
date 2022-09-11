@@ -24,39 +24,38 @@ func _on_community_visibility_changed():
 			
 			for shape in shapes:
 				var callable :Callable = Callable(self, "_on_add_shape_pressed")
-				var button = add_shape_creation_button($TabContainer/Community/HBoxContainer/VBoxContainer/ScrollContainer/GridContainer, shape.name, shape.image_base64, callable.bind(shape.shapes))
+				var button = add_shape_creation_button($TabContainer/Community/HBoxContainer/VBoxContainer/ScrollContainer/GridContainer, shape.name, shape.image_base64, callable.bind(selected_node, shape.shapes))
 		
 		mesh_builder.get_community_meshes(on_completed)
 
-func _on_add_shape_pressed(shapes):
+func _on_add_shape_pressed(owner_of_shapes, shapes):
 	for shape_info in shapes:
 		var shape :MeshBuilderShape
 		var params :Array = shape_info.params
 		params.append(shape_info.operation)
 		if "Combiner" in shape_info.name:
-			shape = selected_node.add_combiner()
+			shape = owner_of_shapes.add_combiner(params)
 		if "Cone" in shape_info.name:
-			shape = selected_node.add_cone(params)
+			shape = owner_of_shapes.add_cone(params)
 		elif "Cube" in shape_info.name:
-			shape = selected_node.add_cube(params)
+			shape = owner_of_shapes.add_cube(params)
 		elif "Cylinder" in shape_info.name:
-			shape = selected_node.add_cylinder(params)
+			shape = owner_of_shapes.add_cylinder(params)
 		elif "DoubleCone" in shape_info.name:
-			shape = selected_node.add_double_cone(params)
+			shape = owner_of_shapes.add_double_cone(params)
 		elif "HalfSphere" in shape_info.name:
-			shape = selected_node.add_half_sphere(params)
+			shape = owner_of_shapes.add_half_sphere(params)
 		elif "Ring" in shape_info.name:
-			shape = selected_node.add_ring(params)
+			shape = owner_of_shapes.add_ring(params)
 		elif "Sphere" in shape_info.name:
-			shape = selected_node.add_sphere(params)
+			shape = owner_of_shapes.add_sphere(params)
 		elif "Torus" in shape_info.name:
-			shape = selected_node.add_torus(params)
+			shape = owner_of_shapes.add_torus(params)
 		
 		shape.position = Vector3(shape_info.position[0], shape_info.position[1], shape_info.position[2])
 		shape.rotation = Vector3(shape_info.rotation[0], shape_info.rotation[1], shape_info.rotation[2])
 		shape.scale = Vector3(shape_info.scale[0], shape_info.scale[1], shape_info.scale[2])
-		for child_shape in shape_info.children:
-			_on_add_shape_pressed(child_shape)
+		_on_add_shape_pressed(shape, shape_info.children)
 
 func _on_add_cone_pressed():
 	selected_node.add_cone()
