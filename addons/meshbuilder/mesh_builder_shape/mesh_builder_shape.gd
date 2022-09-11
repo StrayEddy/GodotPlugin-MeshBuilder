@@ -2,8 +2,6 @@
 extends Node3D
 class_name MeshBuilderShape
 
-signal csg_change
-
 enum OPERATION_TYPE {Union, Subtract, Intersect}
 @export var operation :OPERATION_TYPE = OPERATION_TYPE.Union
 
@@ -11,21 +9,22 @@ var current_transform :Transform3D
 var current_operation :OPERATION_TYPE
 var current_values :Array = []
 var nb_children = 0
-var needs_update = false
 
 func _init(params=[]):
 	self.current_transform = transform
 	self.current_operation = operation
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	if Engine.get_frames_drawn() % 3 == 0:
-		if self.current_transform != transform or self.current_operation != operation or self.nb_children != get_child_count():
-			self.current_transform = transform
-			self.current_operation = operation
-			self.nb_children = get_child_count()
-			needs_update = true
-			emit_signal("csg_change")
+func update():
+	var needs_redraw = false
+	for child in get_children():
+		if child.update():
+			needs_redraw = true
+	if self.current_transform != transform or self.current_operation != operation or self.nb_children != get_child_count():
+		self.current_transform = transform
+		self.current_operation = operation
+		self.nb_children = get_child_count()
+		needs_redraw = true
+	return needs_redraw
 
 func get_mesh_builder():
 	var parent = self

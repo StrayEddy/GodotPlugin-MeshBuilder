@@ -13,12 +13,16 @@ func _init(params=[12,6,0]):
 	super._init(params)
 	self.current_values = [slices, stacks]
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func update():
+	var needs_redraw = super.update()
+	for child in get_children():
+		if child.update():
+			needs_redraw = true
 	if self.current_values != [slices, stacks]:
 		self.current_values = [slices, stacks]
-		emit_signal("csg_change")
-	super._process(delta)
+		needs_redraw = true
+	
+	return needs_redraw
 
 func get_csg():
 	return CSG.sphere(slices, stacks).scale(scale).rotate(rotation).translate(position)

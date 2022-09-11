@@ -17,12 +17,16 @@ func _init(params=[1.0,1.0,1.0,16,0]):
 	super._init(params)
 	self.current_values = [height, bottom_radius, top_radius, slices]
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func update():
+	var needs_redraw = super.update()
+	for child in get_children():
+		if child.update():
+			needs_redraw = true
 	if self.current_values != [height, bottom_radius, top_radius, slices]:
 		self.current_values = [height, bottom_radius, top_radius, slices]
-		emit_signal("csg_change")
-	super._process(delta)
+		needs_redraw = true
+	
+	return needs_redraw
 
 func get_csg():
 	return CSG.cylinder(height, bottom_radius, top_radius, slices).scale(scale).rotate(rotation).translate(position)

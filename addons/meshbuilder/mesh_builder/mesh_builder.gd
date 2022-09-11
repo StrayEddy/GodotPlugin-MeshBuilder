@@ -6,7 +6,7 @@ class_name MeshBuilder
 var mesh_builder_communicator_script = load("res://addons/meshbuilder/mesh_builder/mesh_builder_communication.gd")
 var mesh_builder_communicator
 var root :Node3D
-var nb_children = 0
+var total_nb_shapes = 0
 var last_time_published = 0
 
 var sub_viewport :SubViewport
@@ -31,23 +31,36 @@ func _ready():
 func publish_json_completed():
 	OS.alert("Thank you for publishing your work. It will be reviewed before becoming available to the general public.")
 
+func get_all_children(in_node,arr:=[]):
+	arr.push_back(in_node)
+	for child in in_node.get_children():
+		arr = get_all_children(child,arr)
+	return arr
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if nb_children != get_child_count():
-		nb_children = get_child_count()
-		update()
+	if Engine.get_frames_drawn() % 3 == 0:
+		var needs_redraw = false
+		for child in get_children():
+			if child.update():
+				needs_redraw = true
+		
+		var new_total_nb_shapes = get_all_children(self).size()
+		if total_nb_shapes != new_total_nb_shapes:
+			total_nb_shapes = new_total_nb_shapes
+			needs_redraw = true
+		if needs_redraw:
+			draw()
 
 func add_shape(mbs :MeshBuilderShape, name :String, selected_node :Node3D):
 	if selected_node == self or selected_node is MeshBuilderCombiner:
 		# Add shape under selected node (combiner or builder)
-		mbs.csg_change.connect(update)
 		mbs.name = name
 		selected_node.add_child(mbs, true)
 		mbs.owner = root
 	else:
 		# Add combiner to parent
 		var combiner = MeshBuilderCombiner.new()
-		combiner.csg_change.connect(update)
 		combiner.name = "Combiner"
 		selected_node.get_parent().add_child(combiner, true)
 		combiner.owner = root
@@ -57,7 +70,6 @@ func add_shape(mbs :MeshBuilderShape, name :String, selected_node :Node3D):
 		selected_node.operation = MeshBuilderShape.OPERATION_TYPE.Union
 		selected_node.owner = root
 		# Add shape under combiner
-		mbs.csg_change.connect(update)
 		mbs.name = name
 		combiner.add_child(mbs, true)
 		mbs.owner = root
@@ -69,7 +81,6 @@ static func reparent(child: Node, new_parent: Node):
 
 func add_combiner(selected_node :Node3D):
 	var combiner = MeshBuilderCombiner.new()
-	combiner.csg_change.connect(update)
 	combiner.name = "Combiner"
 	selected_node.add_child(combiner, true)
 	combiner.owner = root
@@ -155,7 +166,7 @@ func get_csg() -> CSG:
 					csg = csg.intersect(shape.get_csg())
 	return csg.scale(scale).rotate(rotation).translate(position)
 
-func update():
+func draw():
 	var csg = get_csg()
 	var st = SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
