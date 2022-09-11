@@ -52,103 +52,81 @@ func _process(delta):
 		if needs_redraw:
 			draw()
 
-func add_shape(mbs :MeshBuilderShape, name :String, selected_node :Node3D):
-	if selected_node == self or selected_node is MeshBuilderCombiner:
-		# Add shape under selected node (combiner or builder)
-		mbs.name = name
-		selected_node.add_child(mbs, true)
-		mbs.owner = root
-	else:
-		# Add combiner to parent
-		var combiner = MeshBuilderCombiner.new()
-		combiner.name = "Combiner"
-		selected_node.get_parent().add_child(combiner, true)
-		combiner.owner = root
-		# Move selected node under combiner
-		reparent(selected_node, combiner)
-		combiner.operation = selected_node.operation
-		selected_node.operation = MeshBuilderShape.OPERATION_TYPE.Union
-		selected_node.owner = root
-		# Add shape under combiner
-		mbs.name = name
-		combiner.add_child(mbs, true)
-		mbs.owner = root
+func add_shape(mbs :MeshBuilderShape, name :String):
+	# Add shape under selected node (combiner or builder)
+	mbs.name = name
+	self.add_child(mbs, true)
+	mbs.owner = root
 
-static func reparent(child: Node, new_parent: Node):
-	var old_parent = child.get_parent()
-	old_parent.remove_child(child)
-	new_parent.add_child(child)
-
-func add_combiner(selected_node :Node3D):
+func add_combiner():
 	var combiner = MeshBuilderCombiner.new()
 	combiner.name = "Combiner"
-	selected_node.add_child(combiner, true)
+	self.add_child(combiner, true)
 	combiner.owner = root
 	return combiner
-
-func add_cone(selected_node :Node3D, params :Array = []):
+func add_cone(params :Array = []):
 	var shape
 	if params.is_empty():
 		shape = MeshBuilderCone.new()
 	else:
 		shape = MeshBuilderCone.new(params)
-	add_shape(shape, "Cone", selected_node)
+	add_shape(shape, "Cone")
 	return shape
-func add_double_cone(selected_node :Node3D, params :Array = []):
+func add_double_cone(params :Array = []):
 	var shape
 	if params.is_empty():
 		shape = MeshBuilderDoubleCone.new()
 	else:
 		shape = MeshBuilderDoubleCone.new(params)
-	add_shape(shape, "DoubleCone", selected_node)
+	add_shape(shape, "DoubleCone")
 	return shape
-func add_cube(selected_node :Node3D, params :Array = []):
+func add_cube(params :Array = []):
 	var shape
 	if params.is_empty():
 		shape = MeshBuilderCube.new()
 	else:
 		shape = MeshBuilderCube.new(params)
-	add_shape(shape, "Cube", selected_node)
+	add_shape(shape, "Cube")
 	return shape
-func add_cylinder(selected_node :Node3D, params :Array = []):
+func add_cylinder(params :Array = []):
 	var shape
 	if params.is_empty():
 		shape = MeshBuilderCylinder.new()
 	else:
 		shape = MeshBuilderCylinder.new(params)
-	add_shape(shape, "Cylinder", selected_node)
+	add_shape(shape, "Cylinder")
 	return shape
-func add_sphere(selected_node :Node3D, params :Array = []):
+func add_sphere(params :Array = []):
 	var shape
 	if params.is_empty():
 		shape = MeshBuilderSphere.new()
 	else:
 		shape = MeshBuilderSphere.new(params)
-	add_shape(shape, "Sphere", selected_node)
+	add_shape(shape, "Sphere")
 	return shape
-func add_half_sphere(selected_node :Node3D, params :Array = []):
+func add_half_sphere(params :Array = []):
 	var shape
 	if params.is_empty():
 		shape = MeshBuilderHalfSphere.new()
 	else:
 		shape = MeshBuilderHalfSphere.new(params)
-	add_shape(shape, "HalfSphere", selected_node)
+	add_shape(shape, "HalfSphere")
 	return shape
-func add_torus(selected_node :Node3D, params :Array = []):
+func add_torus(params :Array = []):
 	var shape
 	if params.is_empty():
 		shape = MeshBuilderTorus.new()
 	else:
 		shape = MeshBuilderTorus.new(params)
-	add_shape(shape, "Torus", selected_node)
+	add_shape(shape, "Torus")
 	return shape
-func add_ring(selected_node :Node3D, params :Array = []):
+func add_ring(params :Array = []):
 	var shape
 	if params.is_empty():
 		shape = MeshBuilderRing.new()
 	else:
 		shape = MeshBuilderRing.new(params)
-	add_shape(shape, "Ring", selected_node)
+	add_shape(shape, "Ring")
 	return shape
 
 func get_csg() -> CSG:

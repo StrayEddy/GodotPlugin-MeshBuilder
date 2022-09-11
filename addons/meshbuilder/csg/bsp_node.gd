@@ -40,7 +40,8 @@ func clone():
 func invert():
 	for poly in self.polygons:
 		poly.flip()
-	self.plane.flip()
+	if self.plane:
+		self.plane.flip()
 	if self.front: 
 		self.front.invert()
 	if self.back: 

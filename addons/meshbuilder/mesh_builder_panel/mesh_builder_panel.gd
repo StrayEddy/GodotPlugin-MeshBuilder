@@ -34,23 +34,23 @@ func _on_add_shape_pressed(shapes):
 		var params :Array = shape_info.params
 		params.append(shape_info.operation)
 		if "Combiner" in shape_info.name:
-			shape = mesh_builder.add_combiner(selected_node)
+			shape = selected_node.add_combiner()
 		if "Cone" in shape_info.name:
-			shape = mesh_builder.add_cone(selected_node, params)
+			shape = selected_node.add_cone(params)
 		elif "Cube" in shape_info.name:
-			shape = mesh_builder.add_cube(selected_node, params)
+			shape = selected_node.add_cube(params)
 		elif "Cylinder" in shape_info.name:
-			shape = mesh_builder.add_cylinder(selected_node, params)
+			shape = selected_node.add_cylinder(params)
 		elif "DoubleCone" in shape_info.name:
-			shape = mesh_builder.add_double_cone(selected_node, params)
+			shape = selected_node.add_double_cone(params)
 		elif "HalfSphere" in shape_info.name:
-			shape = mesh_builder.add_half_sphere(selected_node, params)
+			shape = selected_node.add_half_sphere(params)
 		elif "Ring" in shape_info.name:
-			shape = mesh_builder.add_ring(selected_node, params)
+			shape = selected_node.add_ring(params)
 		elif "Sphere" in shape_info.name:
-			shape = mesh_builder.add_sphere(selected_node, params)
+			shape = selected_node.add_sphere(params)
 		elif "Torus" in shape_info.name:
-			shape = mesh_builder.add_torus(selected_node, params)
+			shape = selected_node.add_torus(params)
 		
 		shape.position = Vector3(shape_info.position[0], shape_info.position[1], shape_info.position[2])
 		shape.rotation = Vector3(shape_info.rotation[0], shape_info.rotation[1], shape_info.rotation[2])
@@ -59,28 +59,28 @@ func _on_add_shape_pressed(shapes):
 			_on_add_shape_pressed(child_shape)
 
 func _on_add_cone_pressed():
-	mesh_builder.add_cone(selected_node)
+	selected_node.add_cone()
 
 func _on_add_double_cone_pressed():
-	mesh_builder.add_double_cone(selected_node)
+	selected_node.add_double_cone()
 
 func _on_add_cube_pressed():
-	mesh_builder.add_cube(selected_node)
+	selected_node.add_cube()
 
 func _on_add_cylinder_pressed():
-	mesh_builder.add_cylinder(selected_node)
+	selected_node.add_cylinder()
 
 func _on_add_sphere_pressed():
-	mesh_builder.add_sphere(selected_node)
+	selected_node.add_sphere()
 
 func _on_add_half_sphere_pressed():
-	mesh_builder.add_half_sphere(selected_node)
+	selected_node.add_half_sphere()
 
 func _on_add_torus_pressed():
-	mesh_builder.add_torus(selected_node)
+	selected_node.add_torus()
 
 func _on_add_ring_pressed():
-	mesh_builder.add_ring(selected_node)
+	selected_node.add_ring()
 
 func _on_publish_pressed():
 	if mesh_builder.publish_check():

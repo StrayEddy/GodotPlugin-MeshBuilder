@@ -5,6 +5,7 @@ class_name MeshBuilderShape
 enum OPERATION_TYPE {Union, Subtract, Intersect}
 @export var operation :OPERATION_TYPE = OPERATION_TYPE.Union
 
+var root :Node3D
 var current_transform :Transform3D
 var current_operation :OPERATION_TYPE
 var current_values :Array = []
@@ -13,6 +14,9 @@ var nb_children = 0
 func _init(params=[]):
 	self.current_transform = transform
 	self.current_operation = operation
+
+func _ready():
+	root = get_tree().get_edited_scene_root()
 
 func update():
 	var needs_redraw = false
@@ -61,3 +65,100 @@ func to_json():
 		"children": children
 	}
 	return json
+
+func add_shape(shape :MeshBuilderShape, name :String):
+	if "Combiner" in self.name:
+		self.add_child(shape, true)
+		shape.name = name
+		shape.owner = root
+	else:
+		# Add combiner to parent
+		var combiner = load("res://addons/meshbuilder/mesh_builder_combiner/mesh_builder_combiner.gd").new()
+		self.get_parent().add_child(combiner, true)
+		combiner.name = "Combiner"
+		combiner.owner = root
+		# Move selected node under combiner
+		reparent(self, combiner)
+		combiner.operation = self.operation
+		self.operation = MeshBuilderShape.OPERATION_TYPE.Union
+		self.owner = root
+		# Add shape under combiner
+		combiner.add_child(shape, true)
+		shape.name = name
+		shape.owner = root
+
+static func reparent(child: Node, new_parent: Node):
+	var old_parent = child.get_parent()
+	old_parent.remove_child(child)
+	new_parent.add_child(child)
+
+func add_combiner():
+	var combiner = load("res://addons/meshbuilder/mesh_builder_combiner/mesh_builder_combiner.gd").new()
+	combiner.name = "Combiner"
+	self.add_child(combiner, true)
+	combiner.owner = root
+	return combiner
+func add_cone(params :Array = []):
+	var shape
+	if params.is_empty():
+		shape = MeshBuilderCone.new()
+	else:
+		shape = MeshBuilderCone.new(params)
+	add_shape(shape, "Cone")
+	return shape
+func add_double_cone(params :Array = []):
+	var shape
+	if params.is_empty():
+		shape = MeshBuilderDoubleCone.new()
+	else:
+		shape = MeshBuilderDoubleCone.new(params)
+	add_shape(shape, "DoubleCone")
+	return shape
+func add_cube(params :Array = []):
+	var shape
+	if params.is_empty():
+		shape = MeshBuilderCube.new()
+	else:
+		shape = MeshBuilderCube.new(params)
+	add_shape(shape, "Cube")
+	return shape
+func add_cylinder(params :Array = []):
+	var shape
+	if params.is_empty():
+		shape = MeshBuilderCylinder.new()
+	else:
+		shape = MeshBuilderCylinder.new(params)
+	add_shape(shape, "Cylinder")
+	return shape
+func add_sphere(params :Array = []):
+	var shape
+	if params.is_empty():
+		shape = MeshBuilderSphere.new()
+	else:
+		shape = MeshBuilderSphere.new(params)
+	add_shape(shape, "Sphere")
+	return shape
+func add_half_sphere(params :Array = []):
+	var shape
+	if params.is_empty():
+		shape = MeshBuilderHalfSphere.new()
+	else:
+		shape = MeshBuilderHalfSphere.new(params)
+	add_shape(shape, "HalfSphere")
+	return shape
+func add_torus(params :Array = []):
+	var shape
+	if params.is_empty():
+		shape = MeshBuilderTorus.new()
+	else:
+		shape = MeshBuilderTorus.new(params)
+	add_shape(shape, "Torus")
+	return shape
+func add_ring(params :Array = []):
+	var shape
+	if params.is_empty():
+		shape = MeshBuilderRing.new()
+	else:
+		shape = MeshBuilderRing.new(params)
+	add_shape(shape, "Ring")
+	return shape
