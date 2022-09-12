@@ -68,6 +68,14 @@ func add_combiner(params :Array = []):
 	shape.name = "Combiner"
 	shape.owner = root
 	return shape
+func add_polygon(params :Array = []):
+	var shape
+	if params.is_empty():
+		shape = MeshBuilderPolygon.new()
+	else:
+		shape = MeshBuilderPolygon.new(params)
+	add_shape(shape, "Polygon")
+	return shape
 func add_cone(params :Array = []):
 	var shape
 	if params.is_empty():
@@ -177,7 +185,7 @@ func get_community_meshes(on_completed :Callable):
 	mesh_builder_communicator.read_json(on_completed)
 
 func publish_check():
-	if get_child_count() < 2:
+	if get_all_children(self).size() < 2:
 		OS.alert("You need at least 2 shapes to publish your work")
 		return false
 	elif Time.get_ticks_msec() - last_time_published < 60000:

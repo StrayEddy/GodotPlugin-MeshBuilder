@@ -35,6 +35,8 @@ func _on_add_shape_pressed(owner_of_shapes, shapes):
 		params.append(shape_info.operation)
 		if "Combiner" in shape_info.name:
 			shape = owner_of_shapes.add_combiner(params)
+		if "Polygon" in shape_info.name:
+			shape = owner_of_shapes.add_polygon(params)
 		if "Cone" in shape_info.name:
 			shape = owner_of_shapes.add_cone(params)
 		elif "Cube" in shape_info.name:
@@ -56,6 +58,11 @@ func _on_add_shape_pressed(owner_of_shapes, shapes):
 		shape.rotation = Vector3(shape_info.rotation[0], shape_info.rotation[1], shape_info.rotation[2])
 		shape.scale = Vector3(shape_info.scale[0], shape_info.scale[1], shape_info.scale[2])
 		_on_add_shape_pressed(shape, shape_info.children)
+
+
+
+func _on_add_polygon_pressed():
+	selected_node.add_polygon()
 
 func _on_add_cone_pressed():
 	selected_node.add_cone()

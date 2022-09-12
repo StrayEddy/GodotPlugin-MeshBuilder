@@ -235,6 +235,34 @@ func inverse():
 		p.flip()
 	return csg
 
+static func test():
+	pass
+
+static func polygon(height :float = 0.1, vertices_2D :Array = [Vector2(1.0,1.0),Vector2(1.0,-1.0),Vector2(-1.0,-1.0),Vector2(-1.0,1.0)]):
+	var polygons = []
+	# draw top, bottom and height
+	var vertices_top = []
+	var vertices_bottom = []
+	for i in vertices_2D.size():
+		var v_2D = vertices_2D[i]
+		var v_top = Vector3(v_2D.x,height/2,v_2D.y)
+		var v_bottom = Vector3(v_2D.x,-height/2,v_2D.y)
+		vertices_top.append(Vertex.new(v_top))
+		vertices_bottom.append(Vertex.new(v_bottom))
+		
+		# Add height polygons
+		var next_v_2D = vertices_2D[(i+1) % vertices_2D.size()]
+		var next_v_top = Vector3(next_v_2D.x,height/2,next_v_2D.y)
+		var next_v_bottom = Vector3(next_v_2D.x,-height/2,next_v_2D.y)
+		polygons.append(Polygon.new([Vertex.new(v_top), Vertex.new(v_bottom), Vertex.new(next_v_bottom), Vertex.new(next_v_top)]))
+	
+	# Add top polygon
+	polygons.append(Polygon.new(vertices_top))
+	# Add bottom polygon
+	vertices_bottom.reverse()
+	polygons.append(Polygon.new(vertices_bottom))
+	return CSG.from_polygons(polygons)
+
 static func cone(height :float = 1.0, radius :float = 1.0, slices :int = 16):
 	var s = Vector3(0,-1,0) * height
 	var e = Vector3(0,1,0) * height

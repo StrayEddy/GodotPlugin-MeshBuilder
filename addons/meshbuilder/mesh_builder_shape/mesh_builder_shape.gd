@@ -102,6 +102,14 @@ func add_combiner(params :Array = []):
 	shape.name = "Combiner"
 	shape.owner = root
 	return shape
+func add_polygon(params :Array = []):
+	var shape
+	if params.is_empty():
+		shape = MeshBuilderPolygon.new()
+	else:
+		shape = MeshBuilderPolygon.new(params)
+	add_shape(shape, "Polygon")
+	return shape
 func add_cone(params :Array = []):
 	var shape
 	if params.is_empty():
