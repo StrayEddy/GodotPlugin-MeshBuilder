@@ -1,6 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://byapsytbqrrb7"]
+[gd_scene load_steps=7 format=3 uid="uid://byapsytbqrrb7"]
 
 [ext_resource type="Script" path="res://demo/demo.gd" id="1_sugoq"]
+[ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder/mesh_builder.gd" id="2_s517m"]
+[ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder_cylinder/mesh_builder_cylinder.gd" id="3_05cxe"]
+[ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder_sphere/mesh_builder_sphere.gd" id="5_weldx"]
+[ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder_box/mesh_builder_box.gd" id="5_xuthu"]
 
 [sub_resource type="Environment" id="Environment_j230i"]
 
@@ -9,3 +13,34 @@ script = ExtResource("1_sugoq")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_j230i")
+
+[node name="MeshBuilder" type="CSGCombiner3D" parent="."]
+script = ExtResource("2_s517m")
+
+[node name="Cylinder" type="CSGCylinder3D" parent="MeshBuilder"]
+transform = Transform3D(1, 0, 0, 0, -1, 1.50996e-07, 0, -1.50996e-07, -1, 0, 0.25, 0)
+radius = 0.06
+height = 1.0
+sides = 16
+cone = true
+script = ExtResource("3_05cxe")
+
+[node name="Box" type="CSGBox3D" parent="MeshBuilder/Cylinder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+operation = 2
+script = ExtResource("5_xuthu")
+
+[node name="Sphere" type="CSGSphere3D" parent="MeshBuilder"]
+transform = Transform3D(0.12, 0, 0, 0, 0.12, 0, 0, 0, 0.12, 0, 0.747824, 0)
+radial_segments = 16
+script = ExtResource("5_weldx")
+
+[node name="Box" type="CSGBox3D" parent="MeshBuilder/Sphere"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+operation = 2
+script = ExtResource("5_xuthu")
+
+[node name="Cylinder2" type="CSGCylinder3D" parent="MeshBuilder"]
+radius = 0.0458214
+height = 0.0151333
+script = ExtResource("3_05cxe")

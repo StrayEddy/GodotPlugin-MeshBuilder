@@ -69,18 +69,16 @@ func _on_add_cylinder_pressed():
 	MeshBuilder.add_cylinder(root, selected_node)
 
 func _on_add_half_sphere_pressed():
-	var combiner = MeshBuilder.add_combiner(root, selected_node)
-	MeshBuilder.add_sphere(root, combiner)
-	var box = MeshBuilder.add_box(root, combiner, [[1,1,1],2])
+	var sphere = MeshBuilder.add_sphere(root, selected_node)
+	var box = MeshBuilder.add_box(root, sphere, [[1,1,1],2])
 	box.position.y -= .5
 
 func _on_add_sphere_pressed():
 	MeshBuilder.add_sphere(root, selected_node)
 
 func _on_add_ring_pressed():
-	var combiner = MeshBuilder.add_combiner(root, selected_node)
-	MeshBuilder.add_cylinder(root, combiner)
-	MeshBuilder.add_cylinder(root, combiner, [false,2.0,0.25,8,true,2])
+	var cylinder = MeshBuilder.add_cylinder(root, selected_node)
+	MeshBuilder.add_cylinder(root, cylinder, [false,2.0,0.25,8,true,2])
 
 func _on_add_torus_pressed():
 	MeshBuilder.add_torus(root, selected_node)
