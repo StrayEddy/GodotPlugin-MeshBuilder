@@ -2,7 +2,7 @@
 extends Camera3D
 class_name MeshBuilderCamera
 
-func focus_camera_on_node(node: MeshInstance3D, margin = 0.9) -> void:
+func focus_camera_on_node(node: CSGShape3D, margin = 0.9) -> void:
 	var fov = self.fov
 	var max_extent =  node.get_aabb().get_longest_axis_size()
 	var min_distance = (max_extent * margin) / sin(deg2rad(fov / 2.0))

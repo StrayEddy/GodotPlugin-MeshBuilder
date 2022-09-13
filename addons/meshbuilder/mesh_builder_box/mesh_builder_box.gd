@@ -1,9 +1,10 @@
 @tool
-extends CSGCombiner3D
-class_name MeshBuilderCombiner
+extends CSGBox3D
+class_name MeshBuilderBox
 
-func _init(params=[0]):
-	self.operation = params[0]
+func _init(params=[[1,1,1],0]):
+	self.size = Vector3(params[0][0], params[0][1], params[0][2])
+	self.operation = params[1]
 	super._init()
 
 func to_json():
@@ -15,7 +16,7 @@ func to_json():
 		"scale": [scale.x, scale.y, scale.z],
 		"rotation": [rotation.x, rotation.y, rotation.z],
 		"position": [position.x, position.y, position.z],
-		"params": [operation],
+		"params": [[size.x,size.y,size.z], operation],
 		"children": children
 	}
 	return json

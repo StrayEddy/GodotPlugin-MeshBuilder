@@ -8,19 +8,29 @@ func selection_changed() -> void:
 	var selection = get_editor_interface().get_selection().get_selected_nodes()
 	if selection.size() == 1 and selection[0] is MeshBuilder:
 		mesh_builder_panel.show()
+		mesh_builder_panel.root = get_tree().get_edited_scene_root()
 		mesh_builder_panel.selected_node = selection[0]
 		mesh_builder_panel.mesh_builder = selection[0]
 		mesh_builder_panel.mesh_builder.root = get_tree().get_edited_scene_root()
 		editable = false
-	elif selection.size() == 1 and selection[0] is MeshBuilderShape:
+	elif selection.size() == 1 and selection[0] is CSGShape3D:
 		mesh_builder_panel.show()
+		mesh_builder_panel.root = get_tree().get_edited_scene_root()
 		mesh_builder_panel.selected_node = selection[0]
-		mesh_builder_panel.mesh_builder = selection[0].get_mesh_builder()
+		mesh_builder_panel.mesh_builder = get_parent_mesh_builder(selection[0])
 		mesh_builder_panel.mesh_builder.root = get_tree().get_edited_scene_root()
 		editable = true
 	else:
 		editable = false
 		mesh_builder_panel.hide()
+
+func get_parent_mesh_builder(selected_node :Node3D):
+	var parent = selected_node.get_parent()
+	if parent is MeshBuilder:
+		return parent
+	else:
+		get_parent_mesh_builder(parent)
+	
 
 # Override functions to capture mouse events when painting an object
 func _handles(obj) -> bool:
@@ -35,11 +45,8 @@ func _enter_tree():
 	add_custom_type("MeshBuilder", "MeshBuilder", preload("res://addons/meshbuilder/mesh_builder/mesh_builder.gd"), preload("res://addons/meshbuilder/mesh_builder/icon.svg"))
 	
 	add_custom_type("MeshBuilderCone", "MeshBuilderCone", preload("res://addons/meshbuilder/mesh_builder_cone/mesh_builder_cone.gd"), preload("res://addons/meshbuilder/mesh_builder_cone/icon.svg"))
-	add_custom_type("MeshBuilderCube", "MeshBuilderCube", preload("res://addons/meshbuilder/mesh_builder_cube/mesh_builder_cube.gd"), preload("res://addons/meshbuilder/mesh_builder_cube/icon.svg"))
+	add_custom_type("MeshBuilderBox", "MeshBuilderBox", preload("res://addons/meshbuilder/mesh_builder_box/mesh_builder_box.gd"), preload("res://addons/meshbuilder/mesh_builder_box/icon.svg"))
 	add_custom_type("MeshBuilderCylinder", "MeshBuilderCylinder", preload("res://addons/meshbuilder/mesh_builder_cylinder/mesh_builder_cylinder.gd"), preload("res://addons/meshbuilder/mesh_builder_cylinder/icon.svg"))
-	add_custom_type("MeshBuilderDoubleCone", "MeshBuilderDoubleCone", preload("res://addons/meshbuilder/mesh_builder_double_cone/mesh_builder_double_cone.gd"), preload("res://addons/meshbuilder/mesh_builder_double_cone/icon.svg"))
-	add_custom_type("MeshBuilderHalfSphere", "MeshBuilderHalfSphere", preload("res://addons/meshbuilder/mesh_builder_half_sphere/mesh_builder_half_sphere.gd"), preload("res://addons/meshbuilder/mesh_builder_half_sphere/icon.svg"))
-	add_custom_type("MeshBuilderRing", "MeshBuilderRing", preload("res://addons/meshbuilder/mesh_builder_ring/mesh_builder_ring.gd"), preload("res://addons/meshbuilder/mesh_builder_ring/icon.svg"))
 	add_custom_type("MeshBuilderSphere", "MeshBuilderSphere", preload("res://addons/meshbuilder/mesh_builder_sphere/mesh_builder_sphere.gd"), preload("res://addons/meshbuilder/mesh_builder_sphere/icon.svg"))
 	add_custom_type("MeshBuilderTorus", "MeshBuilderTorus", preload("res://addons/meshbuilder/mesh_builder_torus/mesh_builder_torus.gd"), preload("res://addons/meshbuilder/mesh_builder_torus/icon.svg"))
 

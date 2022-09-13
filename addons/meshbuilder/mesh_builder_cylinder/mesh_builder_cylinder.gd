@@ -1,32 +1,27 @@
 @tool
-extends MeshBuilderShape
+extends CSGCylinder3D
 class_name MeshBuilderCylinder
 @icon("res://addons/meshbuilder/mesh_builder_cylinder/icon.svg")
 
-@export var height :float = 1.0
-@export var bottom_radius :float = 1.0
-@export var top_radius :float = 1.0
-@export var slices :int = 16
+func _init(params=[false,2.0,0.5,8,true,0]):
+	self.cone = params[0]
+	self.height = params[1]
+	self.radius = params[2]
+	self.sides = params[3]
+	self.smooth_faces = params[4]
+	self.operation = params[5]
+	super._init()
 
-func _init(params=[1.0,1.0,1.0,16,0]):
-	self.height = params[0]
-	self.bottom_radius = params[1]
-	self.top_radius = params[2]
-	self.slices = params[3]
-	self.operation = params[4]
-	super._init(params)
-	self.current_values = [height, bottom_radius, top_radius, slices]
-
-func update():
-	var needs_redraw = super.update()
+func to_json():
+	var children = []
 	for child in get_children():
-		if child.update():
-			needs_redraw = true
-	if self.current_values != [height, bottom_radius, top_radius, slices]:
-		self.current_values = [height, bottom_radius, top_radius, slices]
-		needs_redraw = true
-	
-	return needs_redraw
-
-func get_csg():
-	return CSG.cylinder(height, bottom_radius, top_radius, slices).scale(scale).rotate(rotation).translate(position)
+		children.append(child.to_json())
+	var json = {
+		"name": name,
+		"scale": [scale.x, scale.y, scale.z],
+		"rotation": [rotation.x, rotation.y, rotation.z],
+		"position": [position.x, position.y, position.z],
+		"params": [cone, height, radius, sides, smooth_faces, operation],
+		"children": children
+	}
+	return json

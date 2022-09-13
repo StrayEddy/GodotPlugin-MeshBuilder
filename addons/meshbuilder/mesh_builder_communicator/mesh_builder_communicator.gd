@@ -1,6 +1,6 @@
 @tool
 extends Node
-class_name MeshBuilderCommunication
+class_name MeshBuilderCommunicator
 
 func new_httprequest(on_request_completed :Callable) -> HTTPRequest:
 	var http_request :HTTPRequest = HTTPRequest.new()

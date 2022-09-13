@@ -1,28 +1,25 @@
 @tool
-extends MeshBuilderShape
+extends CSGPolygon3D
 class_name MeshBuilderPolygon
 @icon("res://addons/meshbuilder/mesh_builder_polygon/icon.svg")
 
-@export var height :float = 0.1
-@export var vertices :Array = [Vector2(1.0,1.0),Vector2(1.0,-1.0),Vector2(-1.0,-1.0),Vector2(-1.0,1.0)]
+func _init(params=[1.0,PackedVector2Array([Vector2(0,0),Vector2(0,1),Vector2(1,1),Vector2(1,0)]),true,0]):
+	self.depth = params[0]
+	self.polygon = params[1]
+	self.smooth_faces = params[2]
+	self.operation = params[3]
+	super._init()
 
-func _init(params=[height, [Vector2(1.0,1.0),Vector2(1.0,-1.0),Vector2(-1.0,-1.0),Vector2(-1.0,1.0)],0]):
-	self.height = params[0]
-	self.vertices = params[1]
-	self.operation = params[2]
-	super._init(params)
-	self.current_values = [height, vertices]
-
-func update():
-	var needs_redraw = super.update()
+func to_json():
+	var children = []
 	for child in get_children():
-		if child.update():
-			needs_redraw = true
-	if self.current_values != [height, vertices]:
-		self.current_values = [height, vertices]
-		needs_redraw = true
-	
-	return needs_redraw
-
-func get_csg():
-	return CSG.polygon(height, vertices).scale(scale).rotate(rotation).translate(position)
+		children.append(child.to_json())
+	var json = {
+		"name": name,
+		"scale": [scale.x, scale.y, scale.z],
+		"rotation": [rotation.x, rotation.y, rotation.z],
+		"position": [position.x, position.y, position.z],
+		"params": [depth, polygon, smooth_faces, operation],
+		"children": children
+	}
+	return json

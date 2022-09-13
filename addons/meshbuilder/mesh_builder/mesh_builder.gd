@@ -1,9 +1,9 @@
 @tool
-extends MeshInstance3D
+extends CSGCombiner3D
 class_name MeshBuilder
 @icon("res://addons/meshbuilder/mesh_builder/icon.svg")
 
-var mesh_builder_communicator_script = load("res://addons/meshbuilder/mesh_builder/mesh_builder_communication.gd")
+var mesh_builder_communicator_script = load("res://addons/meshbuilder/mesh_builder_communicator/mesh_builder_communicator.gd")
 var mesh_builder_communicator
 var root :Node3D
 var total_nb_shapes = 0
@@ -37,149 +37,68 @@ func get_all_children(in_node,arr:=[]):
 		arr = get_all_children(child,arr)
 	return arr
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	if Engine.get_frames_drawn() % 3 == 0:
-		var needs_redraw = false
-		for child in get_children():
-			if child.update():
-				needs_redraw = true
-		
-		var new_total_nb_shapes = get_all_children(self).size()
-		if total_nb_shapes != new_total_nb_shapes:
-			total_nb_shapes = new_total_nb_shapes
-			needs_redraw = true
-		if needs_redraw:
-			draw()
-
-func add_shape(mbs :MeshBuilderShape, name :String):
+static func add_shape(root :Node3D, parent :CSGShape3D, mbs :CSGShape3D, name :String):
 	# Add shape under selected node (combiner or builder)
 	mbs.name = name
-	self.add_child(mbs, true)
+	parent.add_child(mbs, true)
 	mbs.owner = root
 
-func add_combiner(params :Array = []):
+static func add_combiner(root :Node3D, parent :CSGShape3D, params :Array = []):
 	var shape
 	if params.is_empty():
 		shape = MeshBuilderCombiner.new()
 	else:
 		shape = MeshBuilderCombiner.new(params)
-	self.add_child(shape, true)
-	shape.name = "Combiner"
-	shape.owner = root
+	add_shape(root, parent, shape, "Combiner")
 	return shape
-func add_polygon(params :Array = []):
+static func add_polygon(root :Node3D, parent :CSGShape3D, params :Array = []):
 	var shape
 	if params.is_empty():
 		shape = MeshBuilderPolygon.new()
 	else:
 		shape = MeshBuilderPolygon.new(params)
-	add_shape(shape, "Polygon")
+	add_shape(root, parent, shape, "Polygon")
 	return shape
-func add_cone(params :Array = []):
+static func add_cone(root :Node3D, parent :CSGShape3D, params :Array = []):
 	var shape
 	if params.is_empty():
 		shape = MeshBuilderCone.new()
 	else:
 		shape = MeshBuilderCone.new(params)
-	add_shape(shape, "Cone")
+	add_shape(root, parent, shape, "Cone")
 	return shape
-func add_double_cone(params :Array = []):
+static func add_box(root :Node3D, parent :CSGShape3D, params :Array = []):
 	var shape
 	if params.is_empty():
-		shape = MeshBuilderDoubleCone.new()
+		shape = MeshBuilderBox.new()
 	else:
-		shape = MeshBuilderDoubleCone.new(params)
-	add_shape(shape, "DoubleCone")
+		shape = MeshBuilderBox.new(params)
+	add_shape(root, parent, shape, "Box")
 	return shape
-func add_cube(params :Array = []):
-	var shape
-	if params.is_empty():
-		shape = MeshBuilderCube.new()
-	else:
-		shape = MeshBuilderCube.new(params)
-	add_shape(shape, "Cube")
-	return shape
-func add_cylinder(params :Array = []):
+static func add_cylinder(root :Node3D, parent :CSGShape3D, params :Array = []):
 	var shape
 	if params.is_empty():
 		shape = MeshBuilderCylinder.new()
 	else:
 		shape = MeshBuilderCylinder.new(params)
-	add_shape(shape, "Cylinder")
+	add_shape(root, parent, shape, "Cylinder")
 	return shape
-func add_sphere(params :Array = []):
+static func add_sphere(root :Node3D, parent :CSGShape3D, params :Array = []):
 	var shape
 	if params.is_empty():
 		shape = MeshBuilderSphere.new()
 	else:
 		shape = MeshBuilderSphere.new(params)
-	add_shape(shape, "Sphere")
+	add_shape(root, parent, shape, "Sphere")
 	return shape
-func add_half_sphere(params :Array = []):
-	var shape
-	if params.is_empty():
-		shape = MeshBuilderHalfSphere.new()
-	else:
-		shape = MeshBuilderHalfSphere.new(params)
-	add_shape(shape, "HalfSphere")
-	return shape
-func add_torus(params :Array = []):
+static func add_torus(root :Node3D, parent :CSGShape3D, params :Array = []):
 	var shape
 	if params.is_empty():
 		shape = MeshBuilderTorus.new()
 	else:
 		shape = MeshBuilderTorus.new(params)
-	add_shape(shape, "Torus")
+	add_shape(root, parent, shape, "Torus")
 	return shape
-func add_ring(params :Array = []):
-	var shape
-	if params.is_empty():
-		shape = MeshBuilderRing.new()
-	else:
-		shape = MeshBuilderRing.new(params)
-	add_shape(shape, "Ring")
-	return shape
-
-func get_csg() -> CSG:
-	var csg = CSG.new()
-	for shape in get_children():
-		if not shape is MeshBuilderShape:
-			continue
-		else:
-			match shape.operation:
-				MeshBuilderShape.OPERATION_TYPE.Union:
-					csg = csg.union(shape.get_csg())
-				MeshBuilderShape.OPERATION_TYPE.Subtract:
-					csg = csg.subtract(shape.get_csg())
-				MeshBuilderShape.OPERATION_TYPE.Intersect:
-					csg = csg.intersect(shape.get_csg())
-	return csg.scale(scale).rotate(rotation).translate(position)
-
-func draw():
-	var csg = get_csg()
-	var st = SurfaceTool.new()
-	st.begin(Mesh.PRIMITIVE_TRIANGLES)
-	
-	var start_time = Time.get_ticks_msec()
-	
-	var real_poly_count = 0
-	if csg != null:
-		for poly in csg.polygons:
-			var vertices = []
-			for vert in poly.vertices:
-				vertices.append(vert.clone())
-			vertices.reverse()
-			for i in len(vertices)-2:
-				st.add_vertex(vertices[0].pos)
-				st.add_vertex(vertices[i+1].pos)
-				st.add_vertex(vertices[i+2].pos)
-				st.set_smooth_group(real_poly_count)
-				real_poly_count += 1
-	
-	st.index()
-	st.generate_normals()
-	self.mesh = st.commit()
 
 func get_community_meshes(on_completed :Callable):
 	mesh_builder_communicator.read_json(on_completed)
@@ -206,7 +125,9 @@ func publish(on_completed :Callable):
 
 func finalize():
 	var mesh_instance_3D = MeshInstance3D.new()
-	mesh_instance_3D.mesh = mesh.duplicate(true)
+	var meshes = get_meshes()
+	mesh_instance_3D.transform = meshes[0]
+	mesh_instance_3D.mesh = meshes[1]
 	get_parent().add_child(mesh_instance_3D, true)
 	mesh_instance_3D.owner = get_tree().get_edited_scene_root()
 	queue_free()

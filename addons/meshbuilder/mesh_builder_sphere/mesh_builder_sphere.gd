@@ -1,28 +1,26 @@
 @tool
-extends MeshBuilderShape
+extends CSGSphere3D
 class_name MeshBuilderSphere
 @icon("res://addons/meshbuilder/mesh_builder_sphere/icon.svg")
 
-@export var slices :int = 12
-@export var stacks :int = 6
+func _init(params=[12,0.5,6,true,0]):
+	self.radial_segments = params[0]
+	self.radius = params[1]
+	self.rings = params[2]
+	self.smooth_faces = params[3]
+	self.operation = params[4]
+	super._init()
 
-func _init(params=[12,6,0]):
-	self.slices = params[0]
-	self.stacks = params[1]
-	self.operation = params[2]
-	super._init(params)
-	self.current_values = [slices, stacks]
-
-func update():
-	var needs_redraw = super.update()
+func to_json():
+	var children = []
 	for child in get_children():
-		if child.update():
-			needs_redraw = true
-	if self.current_values != [slices, stacks]:
-		self.current_values = [slices, stacks]
-		needs_redraw = true
-	
-	return needs_redraw
-
-func get_csg():
-	return CSG.sphere(slices, stacks).scale(scale).rotate(rotation).translate(position)
+		children.append(child.to_json())
+	var json = {
+		"name": name,
+		"scale": [scale.x, scale.y, scale.z],
+		"rotation": [rotation.x, rotation.y, rotation.z],
+		"position": [position.x, position.y, position.z],
+		"params": [radial_segments, radius, rings, smooth_faces, operation],
+		"children": children
+	}
+	return json
