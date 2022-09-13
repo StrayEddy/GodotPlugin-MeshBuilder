@@ -1,12 +1,19 @@
-[gd_scene load_steps=7 format=3 uid="uid://byapsytbqrrb7"]
+[gd_scene load_steps=9 format=3 uid="uid://byapsytbqrrb7"]
 
 [ext_resource type="Script" path="res://demo/demo.gd" id="1_sugoq"]
-[ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder/mesh_builder.gd" id="2_s517m"]
-[ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder_cylinder/mesh_builder_cylinder.gd" id="3_05cxe"]
-[ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder_sphere/mesh_builder_sphere.gd" id="5_weldx"]
-[ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder_box/mesh_builder_box.gd" id="5_xuthu"]
+[ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder/mesh_builder.gd" id="2_2n5ak"]
+[ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder_box/mesh_builder_box.gd" id="3_h6o1e"]
+[ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder_cylinder/mesh_builder_cylinder.gd" id="4_6lb8e"]
+[ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder_polygon/mesh_builder_polygon.gd" id="5_ndkn2"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_gv1g4"]
+
+[sub_resource type="Sky" id="Sky_3a068"]
+sky_material = SubResource("ProceduralSkyMaterial_gv1g4")
 
 [sub_resource type="Environment" id="Environment_j230i"]
+sky = SubResource("Sky_3a068")
+ambient_light_source = 3
 
 [node name="Demo" type="Node3D"]
 script = ExtResource("1_sugoq")
@@ -14,33 +21,43 @@ script = ExtResource("1_sugoq")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_j230i")
 
+[node name="DirectionalLight3d" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.86537, -0.494762, -0.0796554, -0.32328, -0.672605, 0.665652, -0.382916, -0.550284, -0.741999, 13.5405, 13.1879, 7.86839)
+
 [node name="MeshBuilder" type="CSGCombiner3D" parent="."]
-script = ExtResource("2_s517m")
+script = ExtResource("2_2n5ak")
 
-[node name="Cylinder" type="CSGCylinder3D" parent="MeshBuilder"]
-transform = Transform3D(1, 0, 0, 0, -1, 1.50996e-07, 0, -1.50996e-07, -1, 0, 0.25, 0)
-radius = 0.06
-height = 1.0
+[node name="Box" type="CSGBox3D" parent="MeshBuilder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.12381, 0)
+size = Vector3(1, 0.692487, 1)
+script = ExtResource("3_h6o1e")
+
+[node name="Cylinder" type="CSGCylinder3D" parent="MeshBuilder/Box"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.0812133, -0.45496)
+operation = 2
+radius = 0.139859
+height = 0.141809
 sides = 16
-cone = true
-script = ExtResource("3_05cxe")
+script = ExtResource("4_6lb8e")
 
-[node name="Box" type="CSGBox3D" parent="MeshBuilder/Cylinder"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
-operation = 2
-script = ExtResource("5_xuthu")
+[node name="Cylinder2" type="CSGCylinder3D" parent="MeshBuilder/Box"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -0.178, -0.565003)
+radius = 0.0343497
+height = 0.141809
+script = ExtResource("4_6lb8e")
 
-[node name="Sphere" type="CSGSphere3D" parent="MeshBuilder"]
-transform = Transform3D(0.12, 0, 0, 0, 0.12, 0, 0, 0, 0.12, 0, 0.747824, 0)
-radial_segments = 16
-script = ExtResource("5_weldx")
+[node name="Polygon" type="CSGPolygon3D" parent="MeshBuilder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.22, 0.5)
+polygon = PackedVector2Array(0, 0, 0.5, 0.5, 1, 0)
+smooth_faces = true
+script = ExtResource("5_ndkn2")
 
-[node name="Box" type="CSGBox3D" parent="MeshBuilder/Sphere"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-operation = 2
-script = ExtResource("5_xuthu")
+[node name="Box" type="CSGBox3D" parent="MeshBuilder/Polygon"]
+transform = Transform3D(0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0, 1, 0.8, 0.23, -0.5)
+size = Vector3(0.9, 0.07, 1.1)
+script = ExtResource("3_h6o1e")
 
-[node name="Cylinder2" type="CSGCylinder3D" parent="MeshBuilder"]
-radius = 0.0458214
-height = 0.0151333
-script = ExtResource("3_05cxe")
+[node name="Box2" type="CSGBox3D" parent="MeshBuilder/Polygon"]
+transform = Transform3D(0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0, 1, 0.2, 0.23, -0.5)
+size = Vector3(0.9, 0.07, 1.1)
+script = ExtResource("3_h6o1e")

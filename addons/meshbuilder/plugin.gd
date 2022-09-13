@@ -29,7 +29,7 @@ func get_parent_mesh_builder(selected_node :Node3D):
 	if parent is MeshBuilder:
 		return parent
 	else:
-		get_parent_mesh_builder(parent)
+		return get_parent_mesh_builder(parent)
 	
 
 # Override functions to capture mouse events when painting an object

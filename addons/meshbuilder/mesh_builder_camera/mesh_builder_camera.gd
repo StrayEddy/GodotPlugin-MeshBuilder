@@ -5,7 +5,7 @@ class_name MeshBuilderCamera
 func focus_camera_on_node(node: CSGShape3D, margin = 0.9) -> void:
 	var fov = self.fov
 	var max_extent =  node.get_aabb().get_longest_axis_size()
-	var min_distance = (max_extent * margin) / sin(deg2rad(fov / 2.0))
+	var min_distance = (max_extent * margin) / sin(deg_to_rad(fov / 2.0))
 	
 	var highest_point = node.get_aabb().get_center()
 	for i in 8:

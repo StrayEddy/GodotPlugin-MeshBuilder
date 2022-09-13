@@ -31,4 +31,4 @@ func setup_image(image_base64 :String):
 	var texture = ImageTexture.create_from_image(image)
 	texture.create_from_image(image)
 	texture_rect.texture = texture
-	texture_rect.update()
+	texture_rect.update_minimum_size()
