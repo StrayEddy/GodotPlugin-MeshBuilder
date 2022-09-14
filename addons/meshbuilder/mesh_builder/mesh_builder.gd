@@ -127,7 +127,6 @@ func finalize():
 	var mesh_instance_3D = MeshInstance3D.new()
 	var meshes = get_meshes()
 	mesh_instance_3D.transform = meshes[0]
-	mesh_instance_3D.mesh = meshes[1]
+	mesh_instance_3D.mesh = meshes[1].duplicate()
 	get_parent().add_child(mesh_instance_3D, true)
 	mesh_instance_3D.owner = get_tree().get_edited_scene_root()
-	queue_free()

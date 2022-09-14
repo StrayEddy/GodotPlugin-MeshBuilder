@@ -7,18 +7,10 @@ var editable = false
 func selection_changed() -> void:
 	var selection = get_editor_interface().get_selection().get_selected_nodes()
 	if selection.size() == 1 and selection[0] is MeshBuilder:
-		mesh_builder_panel.show()
-		mesh_builder_panel.root = get_tree().get_edited_scene_root()
-		mesh_builder_panel.selected_node = selection[0]
-		mesh_builder_panel.mesh_builder = selection[0]
-		mesh_builder_panel.mesh_builder.root = get_tree().get_edited_scene_root()
+		mesh_builder_panel.setup_and_show(get_tree().get_edited_scene_root(), selection[0], selection[0])
 		editable = false
 	elif selection.size() == 1 and selection[0] is CSGShape3D:
-		mesh_builder_panel.show()
-		mesh_builder_panel.root = get_tree().get_edited_scene_root()
-		mesh_builder_panel.selected_node = selection[0]
-		mesh_builder_panel.mesh_builder = get_parent_mesh_builder(selection[0])
-		mesh_builder_panel.mesh_builder.root = get_tree().get_edited_scene_root()
+		mesh_builder_panel.setup_and_show(get_tree().get_edited_scene_root(), selection[0], get_parent_mesh_builder(selection[0]))
 		editable = true
 	else:
 		editable = false

@@ -14,6 +14,13 @@ func add_shape_creation_button(parent :Control, label_text :String, image_base64
 	button.setup(label_text, image_base64, on_pressed)
 	return button
 
+func setup_and_show(root :Node3D, selected_node :Node3D, mesh_builder :MeshBuilder):
+	self.root = root
+	self.selected_node = selected_node
+	self.mesh_builder = mesh_builder
+	self.mesh_builder.root = root
+	show()
+
 func _on_community_visibility_changed():
 	if $TabContainer/Community.visible:
 		var on_completed = func(shapes :Array):
@@ -26,8 +33,8 @@ func _on_community_visibility_changed():
 			for shape in shapes:
 				var callable :Callable = Callable(self, "_on_add_shape_pressed")
 				var button = add_shape_creation_button($TabContainer/Community/HBoxContainer/VBoxContainer/ScrollContainer/GridContainer, shape.name, shape.image_base64, callable.bind(selected_node, shape.shapes))
-		
-		mesh_builder.get_community_meshes(on_completed)
+		if is_instance_valid(mesh_builder):
+			mesh_builder.get_community_meshes(on_completed)
 
 func _on_add_shape_pressed(owner_of_shapes, shapes):
 	for shape_info in shapes:
@@ -95,6 +102,7 @@ func _on_confirmation_dialog_confirmed():
 
 func _on_finalize_pressed():
 	mesh_builder.finalize()
+	mesh_builder.queue_free()
 
 # When search bar text changes
 func _on_line_edit_text_changed(new_text):
