@@ -2,9 +2,9 @@
 extends CSGCombiner3D
 class_name MeshBuilderCombiner
 
-func _init(params=[0]):
+func init(params=[0]):
 	self.operation = params[0]
-	super._init()
+	return self
 
 func to_json():
 	var children = []

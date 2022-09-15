@@ -3,14 +3,14 @@ extends CSGCylinder3D
 class_name MeshBuilderCone
 @icon("res://addons/meshbuilder/mesh_builder_cone/icon.svg")
 
-func _init(params=[true,2.0,0.5,8,true,0]):
+func init(params=[true,2.0,0.5,8,true,0]):
 	self.cone = params[0]
 	self.height = params[1]
 	self.radius = params[2]
 	self.sides = params[3]
 	self.smooth_faces = params[4]
 	self.operation = params[5]
-	super._init()
+	return self
 
 func to_json():
 	var children = []

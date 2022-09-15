@@ -3,14 +3,14 @@ extends CSGTorus3D
 class_name MeshBuilderTorus
 @icon("res://addons/meshbuilder/mesh_builder_torus/icon.svg")
 
-func _init(params=[0.5,1.0,6,8,true,0]):
+func init(params=[0.5,1.0,6,8,true,0]):
 	self.inner_radius = params[0]
 	self.outer_radius = params[1]
 	self.ring_sides = params[2]
 	self.sides = params[3]
 	self.smooth_faces = params[4]
 	self.operation = params[5]
-	super._init()
+	return self
 
 func to_json():
 	var children = []

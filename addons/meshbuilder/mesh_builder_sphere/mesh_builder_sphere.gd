@@ -3,13 +3,13 @@ extends CSGSphere3D
 class_name MeshBuilderSphere
 @icon("res://addons/meshbuilder/mesh_builder_sphere/icon.svg")
 
-func _init(params=[12,0.5,6,true,0]):
+func init(params=[12,0.5,6,true,0]):
 	self.radial_segments = params[0]
 	self.radius = params[1]
 	self.rings = params[2]
 	self.smooth_faces = params[3]
 	self.operation = params[4]
-	super._init()
+	return self
 
 func to_json():
 	var children = []

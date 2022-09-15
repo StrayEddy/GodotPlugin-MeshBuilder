@@ -3,7 +3,7 @@ extends CSGPolygon3D
 class_name MeshBuilderPolygon
 @icon("res://addons/meshbuilder/mesh_builder_polygon/icon.svg")
 
-func _init(params=[1.0,[[0,0],[0,1],[1,1],[1,0]],true,0]):
+func init(params=[1.0,[[0,0],[0,1],[1,1],[1,0]],true,0]):
 	self.depth = params[0]
 	var polygon_array = []
 	for vertex in params[1]:
@@ -11,7 +11,7 @@ func _init(params=[1.0,[[0,0],[0,1],[1,1],[1,0]],true,0]):
 	self.polygon = PackedVector2Array(polygon_array)
 	self.smooth_faces = params[2]
 	self.operation = params[3]
-	super._init()
+	return self
 
 func to_json():
 	var children = []
