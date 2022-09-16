@@ -37,7 +37,7 @@ static func add_shape(root :Node3D, parent :CSGShape3D, mbs :CSGShape3D, name :S
 static func add_combiner(root :Node3D, parent :CSGShape3D, params :Array = []):
 	var shape
 	if params.is_empty():
-		shape = MeshBuilderCombiner.new()
+		shape = MeshBuilderCombiner.new().init()
 	else:
 		shape = MeshBuilderCombiner.new().init(params)
 	add_shape(root, parent, shape, "Combiner")
@@ -45,7 +45,7 @@ static func add_combiner(root :Node3D, parent :CSGShape3D, params :Array = []):
 static func add_polygon(root :Node3D, parent :CSGShape3D, params :Array = []):
 	var shape
 	if params.is_empty():
-		shape = MeshBuilderPolygon.new()
+		shape = MeshBuilderPolygon.new().init()
 	else:
 		shape = MeshBuilderPolygon.new().init(params)
 	add_shape(root, parent, shape, "Polygon")
@@ -53,7 +53,7 @@ static func add_polygon(root :Node3D, parent :CSGShape3D, params :Array = []):
 static func add_cone(root :Node3D, parent :CSGShape3D, params :Array = []):
 	var shape
 	if params.is_empty():
-		shape = MeshBuilderCone.new()
+		shape = MeshBuilderCone.new().init()
 	else:
 		shape = MeshBuilderCone.new().init(params)
 	add_shape(root, parent, shape, "Cone")
@@ -61,7 +61,7 @@ static func add_cone(root :Node3D, parent :CSGShape3D, params :Array = []):
 static func add_box(root :Node3D, parent :CSGShape3D, params :Array = []):
 	var shape
 	if params.is_empty():
-		shape = MeshBuilderBox.new()
+		shape = MeshBuilderBox.new().init()
 	else:
 		shape = MeshBuilderBox.new().init(params)
 	add_shape(root, parent, shape, "Box")
@@ -69,7 +69,7 @@ static func add_box(root :Node3D, parent :CSGShape3D, params :Array = []):
 static func add_cylinder(root :Node3D, parent :CSGShape3D, params :Array = []):
 	var shape
 	if params.is_empty():
-		shape = MeshBuilderCylinder.new()
+		shape = MeshBuilderCylinder.new().init()
 	else:
 		shape = MeshBuilderCylinder.new().init(params)
 	add_shape(root, parent, shape, "Cylinder")
@@ -77,7 +77,7 @@ static func add_cylinder(root :Node3D, parent :CSGShape3D, params :Array = []):
 static func add_sphere(root :Node3D, parent :CSGShape3D, params :Array = []):
 	var shape
 	if params.is_empty():
-		shape = MeshBuilderSphere.new()
+		shape = MeshBuilderSphere.new().init()
 	else:
 		shape = MeshBuilderSphere.new().init(params)
 	add_shape(root, parent, shape, "Sphere")
@@ -85,7 +85,7 @@ static func add_sphere(root :Node3D, parent :CSGShape3D, params :Array = []):
 static func add_torus(root :Node3D, parent :CSGShape3D, params :Array = []):
 	var shape
 	if params.is_empty():
-		shape = MeshBuilderTorus.new()
+		shape = MeshBuilderTorus.new().init()
 	else:
 		shape = MeshBuilderTorus.new().init(params)
 	add_shape(root, parent, shape, "Torus")

@@ -1,12 +1,14 @@
-[gd_scene load_steps=10 format=3 uid="uid://bjbrvhbu7rmp"]
+[gd_scene load_steps=12 format=3 uid="uid://bjbrvhbu7rmp"]
 
 [ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder_panel/mesh_builder_panel.gd" id="1_xpl4b"]
 [ext_resource type="Texture2D" uid="uid://c76acttmrbesx" path="res://addons/meshbuilder/mesh_builder_cone/icon.svg" id="2_57ccy"]
 [ext_resource type="Texture2D" uid="uid://bikenguuvy84g" path="res://addons/meshbuilder/mesh_builder_polygon/icon.svg" id="2_kdamm"]
-[ext_resource type="Texture2D" uid="uid://bjhx04eyrlsu3" path="res://addons/meshbuilder/mesh_builder_combiner/icon.svg" id="4_wrl1s"]
+[ext_resource type="Texture2D" uid="uid://bj7jphtjfysv1" path="res://addons/meshbuilder/mesh_builder_box/icon.svg" id="4_rnmvk"]
 [ext_resource type="Texture2D" uid="uid://csrsescqx244m" path="res://addons/meshbuilder/mesh_builder_cylinder/icon.svg" id="5_0kbug"]
 [ext_resource type="Texture2D" uid="uid://kyfeevku6xjn" path="res://addons/meshbuilder/mesh_builder_sphere/icon.svg" id="6_2j4gq"]
+[ext_resource type="Texture2D" uid="uid://d10txf77nfmnu" path="res://addons/meshbuilder/mesh_builder_half_sphere/icon.svg" id="7_rfwyq"]
 [ext_resource type="Texture2D" uid="uid://ccllty5ickco2" path="res://addons/meshbuilder/mesh_builder_torus/icon.svg" id="8_yfbcy"]
+[ext_resource type="Texture2D" uid="uid://c06acco5tejcj" path="res://addons/meshbuilder/mesh_builder_ring/icon.svg" id="9_uprak"]
 [ext_resource type="Texture2D" uid="uid://qlofuw7k7xrj" path="res://addons/meshbuilder/mesh_builder_panel/search-icon.svg" id="10_gasgh"]
 [ext_resource type="PackedScene" uid="uid://bwo7tt6etdpqi" path="res://addons/meshbuilder/mesh_builder_panel/shape_creation_button.tscn" id="10_gusm6"]
 
@@ -52,7 +54,7 @@ columns = 10
 custom_minimum_size = Vector2i(80, 80)
 layout_mode = 2
 offset_right = 80.0
-offset_bottom = 145.0
+offset_bottom = 193.0
 
 [node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/VBoxContainer9"]
 layout_mode = 2
@@ -84,7 +86,7 @@ text = "Add"
 layout_mode = 2
 offset_left = 84.0
 offset_right = 164.0
-offset_bottom = 145.0
+offset_bottom = 193.0
 
 [node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -116,7 +118,7 @@ text = "Add"
 layout_mode = 2
 offset_left = 168.0
 offset_right = 248.0
-offset_bottom = 145.0
+offset_bottom = 193.0
 
 [node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/VBoxContainer3"]
 layout_mode = 2
@@ -132,7 +134,7 @@ layout_mode = 2
 offset_top = 30.0
 offset_right = 80.0
 offset_bottom = 110.0
-texture = ExtResource("4_wrl1s")
+texture = ExtResource("4_rnmvk")
 
 [node name="AddBox" type="Button" parent="TabContainer/Basic/HBoxContainer/VBoxContainer3"]
 self_modulate = Color(0.0235294, 1, 0, 1)
@@ -148,7 +150,7 @@ text = "Add"
 layout_mode = 2
 offset_left = 252.0
 offset_right = 332.0
-offset_bottom = 145.0
+offset_bottom = 193.0
 
 [node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/VBoxContainer4"]
 layout_mode = 2
@@ -180,7 +182,7 @@ text = "Add"
 layout_mode = 2
 offset_left = 336.0
 offset_right = 416.0
-offset_bottom = 145.0
+offset_bottom = 193.0
 
 [node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/VBoxContainer5"]
 layout_mode = 2
@@ -212,7 +214,7 @@ text = "Add"
 layout_mode = 2
 offset_left = 420.0
 offset_right = 510.0
-offset_bottom = 145.0
+offset_bottom = 193.0
 
 [node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/VBoxContainer6"]
 layout_mode = 2
@@ -228,7 +230,7 @@ layout_mode = 2
 offset_top = 30.0
 offset_right = 90.0
 offset_bottom = 110.0
-texture = ExtResource("6_2j4gq")
+texture = ExtResource("7_rfwyq")
 
 [node name="AddHalfSphere" type="Button" parent="TabContainer/Basic/HBoxContainer/VBoxContainer6"]
 self_modulate = Color(0.0235294, 1, 0, 1)
@@ -244,7 +246,7 @@ text = "Add"
 layout_mode = 2
 offset_left = 514.0
 offset_right = 594.0
-offset_bottom = 145.0
+offset_bottom = 193.0
 
 [node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/VBoxContainer7"]
 layout_mode = 2
@@ -275,12 +277,12 @@ text = "Add"
 [node name="VBoxContainer8" type="VBoxContainer" parent="TabContainer/Basic/HBoxContainer"]
 layout_mode = 2
 offset_left = 598.0
-offset_right = 678.0
-offset_bottom = 145.0
+offset_right = 726.0
+offset_bottom = 193.0
 
 [node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/VBoxContainer8"]
 layout_mode = 2
-offset_right = 80.0
+offset_right = 128.0
 offset_bottom = 26.0
 text = "Ring"
 horizontal_alignment = 1
@@ -290,17 +292,17 @@ vertical_alignment = 1
 custom_minimum_size = Vector2i(80, 80)
 layout_mode = 2
 offset_top = 30.0
-offset_right = 80.0
-offset_bottom = 110.0
-texture = ExtResource("8_yfbcy")
+offset_right = 128.0
+offset_bottom = 158.0
+texture = ExtResource("9_uprak")
 
 [node name="AddRing" type="Button" parent="TabContainer/Basic/HBoxContainer/VBoxContainer8"]
 self_modulate = Color(0.0235294, 1, 0, 1)
 layout_mode = 2
-offset_left = 20.0
-offset_top = 114.0
-offset_right = 59.0
-offset_bottom = 145.0
+offset_left = 44.0
+offset_top = 162.0
+offset_right = 83.0
+offset_bottom = 193.0
 size_flags_horizontal = 4
 text = "Add"
 
@@ -308,9 +310,9 @@ text = "Add"
 modulate = Color(1, 0, 0.188235, 1)
 custom_minimum_size = Vector2i(150, 0)
 layout_mode = 2
-offset_left = 682.0
-offset_right = 832.0
-offset_bottom = 145.0
+offset_left = 730.0
+offset_right = 880.0
+offset_bottom = 193.0
 text = "FINALIZE"
 
 [node name="Community" type="Panel" parent="TabContainer"]
@@ -320,11 +322,14 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 31.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Community"]
+custom_minimum_size = Vector2i(1028, 205)
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 1038.0
+offset_bottom = 205.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Community/HBoxContainer"]
 layout_mode = 2
