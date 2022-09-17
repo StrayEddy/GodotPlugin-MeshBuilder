@@ -2,7 +2,7 @@
 
 This is a Godot 4 plugin to quickly build 3D meshes via basic CSG shapes and community-created CSG shapes
 
-[![Watch the tutorial](https://ibb.co/cFGXkpx)](https://www.youtube.com/watch?v=vM0oGoyCjEA)
+[![Watch the tutorial](meshbuilder-thumbnail.jpg)](https://www.youtube.com/watch?v=vM0oGoyCjEA)
 
 # How to use
 - Use Godot 4
