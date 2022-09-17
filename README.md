@@ -24,5 +24,5 @@ This is a Godot 4 plugin to quickly build 3D meshes via basic CSG shapes and com
 
 # Publishing
 - In `Community` tab, by clicking `Publish` button you are asked to confirm that you are OK with making that shape available to the public
-- Once you do, I (Edouard) will verify the shape you published and add it the the database of community shapes
-- When I am done, you will be able to see your new shape in the `Community` tab !
+- Once you do, I (Edouard) will verify the shape you published and add it to the database of community shapes
+- When I am done, everyone will be able to see your new shape in the `Community` tab !
