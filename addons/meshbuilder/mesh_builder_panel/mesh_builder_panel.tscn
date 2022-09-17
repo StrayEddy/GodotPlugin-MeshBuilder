@@ -32,6 +32,7 @@ grow_vertical = 2
 metadata/_edit_layout_mode = 1
 
 [node name="Basic" type="Panel" parent="TabContainer"]
+visible = false
 custom_minimum_size = Vector2i(300, 170)
 layout_mode = 2
 anchors_preset = 15
@@ -54,7 +55,7 @@ columns = 10
 custom_minimum_size = Vector2i(80, 80)
 layout_mode = 2
 offset_right = 80.0
-offset_bottom = 193.0
+offset_bottom = 145.0
 
 [node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/VBoxContainer9"]
 layout_mode = 2
@@ -86,7 +87,7 @@ text = "Add"
 layout_mode = 2
 offset_left = 84.0
 offset_right = 164.0
-offset_bottom = 193.0
+offset_bottom = 145.0
 
 [node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -118,7 +119,7 @@ text = "Add"
 layout_mode = 2
 offset_left = 168.0
 offset_right = 248.0
-offset_bottom = 193.0
+offset_bottom = 145.0
 
 [node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/VBoxContainer3"]
 layout_mode = 2
@@ -150,7 +151,7 @@ text = "Add"
 layout_mode = 2
 offset_left = 252.0
 offset_right = 332.0
-offset_bottom = 193.0
+offset_bottom = 145.0
 
 [node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/VBoxContainer4"]
 layout_mode = 2
@@ -182,7 +183,7 @@ text = "Add"
 layout_mode = 2
 offset_left = 336.0
 offset_right = 416.0
-offset_bottom = 193.0
+offset_bottom = 145.0
 
 [node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/VBoxContainer5"]
 layout_mode = 2
@@ -214,7 +215,7 @@ text = "Add"
 layout_mode = 2
 offset_left = 420.0
 offset_right = 510.0
-offset_bottom = 193.0
+offset_bottom = 145.0
 
 [node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/VBoxContainer6"]
 layout_mode = 2
@@ -246,7 +247,7 @@ text = "Add"
 layout_mode = 2
 offset_left = 514.0
 offset_right = 594.0
-offset_bottom = 193.0
+offset_bottom = 145.0
 
 [node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/VBoxContainer7"]
 layout_mode = 2
@@ -277,12 +278,12 @@ text = "Add"
 [node name="VBoxContainer8" type="VBoxContainer" parent="TabContainer/Basic/HBoxContainer"]
 layout_mode = 2
 offset_left = 598.0
-offset_right = 726.0
-offset_bottom = 193.0
+offset_right = 678.0
+offset_bottom = 145.0
 
 [node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/VBoxContainer8"]
 layout_mode = 2
-offset_right = 128.0
+offset_right = 80.0
 offset_bottom = 26.0
 text = "Ring"
 horizontal_alignment = 1
@@ -292,31 +293,30 @@ vertical_alignment = 1
 custom_minimum_size = Vector2i(80, 80)
 layout_mode = 2
 offset_top = 30.0
-offset_right = 128.0
-offset_bottom = 158.0
+offset_right = 80.0
+offset_bottom = 110.0
 texture = ExtResource("9_uprak")
 
 [node name="AddRing" type="Button" parent="TabContainer/Basic/HBoxContainer/VBoxContainer8"]
 self_modulate = Color(0.0235294, 1, 0, 1)
 layout_mode = 2
-offset_left = 44.0
-offset_top = 162.0
-offset_right = 83.0
-offset_bottom = 193.0
+offset_left = 20.0
+offset_top = 114.0
+offset_right = 59.0
+offset_bottom = 145.0
 size_flags_horizontal = 4
 text = "Add"
 
 [node name="Finalize" type="Button" parent="TabContainer/Basic/HBoxContainer"]
-modulate = Color(1, 0, 0.188235, 1)
+modulate = Color(0, 1, 0, 1)
 custom_minimum_size = Vector2i(150, 0)
 layout_mode = 2
-offset_left = 730.0
-offset_right = 880.0
-offset_bottom = 193.0
+offset_left = 682.0
+offset_right = 832.0
+offset_bottom = 145.0
 text = "FINALIZE"
 
 [node name="Community" type="Panel" parent="TabContainer"]
-visible = false
 layout_mode = 2
 anchors_preset = 15
 anchor_right = 1.0
@@ -333,12 +333,12 @@ offset_bottom = 205.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Community/HBoxContainer"]
 layout_mode = 2
-offset_right = 650.0
+offset_right = 700.0
 offset_bottom = 205.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Community/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-offset_right = 650.0
+offset_right = 700.0
 offset_bottom = 31.0
 
 [node name="TextureRect" type="TextureRect" parent="TabContainer/Community/HBoxContainer/VBoxContainer/HBoxContainer"]
@@ -352,47 +352,51 @@ ignore_texture_size = true
 [node name="LineEdit" type="LineEdit" parent="TabContainer/Community/HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 offset_left = 36.0
-offset_right = 650.0
+offset_right = 700.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
 placeholder_text = "Search here..."
 
 [node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/Community/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2i(650, 170)
+custom_minimum_size = Vector2i(700, 170)
 layout_mode = 2
 offset_top = 35.0
-offset_right = 650.0
+offset_right = 700.0
 offset_bottom = 205.0
 
 [node name="GridContainer" type="GridContainer" parent="TabContainer/Community/HBoxContainer/VBoxContainer/ScrollContainer"]
+custom_minimum_size = Vector2i(650, 0)
 layout_mode = 2
+offset_right = 650.0
 columns = 6
 
 [node name="ShapeCreationButton" parent="TabContainer/Community/HBoxContainer/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("10_gusm6")]
+custom_minimum_size = Vector2i(100, 0)
 layout_mode = 2
-offset_right = 0.0
 offset_bottom = 0.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Community/HBoxContainer"]
 layout_mode = 2
-offset_left = 654.0
-offset_right = 1038.0
+offset_left = 704.0
+offset_right = 908.0
 offset_bottom = 205.0
 
 [node name="Publish" type="Button" parent="TabContainer/Community/HBoxContainer/HBoxContainer"]
-modulate = Color(1, 0, 0.188235, 1)
-custom_minimum_size = Vector2i(190, 10)
+modulate = Color(0, 1, 0, 1)
+custom_minimum_size = Vector2i(100, 10)
 layout_mode = 2
-offset_right = 190.0
+offset_right = 100.0
 offset_bottom = 205.0
 text = "PUBLISH"
 
 [node name="Finalize" type="Button" parent="TabContainer/Community/HBoxContainer/HBoxContainer"]
-modulate = Color(1, 0, 0.188235, 1)
-custom_minimum_size = Vector2i(190, 10)
+modulate = Color(0, 1, 0, 1)
+custom_minimum_size = Vector2i(100, 10)
 layout_mode = 2
-offset_left = 194.0
-offset_right = 384.0
+offset_left = 104.0
+offset_right = 204.0
 offset_bottom = 205.0
 text = "FINALIZE"
 
