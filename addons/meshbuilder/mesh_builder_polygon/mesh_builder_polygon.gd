@@ -22,7 +22,7 @@ func to_json():
 		polygon_array.append([vector2.x, vector2.y])
 	
 	var json = {
-		"name": name,
+		"name": "Polygon",
 		"scale": [scale.x, scale.y, scale.z],
 		"rotation": [rotation.x, rotation.y, rotation.z],
 		"position": [position.x, position.y, position.z],

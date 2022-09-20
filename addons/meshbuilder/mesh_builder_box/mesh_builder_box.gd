@@ -12,7 +12,7 @@ func to_json():
 	for child in get_children():
 		children.append(child.to_json())
 	var json = {
-		"name": name,
+		"name": "Box",
 		"scale": [scale.x, scale.y, scale.z],
 		"rotation": [rotation.x, rotation.y, rotation.z],
 		"position": [position.x, position.y, position.z],
