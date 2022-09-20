@@ -18,10 +18,15 @@ func to_json():
 		children.append(child.to_json())
 	var json = {
 		"name": "Torus",
-		"scale": [snapped(scale.x,0.001), snapped(scale.y,0.001), snapped(scale.z,0.001)],
-		"rotation": [snapped(rotation.x,0.001), snapped(rotation.y,0.001), snapped(rotation.z,0.001)],
-		"position": [snapped(position.x,0.001), snapped(position.y,0.001), snapped(position.z,0.001)],
 		"params": [snapped(inner_radius,0.001), snapped(outer_radius,0.001), ring_sides, sides, smooth_faces, operation],
 		"children": children
 	}
+	
+	if scale != Vector3.ONE:
+		json["scale"] = [snapped(scale.x,0.001), snapped(scale.y,0.001), snapped(scale.z,0.001)]
+	if rotation != Vector3.ZERO:
+		json["rotation"] = [snapped(rotation.x,0.001), snapped(rotation.y,0.001), snapped(rotation.z,0.001)]
+	if position != Vector3.ZERO:
+		json["position"] = [snapped(position.x,0.001), snapped(position.y,0.001), snapped(position.z,0.001)]
+	
 	return json

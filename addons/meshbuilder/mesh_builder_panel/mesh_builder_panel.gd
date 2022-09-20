@@ -55,9 +55,13 @@ func _on_add_shape_pressed(owner_of_shapes, shapes):
 		elif "Torus" in shape_info.name:
 			shape = MeshBuilder.add_torus(root, owner_of_shapes, params)
 		
-		shape.position = Vector3(shape_info.position[0], shape_info.position[1], shape_info.position[2])
-		shape.rotation = Vector3(shape_info.rotation[0], shape_info.rotation[1], shape_info.rotation[2])
-		shape.scale = Vector3(shape_info.scale[0], shape_info.scale[1], shape_info.scale[2])
+		if shape_info.has("position"):
+			shape.position = Vector3(shape_info.position[0], shape_info.position[1], shape_info.position[2])
+		if shape_info.has("rotation"):
+			shape.rotation = Vector3(shape_info.rotation[0], shape_info.rotation[1], shape_info.rotation[2])
+		if shape_info.has("scale"):
+			shape.scale = Vector3(shape_info.scale[0], shape_info.scale[1], shape_info.scale[2])
+		
 		_on_add_shape_pressed(shape, shape_info.children)
 
 func _on_add_combiner_pressed():
