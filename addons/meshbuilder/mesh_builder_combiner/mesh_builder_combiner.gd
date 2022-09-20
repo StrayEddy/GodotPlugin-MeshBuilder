@@ -12,9 +12,9 @@ func to_json():
 		children.append(child.to_json())
 	var json = {
 		"name": "Combiner",
-		"scale": [scale.x, scale.y, scale.z],
-		"rotation": [rotation.x, rotation.y, rotation.z],
-		"position": [position.x, position.y, position.z],
+		"scale": [snapped(scale.x,0.001), snapped(scale.y,0.001), snapped(scale.z,0.001)],
+		"rotation": [snapped(rotation.x,0.001), snapped(rotation.y,0.001), snapped(rotation.z,0.001)],
+		"position": [snapped(position.x,0.001), snapped(position.y,0.001), snapped(position.z,0.001)],
 		"params": [operation],
 		"children": children
 	}

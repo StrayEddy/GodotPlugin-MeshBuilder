@@ -19,14 +19,14 @@ func to_json():
 		children.append(child.to_json())
 	var polygon_array = []
 	for vector2 in self.polygon:
-		polygon_array.append([vector2.x, vector2.y])
+		polygon_array.append([snapped(vector2.x,0.001), snapped(vector2.y,0.001)])
 	
 	var json = {
 		"name": "Polygon",
-		"scale": [scale.x, scale.y, scale.z],
-		"rotation": [rotation.x, rotation.y, rotation.z],
-		"position": [position.x, position.y, position.z],
-		"params": [depth, polygon_array, smooth_faces, operation],
+		"scale": [snapped(scale.x,0.001), snapped(scale.y,0.001), snapped(scale.z,0.001)],
+		"rotation": [snapped(rotation.x,0.001), snapped(rotation.y,0.001), snapped(rotation.z,0.001)],
+		"position": [snapped(position.x,0.001), snapped(position.y,0.001), snapped(position.z,0.001)],
+		"params": [snapped(depth,0.001), polygon_array, smooth_faces, operation],
 		"children": children
 	}
 	return json
