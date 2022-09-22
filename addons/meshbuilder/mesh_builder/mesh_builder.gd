@@ -104,7 +104,7 @@ func publish_check():
 	else:
 		return true
 
-func publish(on_completed :Callable):
+func publish(model_name :String, on_completed :Callable):
 	
 	var sub_viewport = SubViewport.new()
 	sub_viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
@@ -126,7 +126,7 @@ func publish(on_completed :Callable):
 	var image = tex.get_image()
 	image.resize(100,100)
 	var image_base64 = Marshalls.raw_to_base64(image.save_png_to_buffer())
-	mesh_builder_communicator.publish(self, image_base64, on_completed)
+	mesh_builder_communicator.publish(self, model_name, image_base64, on_completed)
 	last_time_published = Time.get_ticks_msec()
 
 func finalize():

@@ -1,9 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://byapsytbqrrb7"]
+[gd_scene load_steps=9 format=3 uid="uid://byapsytbqrrb7"]
 
 [ext_resource type="Script" path="res://demo/demo.gd" id="1_sugoq"]
 [ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder/mesh_builder.gd" id="2_33spq"]
 [ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder_polygon/mesh_builder_polygon.gd" id="3_i4odo"]
-[ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder_sphere/mesh_builder_sphere.gd" id="4_q8e18"]
 [ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder_box/mesh_builder_box.gd" id="5_veith"]
 [ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder_cylinder/mesh_builder_cylinder.gd" id="6_r6xh1"]
 
@@ -31,73 +30,37 @@ transform = Transform3D(0.86537, -0.494762, -0.0796554, -0.32328, -0.672605, 0.6
 layers = 524288
 script = ExtResource("2_33spq")
 
-[node name="Cylinder" type="CSGCylinder3D" parent="MeshBuilder"]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -2.40525e-09, 0.0550258, 0)
-radius = 0.03
-height = 0.2
-script = ExtResource("6_r6xh1")
-
-[node name="Sphere" type="CSGSphere3D" parent="MeshBuilder/Cylinder"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
-radius = 0.03
-radial_segments = 8
-script = ExtResource("4_q8e18")
-
-[node name="Sphere2" type="CSGSphere3D" parent="MeshBuilder/Cylinder"]
-transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, -0.1, 0)
-radius = 0.03
-radial_segments = 8
-script = ExtResource("4_q8e18")
-
-[node name="Cylinder" type="CSGCylinder3D" parent="MeshBuilder/Cylinder"]
-transform = Transform3D(0.5, -8.74228e-08, -0.866025, -4.37114e-08, -1, 7.57103e-08, -0.866025, 0, -0.5, -0.015, 0, 0.025)
-radius = 0.05
-height = 0.2
-script = ExtResource("6_r6xh1")
-
-[node name="Sphere" type="CSGSphere3D" parent="MeshBuilder/Cylinder/Cylinder"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
-radius = 0.05
-radial_segments = 8
-script = ExtResource("4_q8e18")
-
-[node name="Sphere2" type="CSGSphere3D" parent="MeshBuilder/Cylinder/Cylinder"]
-transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, -0.1, 0)
-radius = 0.05
-radial_segments = 8
-script = ExtResource("4_q8e18")
-
-[node name="Box" type="CSGBox3D" parent="MeshBuilder/Cylinder/Cylinder"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
-operation = 2
+[node name="Box" type="CSGBox3D" parent="MeshBuilder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.124, 0)
+size = Vector3(1, 0.692, 1)
 script = ExtResource("5_veith")
 
-[node name="Cylinder2" type="CSGCylinder3D" parent="MeshBuilder/Cylinder"]
-transform = Transform3D(0.5, -8.74228e-08, 0.866026, -4.37114e-08, -1, -7.57103e-08, 0.866026, 0, -0.5, -0.015, 0, -0.025)
-radius = 0.05
-height = 0.2
+[node name="Cylinder" type="CSGCylinder3D" parent="MeshBuilder/Box"]
+transform = Transform3D(1, 0, 0, 0, -0.000203653, 1, 0, -1, -0.000203653, 0, 0.081, -0.455)
+operation = 2
+radius = 0.14
+height = 0.142
+sides = 16
 script = ExtResource("6_r6xh1")
 
-[node name="Sphere" type="CSGSphere3D" parent="MeshBuilder/Cylinder/Cylinder2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
-radius = 0.05
-radial_segments = 8
-script = ExtResource("4_q8e18")
+[node name="Cylinder2" type="CSGCylinder3D" parent="MeshBuilder/Box"]
+transform = Transform3D(1, 0, 0, 0, -0.000203653, 1, 0, -1, -0.000203653, 0, -0.178, -0.565)
+radius = 0.034
+height = 0.142
+script = ExtResource("6_r6xh1")
 
-[node name="Sphere2" type="CSGSphere3D" parent="MeshBuilder/Cylinder/Cylinder2"]
-transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, -0.1, 0)
-radius = 0.05
-radial_segments = 8
-script = ExtResource("4_q8e18")
-
-[node name="Box" type="CSGBox3D" parent="MeshBuilder/Cylinder/Cylinder2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
-operation = 2
-script = ExtResource("5_veith")
-
-[node name="Polygon" type="CSGPolygon3D" parent="MeshBuilder/Cylinder"]
-transform = Transform3D(-2.18557e-08, 0, 0.1, 0, 0.9, 0, -0.5, 0, -4.37114e-09, 0.0313614, 0.0376559, 0.00985776)
-polygon = PackedVector2Array(0.0236325, -0.122311, 0.00826871, -0.0720294, 0.0250292, -0.0133677, 0.0054753, 0.041104, 0.0407426, 0.0839701, 0.0264259, 0.041104, 0.0467511, -0.0113346, 0.0278227, -0.0706327, 0.0459799, -0.122311, 0.00547528, -0.171196)
-depth = 0.01
+[node name="Polygon" type="CSGPolygon3D" parent="MeshBuilder/Box"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.344, 0.5)
+polygon = PackedVector2Array(0, 0, 0.5, 0.5, 1, 0)
 smooth_faces = true
 script = ExtResource("3_i4odo")
+
+[node name="Box" type="CSGBox3D" parent="MeshBuilder/Box/Polygon"]
+transform = Transform3D(0.707388, 0.706825, 0, -0.706825, 0.707388, 0, 0, 0, 1, 0.8, 0.23, -0.5)
+size = Vector3(0.9, 0.07, 1.1)
+script = ExtResource("5_veith")
+
+[node name="Box2" type="CSGBox3D" parent="MeshBuilder/Box/Polygon"]
+transform = Transform3D(0.707388, -0.706825, 0, 0.706825, 0.707388, 0, 0, 0, 1, 0.2, 0.23, -0.5)
+size = Vector3(0.9, 0.07, 1.1)
+script = ExtResource("5_veith")

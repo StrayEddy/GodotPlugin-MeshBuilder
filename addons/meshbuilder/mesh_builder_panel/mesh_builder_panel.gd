@@ -100,9 +100,13 @@ func _on_publish_pressed():
 		$ConfirmationDialog.popup_centered()
 
 func _on_confirmation_dialog_confirmed():
+	$NameForPublishDialog.dialog_text = "How do you want to name your published model ?"
+	$NameForPublishDialog.popup_centered()
+
+func _on_name_for_publish_dialog_confirmed():
 	var on_completed = func():
 		OS.alert("Thank you for publishing your work. It will be reviewed before becoming available to the general public.")
-	mesh_builder.publish(on_completed)
+	mesh_builder.publish($NameForPublishDialog/LineEdit.text, on_completed)
 
 func _on_finalize_pressed():
 	mesh_builder.finalize()

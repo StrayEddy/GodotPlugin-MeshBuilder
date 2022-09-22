@@ -32,7 +32,6 @@ grow_vertical = 2
 metadata/_edit_layout_mode = 1
 
 [node name="Basic" type="Panel" parent="TabContainer"]
-visible = false
 custom_minimum_size = Vector2i(300, 170)
 layout_mode = 2
 anchors_preset = 15
@@ -307,16 +306,26 @@ offset_bottom = 145.0
 size_flags_horizontal = 4
 text = "Add"
 
-[node name="Finalize" type="Button" parent="TabContainer/Basic/HBoxContainer"]
+[node name="Publish" type="Button" parent="TabContainer/Basic/HBoxContainer"]
 modulate = Color(0, 1, 0, 1)
 custom_minimum_size = Vector2i(150, 0)
 layout_mode = 2
 offset_left = 682.0
 offset_right = 832.0
 offset_bottom = 145.0
+text = "PUBLISH"
+
+[node name="Finalize" type="Button" parent="TabContainer/Basic/HBoxContainer"]
+modulate = Color(0, 1, 0, 1)
+custom_minimum_size = Vector2i(150, 0)
+layout_mode = 2
+offset_left = 836.0
+offset_right = 986.0
+offset_bottom = 145.0
 text = "FINALIZE"
 
 [node name="Community" type="Panel" parent="TabContainer"]
+visible = false
 layout_mode = 2
 anchors_preset = 15
 anchor_right = 1.0
@@ -404,6 +413,15 @@ text = "FINALIZE"
 size = Vector2i(763, 100)
 dialog_text = "Do you really want to publish your MeshBuilder shape, and make it available for anyone to use ?"
 
+[node name="NameForPublishDialog" type="ConfirmationDialog" parent="."]
+size = Vector2i(763, 100)
+dialog_text = "How do you want to name your published model ?"
+
+[node name="LineEdit" type="LineEdit" parent="NameForPublishDialog"]
+offset_right = 67.0625
+offset_bottom = 31.0
+placeholder_text = "Name of my model"
+
 [connection signal="pressed" from="TabContainer/Basic/HBoxContainer/VBoxContainer9/AddPolygon" to="." method="_on_add_polygon_pressed"]
 [connection signal="pressed" from="TabContainer/Basic/HBoxContainer/VBoxContainer/AddCone" to="." method="_on_add_cone_pressed"]
 [connection signal="pressed" from="TabContainer/Basic/HBoxContainer/VBoxContainer3/AddBox" to="." method="_on_add_box_pressed"]
@@ -412,9 +430,11 @@ dialog_text = "Do you really want to publish your MeshBuilder shape, and make it
 [connection signal="pressed" from="TabContainer/Basic/HBoxContainer/VBoxContainer6/AddHalfSphere" to="." method="_on_add_half_sphere_pressed"]
 [connection signal="pressed" from="TabContainer/Basic/HBoxContainer/VBoxContainer7/AddTorus" to="." method="_on_add_torus_pressed"]
 [connection signal="pressed" from="TabContainer/Basic/HBoxContainer/VBoxContainer8/AddRing" to="." method="_on_add_ring_pressed"]
+[connection signal="pressed" from="TabContainer/Basic/HBoxContainer/Publish" to="." method="_on_publish_pressed"]
 [connection signal="pressed" from="TabContainer/Basic/HBoxContainer/Finalize" to="." method="_on_finalize_pressed"]
 [connection signal="visibility_changed" from="TabContainer/Community" to="." method="_on_community_visibility_changed"]
 [connection signal="text_changed" from="TabContainer/Community/HBoxContainer/VBoxContainer/HBoxContainer/LineEdit" to="." method="_on_line_edit_text_changed"]
 [connection signal="pressed" from="TabContainer/Community/HBoxContainer/HBoxContainer/Publish" to="." method="_on_publish_pressed"]
 [connection signal="pressed" from="TabContainer/Community/HBoxContainer/HBoxContainer/Finalize" to="." method="_on_finalize_pressed"]
 [connection signal="confirmed" from="ConfirmationDialog" to="." method="_on_confirmation_dialog_confirmed"]
+[connection signal="confirmed" from="NameForPublishDialog" to="." method="_on_name_for_publish_dialog_confirmed"]

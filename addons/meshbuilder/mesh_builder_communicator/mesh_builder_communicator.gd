@@ -8,11 +8,11 @@ func new_httprequest(on_request_completed :Callable) -> HTTPRequest:
 	http_request.request_completed.connect(on_request_completed)
 	return http_request
 
-func publish(mesh_builder :MeshBuilder, image_base64 :String, on_completed :Callable):
+func publish(mesh_builder :MeshBuilder, model_name :String, image_base64 :String, on_completed :Callable):
 	var shapes = []
 	for child in mesh_builder.get_children():
 		shapes.append(child.to_json())
-	var json = {"id":str(randi()), "image_base64":image_base64, "shapes":shapes}
+	var json = {"id":str(randi()), "name":model_name, "image_base64":image_base64, "shapes":shapes}
 	publish_json(json, on_completed)
 
 func read_json(on_completed :Callable):
