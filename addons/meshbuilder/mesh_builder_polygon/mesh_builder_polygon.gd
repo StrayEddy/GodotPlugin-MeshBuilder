@@ -16,7 +16,8 @@ func init(params=[1.0,[[0,0],[0,1],[1,1],[1,0]],true,0]):
 func to_json():
 	var children = []
 	for child in get_children():
-		children.append(child.to_json())
+		if child is CSGShape3D:
+			children.append(child.to_json())
 	var polygon_array = []
 	for vector2 in self.polygon:
 		polygon_array.append([snapped(vector2.x,0.001), snapped(vector2.y,0.001)])
