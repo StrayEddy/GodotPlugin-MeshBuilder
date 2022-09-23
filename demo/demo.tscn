@@ -2,9 +2,7 @@
 
 [ext_resource type="Script" path="res://demo/demo.gd" id="1_sugoq"]
 [ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder/mesh_builder.gd" id="2_33spq"]
-[ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder_polygon/mesh_builder_polygon.gd" id="3_i4odo"]
-[ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder_box/mesh_builder_box.gd" id="5_veith"]
-[ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder_cylinder/mesh_builder_cylinder.gd" id="6_r6xh1"]
+[ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder_mesh/mesh_builder_mesh.gd" id="3_ljcsa"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_gv1g4"]
 
@@ -16,6 +14,18 @@ background_mode = 2
 sky = SubResource("Sky_3a068")
 ambient_light_source = 3
 ssao_enabled = true
+
+[sub_resource type="Curve" id="Curve_6g2rw"]
+_data = [Vector2(0.2, 0.3), 0.0, 2.3079, 0, 1, Vector2(0.385135, 0.727273), 1.03967, 1.03967, 0, 0, Vector2(0.8, 0.9), 0.3, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_0li6l"]
+radius = 0.6
+radial_steps = 9
+sections = 6
+section_length = 0.3
+section_rings = 2
+curve = SubResource("Curve_6g2rw")
 
 [node name="Demo" type="Node3D"]
 script = ExtResource("1_sugoq")
@@ -30,37 +40,6 @@ transform = Transform3D(0.86537, -0.494762, -0.0796554, -0.32328, -0.672605, 0.6
 layers = 524288
 script = ExtResource("2_33spq")
 
-[node name="Box" type="CSGBox3D" parent="MeshBuilder"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.124, 0)
-size = Vector3(1, 0.692, 1)
-script = ExtResource("5_veith")
-
-[node name="Cylinder" type="CSGCylinder3D" parent="MeshBuilder/Box"]
-transform = Transform3D(1, 0, 0, 0, -0.000203653, 1, 0, -1, -0.000203653, 0, 0.081, -0.455)
-operation = 2
-radius = 0.14
-height = 0.142
-sides = 16
-script = ExtResource("6_r6xh1")
-
-[node name="Cylinder2" type="CSGCylinder3D" parent="MeshBuilder/Box"]
-transform = Transform3D(1, 0, 0, 0, -0.000203653, 1, 0, -1, -0.000203653, 0, -0.178, -0.565)
-radius = 0.034
-height = 0.142
-script = ExtResource("6_r6xh1")
-
-[node name="Polygon" type="CSGPolygon3D" parent="MeshBuilder/Box"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.344, 0.5)
-polygon = PackedVector2Array(0, 0, 0.5, 0.5, 1, 0)
-smooth_faces = true
-script = ExtResource("3_i4odo")
-
-[node name="Box" type="CSGBox3D" parent="MeshBuilder/Box/Polygon"]
-transform = Transform3D(0.707388, 0.706825, 0, -0.706825, 0.707388, 0, 0, 0, 1, 0.8, 0.23, -0.5)
-size = Vector3(0.9, 0.07, 1.1)
-script = ExtResource("5_veith")
-
-[node name="Box2" type="CSGBox3D" parent="MeshBuilder/Box/Polygon"]
-transform = Transform3D(0.707388, -0.706825, 0, 0.706825, 0.707388, 0, 0, 0, 1, 0.2, 0.23, -0.5)
-size = Vector3(0.9, 0.07, 1.1)
-script = ExtResource("5_veith")
+[node name="Mesh" type="CSGMesh3D" parent="MeshBuilder"]
+mesh = SubResource("TubeTrailMesh_0li6l")
+script = ExtResource("3_ljcsa")

@@ -67,6 +67,27 @@ func init(params=["BoxMesh",[],false, 0]):
 			self.mesh.outer_radius = params[1][1]
 			self.mesh.rings = params[1][2]
 			self.mesh.ring_segments = params[1][3]
+		"TubeTrailMesh":
+			self.mesh = TubeTrailMesh.new()
+			var curve = Curve.new()
+			if params[1].is_empty():
+				var p0 = [[0,0],0,0,0,0]
+				var p1 = [[1,1],0,0,0,0]
+				params[1] = [.5,8,5,.2,3,[0,1,100,[p0,p1]]]
+			self.mesh.radius = params[1][0]
+			self.mesh.radial_steps = params[1][1]
+			self.mesh.sections = params[1][2]
+			self.mesh.section_length = params[1][3]
+			self.mesh.section_rings = params[1][4]
+			
+			curve.min_value = params[1][5][0]
+			curve.max_value = params[1][5][1]
+			curve.bake_resolution = params[1][5][2]
+			for point in params[1][5][3]:
+				var position = Vector2(point[0][0], point[0][1])
+				curve.add_point(position, point[1], point[2], point[3], point[4])
+			self.mesh.curve = curve
+			
 	self.flip_faces = params[2]
 	self.operation = params[3]
 	return self
@@ -93,6 +114,21 @@ func to_json():
 			params = [mesh.radius, mesh.height, mesh.radial_segments, mesh.rings, mesh.is_hemisphere]
 		"TorusMesh":
 			params = [mesh.inner_radius, mesh.outer_radius, mesh.rings, mesh.ring_segments]
+		"TubeTrailMesh":
+			params = [mesh.radius, mesh.radial_steps, mesh.sections, mesh.section_length, mesh.section_rings]
+			var curve = [mesh.curve.min_value, mesh.curve.max_value, mesh.curve.bake_resolution]
+			var points = []
+			for i in mesh.curve.point_count:
+				var point = []
+				var pos = mesh.curve.get_point_position(i)
+				point.append([pos.x, pos.y])
+				point.append(mesh.curve.get_point_left_tangent(i))
+				point.append(mesh.curve.get_point_right_tangent(i))
+				point.append(mesh.curve.get_point_left_mode(i))
+				point.append(mesh.curve.get_point_right_mode(i))
+				points.append(point)
+			curve.append(points)
+			params.append(curve)
 	
 	var json = {
 		"name": "Mesh",
