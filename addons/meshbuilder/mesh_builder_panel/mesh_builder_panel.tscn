@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bjbrvhbu7rmp"]
+[gd_scene load_steps=13 format=3 uid="uid://bjbrvhbu7rmp"]
 
 [ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder_panel/mesh_builder_panel.gd" id="1_xpl4b"]
 [ext_resource type="Texture2D" uid="uid://c76acttmrbesx" path="res://addons/meshbuilder/mesh_builder_cone/icon.svg" id="2_57ccy"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://d10txf77nfmnu" path="res://addons/meshbuilder/mesh_builder_half_sphere/icon.svg" id="7_rfwyq"]
 [ext_resource type="Texture2D" uid="uid://ccllty5ickco2" path="res://addons/meshbuilder/mesh_builder_torus/icon.svg" id="8_yfbcy"]
 [ext_resource type="Texture2D" uid="uid://c06acco5tejcj" path="res://addons/meshbuilder/mesh_builder_ring/icon.svg" id="9_uprak"]
+[ext_resource type="Texture2D" uid="uid://cl6b3j1s1oxrg" path="res://addons/meshbuilder/mesh_builder_mesh/icon.svg" id="10_eyf72"]
 [ext_resource type="Texture2D" uid="uid://qlofuw7k7xrj" path="res://addons/meshbuilder/mesh_builder_panel/search-icon.svg" id="10_gasgh"]
 [ext_resource type="PackedScene" uid="uid://bwo7tt6etdpqi" path="res://addons/meshbuilder/mesh_builder_panel/shape_creation_button.tscn" id="10_gusm6"]
 
@@ -48,7 +49,7 @@ layout_mode = 0
 offset_top = 34.0
 offset_right = 1022.0
 offset_bottom = 204.0
-columns = 10
+columns = 11
 
 [node name="VBoxContainer9" type="VBoxContainer" parent="TabContainer/Basic/HBoxContainer"]
 custom_minimum_size = Vector2i(80, 80)
@@ -306,12 +307,44 @@ offset_bottom = 145.0
 size_flags_horizontal = 4
 text = "Add"
 
+[node name="VBoxContainer10" type="VBoxContainer" parent="TabContainer/Basic/HBoxContainer"]
+layout_mode = 2
+offset_left = 682.0
+offset_right = 762.0
+offset_bottom = 145.0
+
+[node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/VBoxContainer10"]
+layout_mode = 2
+offset_right = 80.0
+offset_bottom = 26.0
+text = "Mesh"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="TabContainer/Basic/HBoxContainer/VBoxContainer10"]
+custom_minimum_size = Vector2i(80, 80)
+layout_mode = 2
+offset_top = 30.0
+offset_right = 80.0
+offset_bottom = 110.0
+texture = ExtResource("10_eyf72")
+
+[node name="AddMesh" type="Button" parent="TabContainer/Basic/HBoxContainer/VBoxContainer10"]
+self_modulate = Color(0.0235294, 1, 0, 1)
+layout_mode = 2
+offset_left = 20.0
+offset_top = 114.0
+offset_right = 59.0
+offset_bottom = 145.0
+size_flags_horizontal = 4
+text = "Add"
+
 [node name="Publish" type="Button" parent="TabContainer/Basic/HBoxContainer"]
 modulate = Color(0, 1, 0, 1)
 custom_minimum_size = Vector2i(150, 0)
 layout_mode = 2
-offset_left = 682.0
-offset_right = 832.0
+offset_left = 766.0
+offset_right = 916.0
 offset_bottom = 145.0
 text = "PUBLISH"
 
@@ -319,8 +352,8 @@ text = "PUBLISH"
 modulate = Color(0, 1, 0, 1)
 custom_minimum_size = Vector2i(150, 0)
 layout_mode = 2
-offset_left = 836.0
-offset_right = 986.0
+offset_left = 920.0
+offset_right = 1070.0
 offset_bottom = 145.0
 text = "FINALIZE"
 
@@ -430,6 +463,7 @@ placeholder_text = "Name of my model"
 [connection signal="pressed" from="TabContainer/Basic/HBoxContainer/VBoxContainer6/AddHalfSphere" to="." method="_on_add_half_sphere_pressed"]
 [connection signal="pressed" from="TabContainer/Basic/HBoxContainer/VBoxContainer7/AddTorus" to="." method="_on_add_torus_pressed"]
 [connection signal="pressed" from="TabContainer/Basic/HBoxContainer/VBoxContainer8/AddRing" to="." method="_on_add_ring_pressed"]
+[connection signal="pressed" from="TabContainer/Basic/HBoxContainer/VBoxContainer10/AddMesh" to="." method="_on_add_mesh_pressed"]
 [connection signal="pressed" from="TabContainer/Basic/HBoxContainer/Publish" to="." method="_on_publish_pressed"]
 [connection signal="pressed" from="TabContainer/Basic/HBoxContainer/Finalize" to="." method="_on_finalize_pressed"]
 [connection signal="visibility_changed" from="TabContainer/Community" to="." method="_on_community_visibility_changed"]

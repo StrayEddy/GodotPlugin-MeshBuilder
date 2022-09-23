@@ -44,6 +44,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://addons/meshbuilder/mesh_builder_cylinder/mesh_builder_cylinder.gd"
 }, {
+"base": "CSGMesh3D",
+"class": &"MeshBuilderMesh",
+"language": &"GDScript",
+"path": "res://addons/meshbuilder/mesh_builder_mesh/mesh_builder_mesh.gd"
+}, {
 "base": "Control",
 "class": &"MeshBuilderPanel",
 "language": &"GDScript",
@@ -77,6 +82,7 @@ _global_script_class_icons={
 "MeshBuilderCommunicator": "",
 "MeshBuilderCone": "res://addons/meshbuilder/mesh_builder_cone/icon.svg",
 "MeshBuilderCylinder": "res://addons/meshbuilder/mesh_builder_cylinder/icon.svg",
+"MeshBuilderMesh": "res://addons/meshbuilder/mesh_builder_mesh/icon.svg",
 "MeshBuilderPanel": "",
 "MeshBuilderPolygon": "res://addons/meshbuilder/mesh_builder_polygon/icon.svg",
 "MeshBuilderSphere": "res://addons/meshbuilder/mesh_builder_sphere/icon.svg",

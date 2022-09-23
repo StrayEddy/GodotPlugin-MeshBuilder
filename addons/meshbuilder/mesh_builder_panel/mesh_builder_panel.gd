@@ -54,6 +54,8 @@ func _on_add_shape_pressed(owner_of_shapes, shapes):
 			shape = MeshBuilder.add_sphere(root, owner_of_shapes, params)
 		elif "Torus" in shape_info.name:
 			shape = MeshBuilder.add_torus(root, owner_of_shapes, params)
+		elif "Mesh" in shape_info.name:
+			shape = MeshBuilder.add_mesh(root, owner_of_shapes, params)
 		
 		if shape_info.has("position"):
 			shape.position = Vector3(shape_info.position[0], shape_info.position[1], shape_info.position[2])
@@ -93,6 +95,9 @@ func _on_add_ring_pressed():
 
 func _on_add_torus_pressed():
 	MeshBuilder.add_torus(root, selected_node)
+
+func _on_add_mesh_pressed():
+	MeshBuilder.add_mesh(root, selected_node)
 
 func _on_publish_pressed():
 	if mesh_builder.publish_check():
