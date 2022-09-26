@@ -9,6 +9,9 @@ var button :Button
 
 func setup(label_text :String, image_base64 :String, on_pressed :Callable):
 	label = Label.new()
+	label.custom_minimum_size = Vector2i(100,50)
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	label.text = label_text
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER

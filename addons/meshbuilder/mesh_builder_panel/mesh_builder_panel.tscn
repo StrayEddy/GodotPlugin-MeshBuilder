@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://bwo7tt6etdpqi" path="res://addons/meshbuilder/mesh_builder_panel/shape_creation_button.tscn" id="10_gusm6"]
 
 [node name="MeshBuilderPanel" type="Control"]
-custom_minimum_size = Vector2i(0, 250)
+custom_minimum_size = Vector2i(0, 270)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -375,12 +375,12 @@ offset_bottom = 205.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Community/HBoxContainer"]
 layout_mode = 2
-offset_right = 700.0
+offset_right = 103.0
 offset_bottom = 205.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Community/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-offset_right = 700.0
+offset_right = 103.0
 offset_bottom = 31.0
 
 [node name="TextureRect" type="TextureRect" parent="TabContainer/Community/HBoxContainer/VBoxContainer/HBoxContainer"]
@@ -394,23 +394,23 @@ ignore_texture_size = true
 [node name="LineEdit" type="LineEdit" parent="TabContainer/Community/HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 offset_left = 36.0
-offset_right = 700.0
+offset_right = 103.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
 placeholder_text = "Search here..."
 
 [node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/Community/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2i(700, 170)
+custom_minimum_size = Vector2i(950, 190)
 layout_mode = 2
 offset_top = 35.0
-offset_right = 700.0
-offset_bottom = 205.0
+offset_right = 103.0
+offset_bottom = 43.0
 
 [node name="GridContainer" type="GridContainer" parent="TabContainer/Community/HBoxContainer/VBoxContainer/ScrollContainer"]
 custom_minimum_size = Vector2i(650, 0)
 layout_mode = 2
 offset_right = 650.0
-columns = 6
+columns = 9
 
 [node name="ShapeCreationButton" parent="TabContainer/Community/HBoxContainer/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("10_gusm6")]
 custom_minimum_size = Vector2i(100, 0)
@@ -421,8 +421,8 @@ size_flags_vertical = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Community/HBoxContainer"]
 layout_mode = 2
-offset_left = 704.0
-offset_right = 908.0
+offset_left = 107.0
+offset_right = 311.0
 offset_bottom = 205.0
 
 [node name="Publish" type="Button" parent="TabContainer/Community/HBoxContainer/HBoxContainer"]
