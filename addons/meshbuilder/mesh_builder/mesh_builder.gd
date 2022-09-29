@@ -90,6 +90,14 @@ static func add_torus(root :Node3D, parent :CSGShape3D, params :Array = []):
 		shape = MeshBuilderTorus.new().init(params)
 	add_shape(root, parent, shape, "Torus")
 	return shape
+static func add_icosphere(root :Node3D, parent :CSGShape3D, params :Array = []):
+	var shape
+	if params.is_empty():
+		shape = MeshBuilderIcosphere.new().init()
+	else:
+		shape = MeshBuilderIcosphere.new().init(params)
+	add_shape(root, parent, shape, "Icosphere")
+	return shape
 static func add_mesh(root :Node3D, parent :CSGShape3D, params :Array = []):
 	var shape
 	if params.is_empty():

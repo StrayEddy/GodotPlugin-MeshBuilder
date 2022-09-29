@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://byapsytbqrrb7"]
 
 [ext_resource type="Script" path="res://demo/demo.gd" id="1_sugoq"]
-[ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder/mesh_builder.gd" id="2_33spq"]
+[ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder/mesh_builder.gd" id="2_kt2xo"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_gv1g4"]
 
@@ -25,4 +25,4 @@ transform = Transform3D(0.86537, -0.494762, -0.0796554, -0.32328, -0.672605, 0.6
 
 [node name="MeshBuilder" type="CSGCombiner3D" parent="."]
 layers = 524288
-script = ExtResource("2_33spq")
+script = ExtResource("2_kt2xo")
