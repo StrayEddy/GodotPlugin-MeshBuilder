@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bjbrvhbu7rmp"]
+[gd_scene load_steps=15 format=3 uid="uid://bjbrvhbu7rmp"]
 
 [ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder_panel/mesh_builder_panel.gd" id="1_xpl4b"]
 [ext_resource type="Texture2D" uid="uid://nj0mgtk308jn" path="res://addons/meshbuilder/mesh_builder_mesh/icon.png" id="2_g0cd1"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://qlofuw7k7xrj" path="res://addons/meshbuilder/mesh_builder_panel/search-icon.svg" id="10_gasgh"]
 [ext_resource type="PackedScene" uid="uid://bwo7tt6etdpqi" path="res://addons/meshbuilder/mesh_builder_panel/shape_creation_button.tscn" id="10_gusm6"]
 [ext_resource type="Texture2D" uid="uid://dr0rypu7gs1o5" path="res://addons/meshbuilder/mesh_builder_ring/icon.png" id="11_2i7k1"]
+[ext_resource type="Texture2D" uid="uid://b2cfcxwjdwbi1" path="res://addons/meshbuilder/mesh_builder_buckyball/icon.png" id="12_x1dxt"]
 
 [node name="MeshBuilderPanel" type="Control"]
 custom_minimum_size = Vector2i(0, 270)
@@ -380,6 +381,39 @@ offset_bottom = 165.0
 size_flags_horizontal = 4
 text = "Add"
 
+[node name="VBoxContainer12" type="VBoxContainer" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2i(100, 0)
+layout_mode = 2
+offset_left = 104.0
+offset_top = 169.0
+offset_right = 204.0
+offset_bottom = 334.0
+
+[node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer12"]
+layout_mode = 2
+offset_right = 100.0
+offset_bottom = 26.0
+text = "Buckyball"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer12"]
+layout_mode = 2
+offset_top = 30.0
+offset_right = 100.0
+offset_bottom = 130.0
+texture = ExtResource("12_x1dxt")
+
+[node name="AddBuckyball" type="Button" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer12"]
+self_modulate = Color(0.0235294, 1, 0, 1)
+layout_mode = 2
+offset_left = 30.0
+offset_top = 134.0
+offset_right = 69.0
+offset_bottom = 165.0
+size_flags_horizontal = 4
+text = "Add"
+
 [node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Basic/HBoxContainer"]
 layout_mode = 2
 offset_left = 954.0
@@ -512,6 +546,7 @@ placeholder_text = "Name of my model"
 [connection signal="pressed" from="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer7/AddTorus" to="." method="_on_add_torus_pressed"]
 [connection signal="pressed" from="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer11/AddIcosphere" to="." method="_on_add_icosphere_pressed"]
 [connection signal="pressed" from="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer8/AddRing" to="." method="_on_add_ring_pressed"]
+[connection signal="pressed" from="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer12/AddBuckyball" to="." method="_on_add_buckyball_pressed"]
 [connection signal="pressed" from="TabContainer/Basic/HBoxContainer/HBoxContainer/Publish" to="." method="_on_publish_pressed"]
 [connection signal="pressed" from="TabContainer/Basic/HBoxContainer/HBoxContainer/Finalize" to="." method="_on_finalize_pressed"]
 [connection signal="visibility_changed" from="TabContainer/Community" to="." method="_on_community_visibility_changed"]
