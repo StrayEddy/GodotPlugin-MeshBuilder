@@ -74,6 +74,14 @@ static func add_cylinder(root :Node3D, parent :CSGShape3D, params :Array = []):
 		shape = MeshBuilderCylinder.new().init(params)
 	add_shape(root, parent, shape, "Cylinder")
 	return shape
+static func add_ring(root :Node3D, parent :CSGShape3D, params :Array = []):
+	var shape
+	if params.is_empty():
+		shape = MeshBuilderRing.new().init()
+	else:
+		shape = MeshBuilderRing.new().init(params)
+	add_shape(root, parent, shape, "Ring")
+	return shape
 static func add_sphere(root :Node3D, parent :CSGShape3D, params :Array = []):
 	var shape
 	if params.is_empty():

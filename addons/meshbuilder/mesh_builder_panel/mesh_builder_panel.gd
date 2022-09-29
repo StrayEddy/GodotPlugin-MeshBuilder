@@ -58,6 +58,8 @@ func _on_add_shape_pressed(owner_of_shapes, shapes):
 			shape = MeshBuilder.add_icosphere(root, owner_of_shapes, params)
 		elif "Buckyball" in shape_info.name:
 			shape = MeshBuilder.add_buckyball(root, owner_of_shapes, params)
+		elif "Ring" in shape_info.name:
+			shape = MeshBuilder.add_ring(root, owner_of_shapes, params)
 		elif "Mesh" in shape_info.name:
 			shape = MeshBuilder.add_mesh(root, owner_of_shapes, params)
 		
@@ -93,8 +95,7 @@ func _on_add_sphere_pressed():
 	MeshBuilder.add_sphere(root, selected_node)
 
 func _on_add_ring_pressed():
-	var cylinder = MeshBuilder.add_cylinder(root, selected_node)
-	MeshBuilder.add_cylinder(root, cylinder, [false,2.0,0.25,8,true,2])
+	MeshBuilder.add_ring(root, selected_node)
 
 func _on_add_torus_pressed():
 	MeshBuilder.add_torus(root, selected_node)
