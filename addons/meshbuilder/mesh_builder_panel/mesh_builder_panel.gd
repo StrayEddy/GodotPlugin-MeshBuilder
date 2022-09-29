@@ -86,9 +86,8 @@ func _on_add_cylinder_pressed():
 	MeshBuilder.add_cylinder(root, selected_node)
 
 func _on_add_half_sphere_pressed():
-	var sphere = MeshBuilder.add_sphere(root, selected_node)
-	var box = MeshBuilder.add_box(root, sphere, [[1,1,1],2])
-	box.position.y -= .5
+	var params = ["SphereMesh",[0.5,0.5,12,6,true],false,0]
+	MeshBuilder.add_mesh(root, selected_node, params)
 
 func _on_add_sphere_pressed():
 	MeshBuilder.add_sphere(root, selected_node)
