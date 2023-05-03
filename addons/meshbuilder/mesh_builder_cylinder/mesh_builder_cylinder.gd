@@ -1,7 +1,7 @@
 @tool
+@icon("res://addons/meshbuilder/mesh_builder_cylinder/icon.svg")
 extends CSGCylinder3D
 class_name MeshBuilderCylinder
-@icon("res://addons/meshbuilder/mesh_builder_cylinder/icon.svg")
 
 func init(params=[false,2.0,0.5,8,true,0]):
 	self.cone = params[0]

@@ -32,7 +32,7 @@ func publish_json(json_data :Dictionary, on_completed :Callable):
 		if response_code == 201:
 			on_completed.call()
 	var http_request = new_httprequest(on_publish_completed)
-	var error = http_request.request("http://206.253.69.60:8080/publish-requests", ["content-type: application/json"], true, HTTPClient.METHOD_POST, json_string)
+	var error = http_request.request("http://206.253.69.60:8080/publish-requests", ["content-type: application/json"], HTTPClient.METHOD_POST, json_string)
 	if error != OK:
 		push_error("An error occurred in the HTTP request.")
 

@@ -1,7 +1,7 @@
 @tool
+@icon("res://addons/meshbuilder/mesh_builder_icosphere/small-icon.svg")
 extends CSGMesh3D
 class_name MeshBuilderIcosphere
-@icon("res://addons/meshbuilder/mesh_builder_icosphere/small-icon.svg")
 
 @export var subdivisions :int = 2 :
 	get:

@@ -1,7 +1,7 @@
 @tool
+@icon("res://addons/meshbuilder/mesh_builder_torus/icon.svg")
 extends CSGTorus3D
 class_name MeshBuilderTorus
-@icon("res://addons/meshbuilder/mesh_builder_torus/icon.svg")
 
 func init(params=[0.5,1.0,6,8,true,0]):
 	self.inner_radius = params[0]

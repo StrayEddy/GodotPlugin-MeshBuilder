@@ -1,7 +1,7 @@
 @tool
+@icon("res://addons/meshbuilder/mesh_builder_buckyball/small-icon.svg")
 extends CSGMesh3D
 class_name MeshBuilderBuckyball
-@icon("res://addons/meshbuilder/mesh_builder_buckyball/small-icon.svg")
 
 const C0:float = 0.809016994374947424102293417183
 const C1:float = 0.850650808352039932181540497063

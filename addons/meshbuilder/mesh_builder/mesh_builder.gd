@@ -1,7 +1,7 @@
 @tool
+@icon("res://addons/meshbuilder/mesh_builder/icon.svg")
 extends CSGCombiner3D
 class_name MeshBuilder
-@icon("res://addons/meshbuilder/mesh_builder/icon.svg")
 
 var mesh_builder_communicator_script = load("res://addons/meshbuilder/mesh_builder_communicator/mesh_builder_communicator.gd")
 var mesh_builder_communicator

@@ -1,7 +1,7 @@
 @tool
+@icon("res://addons/meshbuilder/mesh_builder_polygon/icon.svg")
 extends CSGPolygon3D
 class_name MeshBuilderPolygon
-@icon("res://addons/meshbuilder/mesh_builder_polygon/icon.svg")
 
 func init(params=[1.0,[[0,0],[0,1],[1,1],[1,0]],true,0]):
 	self.depth = params[0]

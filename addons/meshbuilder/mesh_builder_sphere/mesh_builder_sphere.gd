@@ -1,7 +1,7 @@
 @tool
+@icon("res://addons/meshbuilder/mesh_builder_sphere/icon.svg")
 extends CSGSphere3D
 class_name MeshBuilderSphere
-@icon("res://addons/meshbuilder/mesh_builder_sphere/icon.svg")
 
 func init(params=[12,0.5,6,true,0]):
 	self.radial_segments = params[0]

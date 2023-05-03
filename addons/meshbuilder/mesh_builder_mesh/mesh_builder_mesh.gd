@@ -1,7 +1,7 @@
 @tool
+@icon("res://addons/meshbuilder/mesh_builder_mesh/icon.svg")
 extends CSGMesh3D
 class_name MeshBuilderMesh
-@icon("res://addons/meshbuilder/mesh_builder_mesh/icon.svg")
 
 func init(params=["BoxMesh",[],false, 0]):
 	match params[0]:

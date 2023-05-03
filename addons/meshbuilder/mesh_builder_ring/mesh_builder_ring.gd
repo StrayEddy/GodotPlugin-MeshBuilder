@@ -1,7 +1,7 @@
 @tool
+@icon("res://addons/meshbuilder/mesh_builder_ring/small-icon.svg")
 extends CSGMesh3D
 class_name MeshBuilderRing
-@icon("res://addons/meshbuilder/mesh_builder_ring/small-icon.svg")
 
 @export var height :float = 1.0 :
 	get:
