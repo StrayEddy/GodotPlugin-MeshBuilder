@@ -22,9 +22,9 @@ func setup_and_show(root :Node3D, selected_node :Node3D, mesh_builder :MeshBuild
 	show()
 
 func _on_community_visibility_changed():
-	if $TabContainer/Community.visible:
+	if $TabContainer/MyShapes.visible:
 		var on_completed = func(shapes :Array):
-			for child in $TabContainer/Community/HBoxContainer/VBoxContainer/ScrollContainer/GridContainer.get_children():
+			for child in $TabContainer/MyShapes/HBoxContainer/VBoxContainer/ScrollContainer/GridContainer.get_children():
 				child.queue_free()
 			
 			# Sort shapes alphabetically
@@ -32,7 +32,7 @@ func _on_community_visibility_changed():
 			
 			for shape in shapes:
 				var callable :Callable = Callable(self, "_on_add_shape_pressed")
-				var button = add_shape_creation_button($TabContainer/Community/HBoxContainer/VBoxContainer/ScrollContainer/GridContainer, shape.name, shape.image_base64, callable.bind(selected_node, shape.shapes))
+				var button = add_shape_creation_button($TabContainer/MyShapes/HBoxContainer/VBoxContainer/ScrollContainer/GridContainer, shape.name, shape.image_base64, callable.bind(selected_node, shape.shapes))
 		if is_instance_valid(mesh_builder):
 			mesh_builder.get_community_meshes(on_completed)
 
@@ -129,7 +129,7 @@ func _on_finalize_pressed():
 
 # When search bar text changes
 func _on_line_edit_text_changed(new_text):
-	for button in $TabContainer/Community/HBoxContainer/VBoxContainer/ScrollContainer/GridContainer.get_children():
+	for button in $TabContainer/MyShapes/HBoxContainer/VBoxContainer/ScrollContainer/GridContainer.get_children():
 		if new_text in button.label.text or new_text == "":
 			button.show()
 		else:

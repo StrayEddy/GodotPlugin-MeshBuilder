@@ -130,9 +130,9 @@ func publish_check():
 	if get_all_children(self).size() < 2:
 		OS.alert("You need at least 2 shapes to publish your work")
 		return false
-	elif Time.get_ticks_msec() - last_time_published < 60000:
-		OS.alert("You need to wait a minute before publishing again")
-		return false
+#	elif Time.get_ticks_msec() - last_time_published < 60000:
+#		OS.alert("You need to wait a minute before publishing again")
+#		return false
 	else:
 		return true
 

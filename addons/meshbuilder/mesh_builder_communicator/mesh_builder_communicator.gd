@@ -2,37 +2,30 @@
 extends Node
 class_name MeshBuilderCommunicator
 
-func new_httprequest(on_request_completed :Callable) -> HTTPRequest:
-	var http_request :HTTPRequest = HTTPRequest.new()
-	add_child(http_request, true)
-	http_request.request_completed.connect(on_request_completed)
-	return http_request
+const json_file = "res://addons/meshbuilder/myshapes.json"
 
 func publish(mesh_builder :MeshBuilder, model_name :String, image_base64 :String, on_completed :Callable):
 	var shapes = []
 	for child in mesh_builder.get_children():
 		shapes.append(child.to_json())
-	var json = {"id":str(randi()), "name":model_name, "image_base64":image_base64, "shapes":shapes}
-	publish_json(json, on_completed)
+	var new_shape = {"id":str(randi()), "name":model_name, "image_base64":image_base64, "shapes":shapes}
+	add_shape_to_json(new_shape, on_completed)
 
 func read_json(on_completed :Callable):
-	var on_read_completed = func(result, response_code, headers, body):
-		if response_code == 200:
-			var json = JSON.new()
-			json.parse(body.get_string_from_utf8())
-			on_completed.call(json.get_data())
-	var http_request = new_httprequest(on_read_completed)
-	var error = http_request.request("http://206.253.69.60:8080/shapes", [])
-	if error != OK:
-		push_error("An error occurred in the HTTP request.")
+	var file = FileAccess.open(json_file, FileAccess.READ)
+	var content = file.get_as_text()
+	var json = JSON.new()
+	json.parse(content)
+	on_completed.call(json.data)
 
-func publish_json(json_data :Dictionary, on_completed :Callable):
-	var json_string = JSON.new().stringify(json_data)
-	var on_publish_completed = func(result, response_code, headers, body):
-		if response_code == 201:
-			on_completed.call()
-	var http_request = new_httprequest(on_publish_completed)
-	var error = http_request.request("http://206.253.69.60:8080/publish-requests", ["content-type: application/json"], HTTPClient.METHOD_POST, json_string)
-	if error != OK:
-		push_error("An error occurred in the HTTP request.")
+func write_json(content):
+	var file = FileAccess.open(json_file, FileAccess.WRITE)
+	file.store_string(content)
+
+func add_shape_to_json(new_shape :Dictionary, on_completed :Callable):
+	var json_as_text = FileAccess.get_file_as_string(json_file)
+	var json = JSON.parse_string(json_as_text)
+	json.append(new_shape)
+	var new_json_string = JSON.new().stringify(json)
+	write_json(new_json_string)
 

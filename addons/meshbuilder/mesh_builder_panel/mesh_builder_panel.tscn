@@ -16,7 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://b2cfcxwjdwbi1" path="res://addons/meshbuilder/mesh_builder_buckyball/icon.png" id="12_x1dxt"]
 
 [node name="MeshBuilderPanel" type="Control"]
-custom_minimum_size = Vector2i(0, 270)
+custom_minimum_size = Vector2(0, 270)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -36,490 +36,312 @@ metadata/_edit_layout_mode = 1
 
 [node name="Basic" type="Panel" parent="TabContainer"]
 layout_mode = 2
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 31.0
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Basic"]
-custom_minimum_size = Vector2i(1028, 205)
+custom_minimum_size = Vector2(1028, 205)
 layout_mode = 0
 offset_right = 1038.0
 offset_bottom = 205.0
 
 [node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/Basic/HBoxContainer"]
-custom_minimum_size = Vector2i(950, 190)
+custom_minimum_size = Vector2(950, 190)
 layout_mode = 2
-offset_right = 950.0
-offset_bottom = 205.0
 
 [node name="GridContainer" type="GridContainer" parent="TabContainer/Basic/HBoxContainer/ScrollContainer"]
-custom_minimum_size = Vector2i(650, 0)
+custom_minimum_size = Vector2(650, 0)
 layout_mode = 2
-offset_right = 932.0
-offset_bottom = 334.0
 columns = 9
 
 [node name="VBoxContainer10" type="VBoxContainer" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2i(100, 0)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-offset_right = 100.0
-offset_bottom = 165.0
 
 [node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer10"]
 layout_mode = 2
-offset_right = 100.0
-offset_bottom = 26.0
 text = "Mesh"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer10"]
 layout_mode = 2
-offset_top = 30.0
-offset_right = 100.0
-offset_bottom = 130.0
 texture = ExtResource("2_g0cd1")
 
 [node name="AddMesh" type="Button" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer10"]
 self_modulate = Color(0.0235294, 1, 0, 1)
 layout_mode = 2
-offset_left = 30.0
-offset_top = 134.0
-offset_right = 69.0
-offset_bottom = 165.0
 size_flags_horizontal = 4
 text = "Add"
 
 [node name="VBoxContainer9" type="VBoxContainer" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2i(100, 0)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-offset_left = 104.0
-offset_right = 204.0
-offset_bottom = 165.0
 
 [node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer9"]
 layout_mode = 2
-offset_right = 100.0
-offset_bottom = 26.0
 text = "Polygon"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer9"]
 layout_mode = 2
-offset_top = 30.0
-offset_right = 100.0
-offset_bottom = 130.0
 texture = ExtResource("4_xprkn")
 
 [node name="AddPolygon" type="Button" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer9"]
 self_modulate = Color(0.0235294, 1, 0, 1)
 layout_mode = 2
-offset_left = 30.0
-offset_top = 134.0
-offset_right = 69.0
-offset_bottom = 165.0
 size_flags_horizontal = 4
 text = "Add"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2i(100, 0)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-offset_left = 208.0
-offset_right = 308.0
-offset_bottom = 165.0
 
 [node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer"]
 layout_mode = 2
-offset_right = 100.0
-offset_bottom = 26.0
 text = "Cone"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer"]
 layout_mode = 2
-offset_top = 30.0
-offset_right = 100.0
-offset_bottom = 130.0
 texture = ExtResource("4_ufa4f")
 
 [node name="AddCone" type="Button" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer"]
 self_modulate = Color(0.0235294, 1, 0, 1)
 layout_mode = 2
-offset_left = 30.0
-offset_top = 134.0
-offset_right = 69.0
-offset_bottom = 165.0
 size_flags_horizontal = 4
 text = "Add"
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2i(100, 0)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-offset_left = 312.0
-offset_right = 412.0
-offset_bottom = 165.0
 
 [node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer3"]
 layout_mode = 2
-offset_right = 100.0
-offset_bottom = 26.0
 text = "Box"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer3"]
 layout_mode = 2
-offset_top = 30.0
-offset_right = 100.0
-offset_bottom = 130.0
 texture = ExtResource("5_sr8gj")
 
 [node name="AddBox" type="Button" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer3"]
 self_modulate = Color(0.0235294, 1, 0, 1)
 layout_mode = 2
-offset_left = 30.0
-offset_top = 134.0
-offset_right = 69.0
-offset_bottom = 165.0
 size_flags_horizontal = 4
 text = "Add"
 
 [node name="VBoxContainer4" type="VBoxContainer" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2i(100, 0)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-offset_left = 416.0
-offset_right = 516.0
-offset_bottom = 165.0
 
 [node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer4"]
 layout_mode = 2
-offset_right = 100.0
-offset_bottom = 26.0
 text = "Cylinder"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer4"]
 layout_mode = 2
-offset_top = 30.0
-offset_right = 100.0
-offset_bottom = 130.0
 texture = ExtResource("6_fysmq")
 
 [node name="AddCylinder" type="Button" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer4"]
 self_modulate = Color(0.0235294, 1, 0, 1)
 layout_mode = 2
-offset_left = 30.0
-offset_top = 134.0
-offset_right = 69.0
-offset_bottom = 165.0
 size_flags_horizontal = 4
 text = "Add"
 
 [node name="VBoxContainer5" type="VBoxContainer" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2i(100, 0)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-offset_left = 520.0
-offset_right = 620.0
-offset_bottom = 165.0
 
 [node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer5"]
 layout_mode = 2
-offset_right = 100.0
-offset_bottom = 26.0
 text = "Sphere"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer5"]
 layout_mode = 2
-offset_top = 30.0
-offset_right = 100.0
-offset_bottom = 130.0
 texture = ExtResource("7_ekhoq")
 
 [node name="AddSphere" type="Button" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer5"]
 self_modulate = Color(0.0235294, 1, 0, 1)
 layout_mode = 2
-offset_left = 30.0
-offset_top = 134.0
-offset_right = 69.0
-offset_bottom = 165.0
 size_flags_horizontal = 4
 text = "Add"
 
 [node name="VBoxContainer6" type="VBoxContainer" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2i(100, 0)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-offset_left = 624.0
-offset_right = 724.0
-offset_bottom = 165.0
 
 [node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer6"]
 layout_mode = 2
-offset_right = 100.0
-offset_bottom = 26.0
 text = "Half Sphere"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer6"]
 layout_mode = 2
-offset_top = 30.0
-offset_right = 100.0
-offset_bottom = 130.0
 texture = ExtResource("8_cj67l")
 
 [node name="AddHalfSphere" type="Button" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer6"]
 self_modulate = Color(0.0235294, 1, 0, 1)
 layout_mode = 2
-offset_left = 30.0
-offset_top = 134.0
-offset_right = 69.0
-offset_bottom = 165.0
 size_flags_horizontal = 4
 text = "Add"
 
 [node name="VBoxContainer7" type="VBoxContainer" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2i(100, 0)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-offset_left = 728.0
-offset_right = 828.0
-offset_bottom = 165.0
 
 [node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer7"]
 layout_mode = 2
-offset_right = 100.0
-offset_bottom = 26.0
 text = "Torus"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer7"]
 layout_mode = 2
-offset_top = 30.0
-offset_right = 100.0
-offset_bottom = 130.0
 texture = ExtResource("9_v0ran")
 
 [node name="AddTorus" type="Button" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer7"]
 self_modulate = Color(0.0235294, 1, 0, 1)
 layout_mode = 2
-offset_left = 30.0
-offset_top = 134.0
-offset_right = 69.0
-offset_bottom = 165.0
 size_flags_horizontal = 4
 text = "Add"
 
 [node name="VBoxContainer11" type="VBoxContainer" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2i(100, 0)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-offset_left = 832.0
-offset_right = 932.0
-offset_bottom = 165.0
 
 [node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer11"]
 layout_mode = 2
-offset_right = 100.0
-offset_bottom = 26.0
 text = "Icosphere"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer11"]
 layout_mode = 2
-offset_top = 30.0
-offset_right = 100.0
-offset_bottom = 130.0
 texture = ExtResource("10_3peuj")
 
 [node name="AddIcosphere" type="Button" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer11"]
 self_modulate = Color(0.0235294, 1, 0, 1)
 layout_mode = 2
-offset_left = 30.0
-offset_top = 134.0
-offset_right = 69.0
-offset_bottom = 165.0
 size_flags_horizontal = 4
 text = "Add"
 
 [node name="VBoxContainer8" type="VBoxContainer" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2i(100, 0)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-offset_top = 169.0
-offset_right = 100.0
-offset_bottom = 334.0
 
 [node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer8"]
 layout_mode = 2
-offset_right = 100.0
-offset_bottom = 26.0
 text = "Ring"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer8"]
 layout_mode = 2
-offset_top = 30.0
-offset_right = 100.0
-offset_bottom = 130.0
 texture = ExtResource("11_2i7k1")
 
 [node name="AddRing" type="Button" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer8"]
 self_modulate = Color(0.0235294, 1, 0, 1)
 layout_mode = 2
-offset_left = 30.0
-offset_top = 134.0
-offset_right = 69.0
-offset_bottom = 165.0
 size_flags_horizontal = 4
 text = "Add"
 
 [node name="VBoxContainer12" type="VBoxContainer" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer"]
-custom_minimum_size = Vector2i(100, 0)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-offset_left = 104.0
-offset_top = 169.0
-offset_right = 204.0
-offset_bottom = 334.0
 
 [node name="Label" type="Label" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer12"]
 layout_mode = 2
-offset_right = 100.0
-offset_bottom = 26.0
 text = "Buckyball"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer12"]
 layout_mode = 2
-offset_top = 30.0
-offset_right = 100.0
-offset_bottom = 130.0
 texture = ExtResource("12_x1dxt")
 
 [node name="AddBuckyball" type="Button" parent="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer12"]
 self_modulate = Color(0.0235294, 1, 0, 1)
 layout_mode = 2
-offset_left = 30.0
-offset_top = 134.0
-offset_right = 69.0
-offset_bottom = 165.0
 size_flags_horizontal = 4
 text = "Add"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Basic/HBoxContainer"]
 layout_mode = 2
-offset_left = 954.0
-offset_right = 1158.0
-offset_bottom = 205.0
 
 [node name="Publish" type="Button" parent="TabContainer/Basic/HBoxContainer/HBoxContainer"]
 modulate = Color(0, 1, 0, 1)
-custom_minimum_size = Vector2i(100, 10)
+custom_minimum_size = Vector2(100, 10)
 layout_mode = 2
-offset_right = 100.0
-offset_bottom = 205.0
 text = "PUBLISH"
 
 [node name="Finalize" type="Button" parent="TabContainer/Basic/HBoxContainer/HBoxContainer"]
 modulate = Color(0, 1, 0, 1)
-custom_minimum_size = Vector2i(100, 10)
+custom_minimum_size = Vector2(100, 10)
 layout_mode = 2
-offset_left = 104.0
-offset_right = 204.0
-offset_bottom = 205.0
 text = "FINALIZE"
 
-[node name="Community" type="Panel" parent="TabContainer"]
+[node name="MyShapes" type="Panel" parent="TabContainer"]
 visible = false
 layout_mode = 2
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 31.0
-grow_horizontal = 2
-grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Community"]
-custom_minimum_size = Vector2i(1028, 205)
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/MyShapes"]
+custom_minimum_size = Vector2(1028, 205)
 layout_mode = 0
 offset_right = 1038.0
 offset_bottom = 205.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Community/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/MyShapes/HBoxContainer"]
 layout_mode = 2
-offset_right = 950.0
-offset_bottom = 225.0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Community/HBoxContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/MyShapes/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-offset_right = 950.0
-offset_bottom = 31.0
 
-[node name="TextureRect" type="TextureRect" parent="TabContainer/Community/HBoxContainer/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2i(32, 16)
+[node name="TextureRect" type="TextureRect" parent="TabContainer/MyShapes/HBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 16)
 layout_mode = 2
-offset_right = 32.0
-offset_bottom = 31.0
 texture = ExtResource("10_gasgh")
-ignore_texture_size = true
+expand_mode = 1
 
-[node name="LineEdit" type="LineEdit" parent="TabContainer/Community/HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="LineEdit" type="LineEdit" parent="TabContainer/MyShapes/HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-offset_left = 36.0
-offset_right = 950.0
-offset_bottom = 31.0
 size_flags_horizontal = 3
 placeholder_text = "Search here..."
 
-[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/Community/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2i(950, 190)
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/MyShapes/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(950, 190)
 layout_mode = 2
-offset_top = 35.0
-offset_right = 950.0
-offset_bottom = 225.0
 
-[node name="GridContainer" type="GridContainer" parent="TabContainer/Community/HBoxContainer/VBoxContainer/ScrollContainer"]
-custom_minimum_size = Vector2i(650, 0)
+[node name="GridContainer" type="GridContainer" parent="TabContainer/MyShapes/HBoxContainer/VBoxContainer/ScrollContainer"]
+custom_minimum_size = Vector2(650, 0)
 layout_mode = 2
-offset_right = 650.0
 columns = 9
 
-[node name="ShapeCreationButton" parent="TabContainer/Community/HBoxContainer/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("10_gusm6")]
-custom_minimum_size = Vector2i(100, 0)
+[node name="ShapeCreationButton" parent="TabContainer/MyShapes/HBoxContainer/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("10_gusm6")]
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-offset_bottom = 0.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Community/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/MyShapes/HBoxContainer"]
 layout_mode = 2
-offset_left = 954.0
-offset_right = 1158.0
-offset_bottom = 225.0
 
-[node name="Publish" type="Button" parent="TabContainer/Community/HBoxContainer/HBoxContainer"]
+[node name="Publish" type="Button" parent="TabContainer/MyShapes/HBoxContainer/HBoxContainer"]
 modulate = Color(0, 1, 0, 1)
-custom_minimum_size = Vector2i(100, 10)
+custom_minimum_size = Vector2(100, 10)
 layout_mode = 2
-offset_right = 100.0
-offset_bottom = 225.0
 text = "PUBLISH"
 
-[node name="Finalize" type="Button" parent="TabContainer/Community/HBoxContainer/HBoxContainer"]
+[node name="Finalize" type="Button" parent="TabContainer/MyShapes/HBoxContainer/HBoxContainer"]
 modulate = Color(0, 1, 0, 1)
-custom_minimum_size = Vector2i(100, 10)
+custom_minimum_size = Vector2(100, 10)
 layout_mode = 2
-offset_left = 104.0
-offset_right = 204.0
-offset_bottom = 225.0
 text = "FINALIZE"
 
 [node name="ConfirmationDialog" type="ConfirmationDialog" parent="."]
@@ -549,9 +371,9 @@ placeholder_text = "Name of my model"
 [connection signal="pressed" from="TabContainer/Basic/HBoxContainer/ScrollContainer/GridContainer/VBoxContainer12/AddBuckyball" to="." method="_on_add_buckyball_pressed"]
 [connection signal="pressed" from="TabContainer/Basic/HBoxContainer/HBoxContainer/Publish" to="." method="_on_publish_pressed"]
 [connection signal="pressed" from="TabContainer/Basic/HBoxContainer/HBoxContainer/Finalize" to="." method="_on_finalize_pressed"]
-[connection signal="visibility_changed" from="TabContainer/Community" to="." method="_on_community_visibility_changed"]
-[connection signal="text_changed" from="TabContainer/Community/HBoxContainer/VBoxContainer/HBoxContainer/LineEdit" to="." method="_on_line_edit_text_changed"]
-[connection signal="pressed" from="TabContainer/Community/HBoxContainer/HBoxContainer/Publish" to="." method="_on_publish_pressed"]
-[connection signal="pressed" from="TabContainer/Community/HBoxContainer/HBoxContainer/Finalize" to="." method="_on_finalize_pressed"]
+[connection signal="visibility_changed" from="TabContainer/MyShapes" to="." method="_on_community_visibility_changed"]
+[connection signal="text_changed" from="TabContainer/MyShapes/HBoxContainer/VBoxContainer/HBoxContainer/LineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="pressed" from="TabContainer/MyShapes/HBoxContainer/HBoxContainer/Publish" to="." method="_on_publish_pressed"]
+[connection signal="pressed" from="TabContainer/MyShapes/HBoxContainer/HBoxContainer/Finalize" to="." method="_on_finalize_pressed"]
 [connection signal="confirmed" from="ConfirmationDialog" to="." method="_on_confirmation_dialog_confirmed"]
 [connection signal="confirmed" from="NameForPublishDialog" to="." method="_on_name_for_publish_dialog_confirmed"]
