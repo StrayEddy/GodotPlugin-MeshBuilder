@@ -1,6 +1,6 @@
 # MeshBuilder (Godot Plugin)
 
-This is a Godot 4 plugin to quickly build 3D meshes via basic CSG shapes and community-created CSG shapes
+This is a Godot 4 plugin to quickly build 3D meshes via basic CSG shapes and self-created CSG shapes
 
 # How to use
 - Use Godot 4
@@ -8,7 +8,7 @@ This is a Godot 4 plugin to quickly build 3D meshes via basic CSG shapes and com
 - Enable the addon in `Project/Project Settings/Plugins`
 - Add a `MeshBuilder` node to your scene
 - Select the `MeshBuilder` node to start building
-- Once your done, you can `Finalize` your work to convert it to a `MeshInstance3D`
+- Once you're done, you can `Finalize` your work to convert it to a `MeshInstance3D`
 
 # Basic Tab
 - Add basic shapes (Polygon, Cone, Cube, Cylinder, Sphere, Half-Sphere, Torus, Ring)
