@@ -1,7 +1,7 @@
-@tool
+tool
 extends EditorPlugin
 
-var mesh_builder_panel :MeshBuilderPanel
+var mesh_builder_panel
 var editable = false
 
 func selection_changed() -> void:
@@ -9,14 +9,14 @@ func selection_changed() -> void:
 	if selection.size() == 1 and selection[0] is MeshBuilder:
 		mesh_builder_panel.setup_and_show(get_tree().get_edited_scene_root(), selection[0], selection[0])
 		editable = false
-	elif selection.size() == 1 and selection[0] is CSGShape3D:
+	elif selection.size() == 1 and selection[0] is CSGShape:
 		mesh_builder_panel.setup_and_show(get_tree().get_edited_scene_root(), selection[0], get_parent_mesh_builder(selection[0]))
 		editable = true
 	else:
 		editable = false
 		mesh_builder_panel.hide()
 
-func get_parent_mesh_builder(selected_node :Node3D):
+func get_parent_mesh_builder(selected_node :Spatial):
 	var parent = selected_node.get_parent()
 	if parent is MeshBuilder:
 		return parent
@@ -30,7 +30,7 @@ func _handles(obj) -> bool:
 
 # Create whole plugin
 func _enter_tree():
-	mesh_builder_panel = preload("res://addons/meshbuilder/mesh_builder_panel/mesh_builder_panel.tscn").instantiate()
+	mesh_builder_panel = preload("res://addons/meshbuilder/mesh_builder_panel/mesh_builder_panel.tscn").instance()
 	add_control_to_container(EditorPlugin.CONTAINER_SPATIAL_EDITOR_BOTTOM, mesh_builder_panel)
 	mesh_builder_panel.hide()
 
@@ -43,7 +43,7 @@ func _enter_tree():
 	add_custom_type("MeshBuilderTorus", "MeshBuilderTorus", preload("res://addons/meshbuilder/mesh_builder_torus/mesh_builder_torus.gd"), preload("res://addons/meshbuilder/mesh_builder_torus/icon.svg"))
 
 	# Spy on event when object selected in tree changes
-	get_editor_interface().get_selection().selection_changed.connect(self.selection_changed)
+	get_editor_interface().get_selection().connect("selection_changed", self, "selection_changed")
 
 
 # Destroy whole plugin

@@ -1,10 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://ghio38vqvfj0"]
+[gd_scene load_steps=3 format=2]
 
-[ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder_camera/mesh_builder_camera.gd" id="1_vjbaa"]
-[ext_resource type="Environment" uid="uid://b5dm25oceh18m" path="res://addons/meshbuilder/mesh_builder_camera/mesh_builder_camera.tres" id="1_wwgfg"]
+[ext_resource path="res://addons/meshbuilder/mesh_builder_camera/mesh_builder_camera.gd" type="Script" id=1]
+[ext_resource path="res://addons/meshbuilder/mesh_builder_camera/mesh_builder_camera.tres" type="Environment" id=2]
 
-[node name="MeshBuilderCamera" type="Camera3D"]
-transform = Transform3D(-0.707106, 0.40558, -0.579228, 0, 0.819152, 0.573577, 0.707106, 0.40558, -0.579228, -2, 2, -2)
-cull_mask = 524288
-environment = ExtResource("1_wwgfg")
-script = ExtResource("1_vjbaa")
+[node name="MeshBuilderCamera" type="Camera"]
+transform = Transform( -0.707107, 0.40558, -0.579228, 0, 0.819152, 0.573577, 0.707107, 0.40558, -0.579228, -2, 2, -2 )
+environment = ExtResource( 2 )
+fov = 75.0
+far = 4000.0
+script = ExtResource( 1 )

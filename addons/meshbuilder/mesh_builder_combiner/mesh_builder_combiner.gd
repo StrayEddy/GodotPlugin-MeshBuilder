@@ -1,5 +1,5 @@
-@tool
-extends CSGCombiner3D
+tool
+extends CSGCombiner
 class_name MeshBuilderCombiner
 
 func init(params=[0]):
@@ -17,10 +17,10 @@ func to_json():
 	}
 	
 	if scale != Vector3.ONE:
-		json["scale"] = [snapped(scale.x,0.001), snapped(scale.y,0.001), snapped(scale.z,0.001)]
+		json["scale"] = [stepify(scale.x,0.001), stepify(scale.y,0.001), stepify(scale.z,0.001)]
 	if rotation != Vector3.ZERO:
-		json["rotation"] = [snapped(rotation.x,0.001), snapped(rotation.y,0.001), snapped(rotation.z,0.001)]
-	if position != Vector3.ZERO:
-		json["position"] = [snapped(position.x,0.001), snapped(position.y,0.001), snapped(position.z,0.001)]
+		json["rotation"] = [stepify(rotation.x,0.001), stepify(rotation.y,0.001), stepify(rotation.z,0.001)]
+	if translation != Vector3.ZERO:
+		json["position"] = [stepify(translation.x,0.001), stepify(translation.y,0.001), stepify(translation.z,0.001)]
 	
 	return json

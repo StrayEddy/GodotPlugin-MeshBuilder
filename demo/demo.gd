@@ -1,4 +1,4 @@
-extends Node3D
+extends Spatial
 
 
 # Called when the node enters the scene tree for the first time.

@@ -1,36 +1,35 @@
-@tool
-@icon("res://addons/meshbuilder/mesh_builder_icosphere/small-icon.svg")
-extends CSGMesh3D
+tool
+extends CSGMesh
 class_name MeshBuilderIcosphere
 
-@export var subdivisions :int = 2 :
-	get:
-		return subdivisions
-	set(value):
-		value = clamp(value,0,6)
-		subdivisions = value
-		update_mesh()
+export(int) var subdivisions = 2 setget setSubdivisions, getSubdivisions
+func setSubdivisions(value):
+	value = clamp(value,0,6)
+	subdivisions = value
+	update_mesh()
+func getSubdivisions():
+	return subdivisions
 
-@export var diameter :float = 1.0 :
-	get:
-		return diameter
-	set(value):
+export(float) var diameter = 1.0 setget setDiameter, getDiameter
+func setDiameter(value):
 		diameter = value
 		update_mesh()
+func getDiameter():
+		return diameter
 
 const X :float = 0.525731112119133606 
 const Z :float = 0.850650808352039932
 const N :float = 0.0
 
-var vertices : PackedVector3Array = []
-var core_vertices : PackedVector3Array = [
+var vertices : PoolVector3Array = []
+var core_vertices : PoolVector3Array = [
 		Vector3(-X,N,Z), Vector3(X,N,Z), Vector3(-X,N,-Z), Vector3(X,N,-Z),
 		Vector3(N,Z,X), Vector3(N,Z,-X), Vector3(N,-Z,X), Vector3(N,-Z,-X),
 		Vector3(Z,X,N), Vector3(-Z,X, N), Vector3(Z,-X,N), Vector3(-Z,-X, N),
 		]
 
-var triangles : PackedVector3Array = []
-var core_triangles : PackedVector3Array = [
+var triangles : PoolVector3Array = []
+var core_triangles : PoolVector3Array = [
 		Vector3(0,4,1), Vector3(0,9,4), Vector3(9,5,4), Vector3(4,5,8), Vector3(4,8,1),
 		Vector3(8,10,1), Vector3(8,3,10), Vector3(5,3,8), Vector3(5,2,3), Vector3(2,7,3),
 		Vector3(7,10,3), Vector3(7,6,10), Vector3(7,11,6), Vector3(11,0,6), Vector3(0,1,6),
@@ -45,8 +44,8 @@ func init(params=[2,1.0,0]):
 	return self
 
 func update_mesh():
-	triangles = core_triangles.duplicate()
-	vertices = core_vertices.duplicate()
+	triangles = PoolVector3Array(core_triangles)
+	vertices = PoolVector3Array(core_vertices)
 	
 	for i in subdivisions:
 		triangles = subdivide()
@@ -54,7 +53,7 @@ func update_mesh():
 	for i in vertices.size():
 		vertices[i] = vertices[i] * diameter
 ## convert tiangles to PoolIntArray
-	var triangles_pi : PackedInt32Array = []
+	var triangles_pi : PoolIntArray = []
 	for triangle in triangles:
 		triangles_pi.append(triangle[0])
 		triangles_pi.append(triangle[1])
@@ -89,7 +88,7 @@ func vertex_for_edge(first:int, second:int) -> int:
 
 func subdivide():
 	lookup = {}
-	var new_triangles : PackedVector3Array = []
+	var new_triangles : PoolVector3Array = []
 	var mid = [null, null, null]
 	
 	for original_triangle in triangles:
@@ -108,15 +107,15 @@ func to_json():
 		children.append(child.to_json())
 	var json = {
 		"name": "Icosphere",
-		"params": [subdivisions, snapped(diameter, 0.001), operation],
+		"params": [subdivisions, stepify(diameter, 0.001), operation],
 		"children": children
 	}
 	
 	if scale != Vector3.ONE:
-		json["scale"] = [snapped(scale.x,0.001), snapped(scale.y,0.001), snapped(scale.z,0.001)]
+		json["scale"] = [stepify(scale.x,0.001), stepify(scale.y,0.001), stepify(scale.z,0.001)]
 	if rotation != Vector3.ZERO:
-		json["rotation"] = [snapped(rotation.x,0.001), snapped(rotation.y,0.001), snapped(rotation.z,0.001)]
-	if position != Vector3.ZERO:
-		json["position"] = [snapped(position.x,0.001), snapped(position.y,0.001), snapped(position.z,0.001)]
+		json["rotation"] = [stepify(rotation.x,0.001), stepify(rotation.y,0.001), stepify(rotation.z,0.001)]
+	if translation != Vector3.ZERO:
+		json["position"] = [stepify(translation.x,0.001), stepify(translation.y,0.001), stepify(translation.z,0.001)]
 	
 	return json

@@ -1,6 +1,5 @@
-@tool
-@icon("res://addons/meshbuilder/mesh_builder_buckyball/small-icon.svg")
-extends CSGMesh3D
+tool
+extends CSGMesh
 class_name MeshBuilderBuckyball
 
 const C0:float = 0.809016994374947424102293417183
@@ -12,7 +11,7 @@ const C5:float = 2.159667802726987356283833914246
 const C6:float = 2.18539891484612096230950299909
 const C7:float = 2.68539891484612096230950299909
  
-var points:PackedVector3Array = PackedVector3Array([
+var points:PoolVector3Array = PoolVector3Array([
 	Vector3( 0.0,   C2,   C7),
 	Vector3( 0.0,   C2,  -C7),
 	Vector3( 0.0,  -C2,   C7),
@@ -145,8 +144,8 @@ func init(params=[0]):
 	build()
 	return self
  
-func triangles_from_hexa(hexa:PackedVector3Array) -> PackedVector3Array:
-	var tri_arr:PackedVector3Array = []
+func triangles_from_hexa(hexa:PoolVector3Array) -> PoolVector3Array:
+	var tri_arr:PoolVector3Array = []
 	var mid:Vector3 = (hexa[0] + hexa[1] + hexa[2] + hexa[3] + hexa[4] + hexa[5]) / 6.0
 
 	for i in range(hexa.size()):
@@ -156,8 +155,8 @@ func triangles_from_hexa(hexa:PackedVector3Array) -> PackedVector3Array:
 		tri_arr.append(hexa[i])
 	return tri_arr
  
-func triangles_from_penta(penta:PackedVector3Array) -> PackedVector3Array:
-	var tri_arr:PackedVector3Array = []
+func triangles_from_penta(penta:PoolVector3Array) -> PoolVector3Array:
+	var tri_arr:PoolVector3Array = []
 	var mid:Vector3 = (penta[0] + penta[1] + penta[2] + penta[3] + penta[4]) / 5.0
  
 	for i in range(penta.size()):
@@ -169,9 +168,9 @@ func triangles_from_penta(penta:PackedVector3Array) -> PackedVector3Array:
 	
 func build() -> void:
 	# Convert hexagons and pentagons to triangles
-	var hex_points1:PackedVector3Array = []
-	var hex_points2:PackedVector3Array = []
-	var penta_points:PackedVector3Array = []
+	var hex_points1:PoolVector3Array = []
+	var hex_points2:PoolVector3Array = []
+	var penta_points:PoolVector3Array = []
 	for face in faces:
 		if face.size() == 6:
 			if randf() > .5:
@@ -212,10 +211,10 @@ func to_json():
 	}
 	
 	if scale != Vector3.ONE:
-		json["scale"] = [snapped(scale.x,0.001), snapped(scale.y,0.001), snapped(scale.z,0.001)]
+		json["scale"] = [stepify(scale.x,0.001), stepify(scale.y,0.001), stepify(scale.z,0.001)]
 	if rotation != Vector3.ZERO:
-		json["rotation"] = [snapped(rotation.x,0.001), snapped(rotation.y,0.001), snapped(rotation.z,0.001)]
-	if position != Vector3.ZERO:
-		json["position"] = [snapped(position.x,0.001), snapped(position.y,0.001), snapped(position.z,0.001)]
+		json["rotation"] = [stepify(rotation.x,0.001), stepify(rotation.y,0.001), stepify(rotation.z,0.001)]
+	if translation != Vector3.ZERO:
+		json["position"] = [stepify(translation.x,0.001), stepify(translation.y,0.001), stepify(translation.z,0.001)]
 	
 	return json

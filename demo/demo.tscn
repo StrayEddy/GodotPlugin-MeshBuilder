@@ -1,28 +1,24 @@
-[gd_scene load_steps=6 format=3 uid="uid://byapsytbqrrb7"]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource type="Script" path="res://demo/demo.gd" id="1_sugoq"]
-[ext_resource type="Script" path="res://addons/meshbuilder/mesh_builder/mesh_builder.gd" id="2_kt2xo"]
+[ext_resource path="res://addons/meshbuilder/mesh_builder/mesh_builder.gd" type="Script" id=1]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_gv1g4"]
+[sub_resource type="ProceduralSky" id=1]
 
-[sub_resource type="Sky" id="Sky_3a068"]
-sky_material = SubResource("ProceduralSkyMaterial_gv1g4")
-
-[sub_resource type="Environment" id="Environment_j230i"]
+[sub_resource type="Environment" id=2]
 background_mode = 2
-sky = SubResource("Sky_3a068")
-ambient_light_source = 3
-ssao_enabled = true
+background_sky = SubResource( 1 )
 
-[node name="Demo" type="Node3D"]
-script = ExtResource("1_sugoq")
+[node name="Demo" type="Spatial"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_j230i")
+environment = SubResource( 2 )
 
-[node name="DirectionalLight3d" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.86537, -0.494762, -0.0796554, -0.32328, -0.672605, 0.665652, -0.382916, -0.550284, -0.741999, 13.5405, 13.1879, 7.86839)
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 0.86532, -0.494901, -0.0793409, -0.323786, -0.672779, 0.66523, -0.382602, -0.549947, -0.742411, 0, 4, 0 )
+light_energy = 0.5
+light_bake_mode = 0
 
-[node name="MeshBuilder" type="CSGCombiner3D" parent="."]
+[node name="MeshBuilder" type="CSGCombiner" parent="."]
 layers = 524288
-script = ExtResource("2_kt2xo")
+generate_lightmap = false
+script = ExtResource( 1 )
