@@ -71,7 +71,7 @@ func _on_add_shape_pressed(owner_of_shapes, shapes):
 			shape = MeshBuilder.add_mesh(root, owner_of_shapes, params)
 		
 		if shape_info.has("position"):
-			shape.position = Vector3(shape_info.position[0], shape_info.position[1], shape_info.position[2])
+			shape.translation = Vector3(shape_info.position[0], shape_info.position[1], shape_info.position[2])
 		if shape_info.has("rotation"):
 			shape.rotation = Vector3(shape_info.rotation[0], shape_info.rotation[1], shape_info.rotation[2])
 		if shape_info.has("scale"):

@@ -423,7 +423,6 @@ margin_bottom = 70.0
 dialog_text = "Do you really want to publish your MeshBuilder shape, and make it available for anyone to use ?"
 
 [node name="NameForPublishDialog" type="ConfirmationDialog" parent="."]
-visible = true
 margin_right = 336.0
 margin_bottom = 95.0
 rect_min_size = Vector2( 200, 150 )
